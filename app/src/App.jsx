@@ -1,11 +1,17 @@
 import './App.css';
-import Header from './Components/Header.jsx'
+import Header from './Components/Header/Header.jsx';
+import WebsiteListPage from './Pages/WebsiteListPage/WebsiteListPage';
+import IssuePage from './Pages/IssuePage/IssuePage';
 
 function App() {
   return (
-    <main>
+    <>
       <Header/>
-    </main>
+      <main>
+        {/* <WebsiteListPage/> */}
+        <IssuePage/>
+      </main> 
+    </>
   );
 }
 

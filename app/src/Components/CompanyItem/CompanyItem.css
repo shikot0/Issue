@@ -1,0 +1,26 @@
+.company-item {
+    display: flex;
+    flex-direction: column;
+    /* border-radius: .75rem; */
+    /* border: 3px solid rgba(0, 0, 0, 0.15); */
+    overflow: hidden;
+}
+.company-item .company-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .75rem 0;
+    border-radius: .6rem .6rem 0 0;
+    border: 3px solid rgb(64, 189, 224);
+    border-bottom: none;
+}
+.company-image {
+    width: 55%;
+}
+.company-name {
+    background-image: linear-gradient(to right, rgb(60, 57, 164), rgb(60, 89, 215));
+    padding: .3rem 0;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 0 0 .6rem .6rem;
+}

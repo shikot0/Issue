@@ -1,0 +1,15 @@
+.searchbar {
+    display: block;
+    /* border: 2px solid rgba(0, 0, 0, 0.15); */
+    border: 3px solid rgb(64, 189, 224);
+    border-radius: .5rem;
+    background-color: white;
+    font-weight: 700;
+    padding: .5rem .5rem .5rem 1rem;
+    width: 25rem;
+    max-width: 90%;
+    margin: 3% auto 6%;
+}
+.searchbar:focus {
+    outline: none;
+}
