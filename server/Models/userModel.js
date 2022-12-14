@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 8,
     },
+    resolvedIssues: {
+        type: Number,
+        default: 0,
+    },
     profilePicture: {
         Data: Buffer,
         ContentType: String,

@@ -1,6 +1,7 @@
 import './App.css';
 import Header from './Components/Header/Header.jsx';
 import WebsiteListPage from './Pages/WebsiteListPage/WebsiteListPage';
+import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
       <Header/>
       <main>
         {/* <WebsiteListPage/> */}
-        <IssuePage/>
+        {/* <IssuePage/> */}
+        <RegisterPage/>
       </main> 
     </>
   );

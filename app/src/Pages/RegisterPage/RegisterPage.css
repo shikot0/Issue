@@ -1,0 +1,110 @@
+#register-page {
+	/* min-height: 100vh; */
+	display: grid;
+	justify-items: center;
+	align-items: center;
+}
+.form-wrapper {
+    max-width: 22rem;
+	width: 100%;
+	display: grid;
+	overflow: hidden;
+	align-items: center;
+	border-radius: .75rem;
+	grid-auto-flow: column;
+	grid-auto-columns: 100%;
+	padding: 1.75rem 0;
+    background-color: rgba(255, 255, 255);
+	background-size: 200%;
+	box-shadow: 0 0 20rem rgba(33, 0, 180, 0.4), 0 20rem 20rem rgba(182, 0, 233, 0.4);
+	animation: fade-in 1s cubic-bezier(.68,-0.55,.27,1.55) 1 forwards;
+	scroll-snap-type: inline mandatory;
+	transition: .4s;
+}
+@keyframes fade-in {
+	from {
+		scale: .85;
+		filter: blur(10px)
+	}
+}
+@keyframes gradient-bg {
+	0% {
+		background-position: 0%;
+	}
+	50% {
+		background-position: 100%;
+	}
+	100% {
+		background-position: 0%;
+	}
+}
+
+#register-page form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	gap: 1.5rem;
+	scroll-snap-align: center;
+	transition: .75s cubic-bezier(.68,-0.55,.27,1.55);
+}
+/* input {
+	padding: .5rem 1rem;
+	font-size: 1rem;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	width: 90%;
+	color: white;
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)) padding-box,
+	linear-gradient(to bottom left, rgb(34, 0, 255), rgb(144, 0, 255)) border-box;
+  	border: 2px solid transparent;
+	border-radius: .4rem;
+}
+#sign-up-page input{
+	max-width: 25rem;
+}
+input::placeholder {
+	font-weight: 500;
+}
+input:focus {
+	outline: none;
+} */
+.hint {
+	font-weight: 500;
+	text-align: center;
+	font-size: clamp(.85rem, 2vw, 1rem);
+}
+.hint span {
+	color: transparent;
+	background: linear-gradient(to top left, rgb(47, 109, 255), rgb(118, 59, 255));
+	background-clip: text;
+	cursor: pointer;
+}
+
+.profile-picture-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 90%;
+    height: 90%;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+.profile-picture-form .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 7.5rem;
+    height: 7.5rem;
+    overflow: hidden;
+    border: 3px solid #40bde0;
+	box-shadow: 0 0 1.5rem #40bde0;
+    border-radius: 20rem;
+}
+.profile-photo {
+	object-fit: cover; 
+    object-position: center;
+	width: 100%;
+    height: 100%;
+}

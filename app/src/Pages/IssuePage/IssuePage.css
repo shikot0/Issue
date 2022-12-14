@@ -1,0 +1,120 @@
+* {
+    transition: .2s;
+}
+#issue-page {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 0 2rem;
+}
+.company {
+    display: flex;
+    gap: 2rem;
+}
+.company .company-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #40bde0;
+    border-radius: 1rem; 
+    padding: 1rem 0;
+    width: 22.5%;
+}
+.company .company-image-wrapper img {
+    width: 70%;
+}
+.company .company-about {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 1.5rem;
+    gap: 2rem;
+    width: 77.5%;
+}
+.domain-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.domain {
+    font-size: .8rem;
+    padding: .25rem .75rem;
+    border-radius: .3rem;
+    /* background-color: rgb(183, 183, 183); */
+    font-weight: 500;
+    background-color: rgb(115, 80, 148);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+}
+.name-and-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 3vw;
+}
+.image-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed rgb(115, 80, 148);
+    border-radius: .5rem;
+    padding: 1rem;
+    min-height: 15rem;
+    width: 100%;
+    max-width: 50rem;
+    overflow: hidden;
+    gap: 1rem;
+}
+.image-input-wrapper.drag-over {
+    border: 3px dashed #40bde0;
+}
+.upload-hint-image {
+    width: 3rem;
+    fill: rgb(115, 80, 148);
+}
+.upload-hint-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-align: center;
+}
+.browse-button {
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    background: white;
+    color: rgb(115, 80, 148);
+    cursor: pointer;
+}
+#image-input {
+    display: none;
+}
+.image-input-wrapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: .3rem;
+}
+img.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .company .company-image-wrapper {
+        width: 32.5%;
+    }
+    .company .company-about {
+        width: 67.5%;
+    }
+    .name-and-link {
+        flex-direction: column;
+    }
+    #issue-page input[type$=text], #issue-page input[type$=url] {
+        width: 100%; 
+    }
+}

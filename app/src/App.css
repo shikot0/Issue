@@ -4,9 +4,48 @@
   margin: 0;
   font-family: 'Poppins';
 }
-
-header, #website-list-page {
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header {
   max-width: 75rem;
   width: 95%;
-  margin: 0 auto;
+  margin: 0 auto; 
+}
+#register-page, #website-list-page, #issue-page {
+  max-width: 75rem;
+  width: 95%;
+  margin: 3% 0 0;
+}
+/* input[type$=text], input[type$=url], input[type$=email], input[type$=password] {
+  padding: .5rem 0 .5rem 1rem;
+  border-radius: .4rem;
+  border: 2px solid #40bde0;
+}
+input[type$=text]:focus, input[type$=url]:focus, input[type$=email]:focus, input[type$=password]:focus {
+  outline: none;
+  border: 2px solid rgba(115, 80, 148, 0.5);
+} */
+input {
+  padding: .5rem 0 .5rem 1rem;
+  border-radius: .4rem;
+  border: 2px solid #40bde0;
+}
+input:hover {
+  outline: none;
+  border: 2px solid rgba(115, 80, 148, 0.5);
+}
+.cta {
+  background-color: rgb(115, 80, 148);
+  border: none;
+  border-radius: .3rem;
+  font-weight: 700;
+  padding: .5rem 1.25rem; 
+  cursor: pointer;
+}
+.cta:hover {
+  scale: 1.1;
+  background-color: #40bde0;
 }
