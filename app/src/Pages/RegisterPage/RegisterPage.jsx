@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { registerRoute, loginRoute, setProfilePictureRoute } from '../../utils/APIRoutes';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,14 +13,13 @@ function RegisterPage() {
         password: "", 
         confirmPassword: ""
     });
-    const user = JSON.parse(localStorage.getItem('chat-app-user'));
     
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
     });
     
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
     const toastOptions = {
         position: "top-right",
@@ -30,11 +29,11 @@ function RegisterPage() {
         theme: "light",
     }
     
-    // useEffect(() => {
-    //     if(localStorage.getItem('chat-app-user')) {
-    //         navigate('/')
-    //     }
-    // }, [navigate])
+    useEffect(() => {
+        if(localStorage.getItem('user')) {
+            navigate('/')
+        }
+    }, [navigate])
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -68,8 +67,7 @@ function RegisterPage() {
             if(response.status === false) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === true) {
-                localStorage.setItem('chat-app-user', JSON.stringify(response.user));
-                // navigate('/profilepicture')
+                localStorage.setItem('user', JSON.stringify(response.user));
                 document.querySelectorAll('form').forEach(form => {
                     form.style.translate = `-200%`
                 })
@@ -97,8 +95,8 @@ function RegisterPage() {
             if(response.status === false) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === true) {
-                localStorage.setItem('chat-app-user', JSON.stringify(response.user));
-                // navigate('/')
+                localStorage.setItem('user', JSON.stringify(response.user));
+                navigate('/')
             }
         }
     }
@@ -126,22 +124,24 @@ function RegisterPage() {
     }
 
     async function handleSetUserImage(e) {
-        e.preventDefault()
-        if(currentUserImage) {
-            const formData = new FormData();
-            formData.append('fileupload', currentUserImage);
-            const data = await fetch(`${setProfilePictureRoute}/${user._id}`, {
-                method: 'POST',
-                body: formData, 
-            }).then(res => res.json())
-            .then(data => data);
+        e.preventDefault();
+        console.log(JSON.parse(localStorage.getItem('user')))
+        // const user = JSON.parse(localStorage.getItem('user'));
+        // if(currentUserImage) {
+        //     const formData = new FormData();
+        //     formData.append('fileupload', currentUserImage);
+        //     const data = await fetch(`${setProfilePictureRoute}/${user._id}`, {
+        //         method: 'POST',
+        //         body: formData, 
+        //     }).then(res => res.json())
+        //     .then(data => data);
 
-            if(data.status) {
-                // navigate('/') 
-            }
-        }else {
-            toast.error('Please choose an image for your profile',toastOptions)
-        }
+        //     if(data.status) {
+        //         navigate('/') 
+        //     }
+        // }else {
+        //     toast.error('Please choose an image for your profile',toastOptions)
+        // }
     }
 
     return(

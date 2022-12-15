@@ -33,9 +33,9 @@ input {
   border-radius: .4rem;
   border: 2px solid #40bde0;
 }
-input:hover {
+input:focus {
   outline: none;
-  border: 2px solid rgba(115, 80, 148, 0.5);
+  border: 2px solid rgba(115, 80, 148);
 }
 .cta {
   background-color: rgb(115, 80, 148);

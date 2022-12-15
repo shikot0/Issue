@@ -31,7 +31,6 @@ function IssuePage() {
     
     function handleDragImage(e) {
         e.preventDefault();
-        console.log(e.dataTransfer)
         if(e.dataTransfer.files[0].size < 1000000) {
             setUploadedImage(e.dataTransfer.files[0]);
         }else {
