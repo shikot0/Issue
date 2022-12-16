@@ -12,7 +12,7 @@ header {
     font-size: 2rem;
     font-style: italic;
     letter-spacing: -4px;
-    color: rgb(115, 80, 148);
+    color: var(--secondary-color);
 }
 nav {
     display: flex;
@@ -20,7 +20,7 @@ nav {
     justify-content: flex-end;
 }
 .user {
-    background-image: linear-gradient(to right, rgb(60, 57, 164), rgb(60, 89, 215));
+    background-image: linear-gradient(to bottom right, var(--secondary-color), var(--cta-color));
     display: flex;
     align-items: center;
     gap: .8rem;
@@ -32,6 +32,7 @@ nav {
     height: 2.25rem;
     border-radius: 10rem;
     overflow: hidden;
+    border: 2px solid var(--primary-text-color);
 }
 .profile-picture {
     width: 100%;
@@ -41,5 +42,5 @@ nav {
 .username {
     font-weight: 500;
     font-size: 1rem;
-    color: white;
+    /* color: var(--text-color); */
 }

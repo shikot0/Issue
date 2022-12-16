@@ -1,6 +1,6 @@
 .searchbar {
     display: block;
-    border: 2px solid rgb(64, 189, 224);
+    /* border: 2px solid rgb(64, 189, 224); */
     border-radius: .5rem;
     background-color: white;
     font-weight: 700;

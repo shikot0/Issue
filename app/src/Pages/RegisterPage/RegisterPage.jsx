@@ -29,11 +29,11 @@ function RegisterPage() {
         theme: "light",
     }
     
-    useEffect(() => {
-        if(localStorage.getItem('user')) {
-            navigate('/')
-        }
-    }, [navigate])
+    // useEffect(() => {
+    //     if(localStorage.getItem('user')) {
+    //         navigate('/')
+    //     }
+    // }, [navigate])
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -64,10 +64,11 @@ function RegisterPage() {
                 })
             })
             const response = await data.json();
+            console.log(response)
             if(response.status === false) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === true) {
-                localStorage.setItem('user', JSON.stringify(response.user));
+                localStorage.setItem('user', JSON.stringify(response.returnedUser));
                 document.querySelectorAll('form').forEach(form => {
                     form.style.translate = `-200%`
                 })
@@ -95,7 +96,7 @@ function RegisterPage() {
             if(response.status === false) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === true) {
-                localStorage.setItem('user', JSON.stringify(response.user));
+                localStorage.setItem('user', JSON.stringify(response.returnedUser));
                 navigate('/')
             }
         }
@@ -125,23 +126,23 @@ function RegisterPage() {
 
     async function handleSetUserImage(e) {
         e.preventDefault();
-        console.log(JSON.parse(localStorage.getItem('user')))
-        // const user = JSON.parse(localStorage.getItem('user'));
-        // if(currentUserImage) {
-        //     const formData = new FormData();
-        //     formData.append('fileupload', currentUserImage);
-        //     const data = await fetch(`${setProfilePictureRoute}/${user._id}`, {
-        //         method: 'POST',
-        //         body: formData, 
-        //     }).then(res => res.json())
-        //     .then(data => data);
+        // console.log(JSON.parse(localStorage.getItem('user')))
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(currentUserImage) {
+            const formData = new FormData();
+            formData.append('fileupload', currentUserImage);
+            const data = await fetch(`${setProfilePictureRoute}/${user.id}`, {
+                method: 'POST',
+                body: formData, 
+            }).then(res => res.json())
+            .then(data => data);
 
-        //     if(data.status) {
-        //         navigate('/') 
-        //     }
-        // }else {
-        //     toast.error('Please choose an image for your profile',toastOptions)
-        // }
+            if(data.status) {
+                navigate('/') 
+            }
+        }else {
+            toast.error('Please choose an image for your profile',toastOptions)
+        }
     }
 
     return(

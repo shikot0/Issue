@@ -13,7 +13,7 @@ app.use(fileuploader());
 app.use('/api/auth', userRoutes);
 // app.use('/api/issues', issueRoutes);
 
-mongoose.set('strictQuery', false)
+mongoose.set('strictQuery', false) 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

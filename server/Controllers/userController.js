@@ -12,16 +12,21 @@ module.exports.register = async (req,res,next) => {
         if(emailCheck) {
             return res.json({msg: 'Email is already in use', status: false});
         }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await Users.create({
             email,
             username,
             password: hashedPassword
-        }); 
-        // delete user.password;
-        // delete user.resolvedIssues;
-        console.log(user)
-        return res.json({status: true, user})
+        });
+
+        const returnedUser = {
+            id: user._id,
+            username: user.username,
+            email: user.email
+        };
+        // console.log(returnedUser)
+        return res.json({status: true, returnedUser})
     } catch(err) {
         next(err);
     }
@@ -40,9 +45,12 @@ module.exports.login = async (req, res, next) => {
         if(!isPasswordValid) {
             return res.json({msg: 'Incorrect username or password', status: false});
         }
-        delete user.password;
-
-        return res.json({status: true, user})
+        const returnedUser = {
+            id: user._id,
+            username: user.username,
+            email: user.email
+        };
+        return res.json({status: true, returnedUser})
     } catch(err) {
         next(err)
     }
@@ -51,13 +59,13 @@ module.exports.login = async (req, res, next) => {
 module.exports.setProfilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const user = await Users.findOne({_id: id})
         const {data, mimetype} = req.files.fileupload;
+        const user = await Users.findOne({_id: id})
         user.profilePicture.Data = data;
         user.profilePicture.ContentType = mimetype; 
 
         await user.save();
-        return res.json({status: true, user})
+        return res.json({status: true})
     } catch(err) {
         next(err)
     }

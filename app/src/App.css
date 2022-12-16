@@ -1,13 +1,24 @@
+:root {
+  /* --primary-color: #00cde4; */
+  --primary-color: #6cff23;
+  --secondary-color: #1ae4ff;
+  --cta-color: #743dff;
+  --primary-text-color: #324b4f;
+  --secondary-text-color: #95b0b5;
+}
 *, *::before, *::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: 'Poppins';
+  color: var(--primary-text-color);
 }
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(to bottom right, rgb(35, 35, 35), rgb(18, 18, 18))
 }
 header {
   max-width: 75rem;
@@ -31,14 +42,14 @@ input[type$=text]:focus, input[type$=url]:focus, input[type$=email]:focus, input
 input {
   padding: .5rem 0 .5rem 1rem;
   border-radius: .4rem;
-  border: 2px solid #40bde0;
+  border: 3px solid var(--cta-color);
 }
 input:focus {
   outline: none;
-  border: 2px solid rgba(115, 80, 148);
+  border: 3px solid var(--secondary-color);
 }
 .cta {
-  background-color: rgb(115, 80, 148);
+  background-color: var(--cta-color);
   border: none;
   border-radius: .3rem;
   font-weight: 700;
@@ -47,5 +58,5 @@ input:focus {
 }
 .cta:hover {
   scale: 1.1;
-  background-color: #40bde0;
+  background-color: var(--secondary-color);
 }
