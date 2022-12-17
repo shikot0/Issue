@@ -8,9 +8,9 @@ import './App.css';
 function App() {
   return (
     <>
-      <Header/>
       <main>
         <BrowserRouter>
+          <Header/>
           <Routes>
             <Route path="/" element={<WebsiteListPage/>}/>
             <Route path="/issue" element={<IssuePage/>}/>

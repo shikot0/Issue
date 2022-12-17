@@ -11,7 +11,8 @@ function RegisterPage() {
         username: "",
         email: "",
         password: "", 
-        confirmPassword: ""
+        confirmPassword: "",
+        profilePicture: {}
     });
     
     const [loginData, setLoginData] = useState({
@@ -42,6 +43,14 @@ function RegisterPage() {
     function handleLogin(e) {
         setLoginData({...loginData, [e.target.name]: e.target.value})
     }
+    
+    function handleShowUserImage(e) {
+        if(e.target.files[0].size < 400000) {
+            setCurrentUserImage(e.target.files[0]);
+        }else {
+            toast.error('Please choose a smaller image', toastOptions)
+        }
+    }
 
     async function handleSignUpValidation() {
         const {password, confirmPassword, email, username} = signUpData;
@@ -54,26 +63,52 @@ function RegisterPage() {
         }else if(email === "") {
             toast.error("Please add your email", toastOptions);
         }else {
-            const data = await fetch(registerRoute, {
+            document.querySelectorAll('form').forEach(form => {
+                form.style.translate = `-200%`
+            })        
+        }
+    }
+
+    async function handleSetUserImage(e) {
+        e.preventDefault();
+        const {password, confirmPassword, email, username} = signUpData;
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(currentUserImage) {
+            const formData = new FormData();
+            formData.append('fileupload', currentUserImage);
+
+            // const data = await fetch(`${setProfilePictureRoute}/${user.id}`, {
+            //     method: 'POST',
+            //     body: formData, 
+            // }).then(res => res.json())
+            // .then(data => data);
+
+            
+            fetch(registerRoute, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     username,
                     email,
                     password   
                 })
+            }).then(res => res.json())
+            .then(data => {
+                if(data.status) {
+                    localStorage.setItem('user', JSON.stringify(data.returnedUser));
+                    fetch(`${setProfilePictureRoute}/${data.returnedUser.id}`, {
+                        method: "POST",
+                        body: formData
+                    }).then(res => res.json())
+                      .then(data => {
+                        if(data.status) {
+                            navigate('/');
+                        }
+                    })
+                }
             })
-            const response = await data.json();
-            console.log(response)
-            if(response.status === false) {
-                toast.error(response.msg, toastOptions);
-            }else if(response.status === true) {
-                localStorage.setItem('user', JSON.stringify(response.returnedUser));
-                document.querySelectorAll('form').forEach(form => {
-                    form.style.translate = `-200%`
-                })
-            }
-            
+        }else {
+            toast.error('Please choose an image for your profile',toastOptions)
         }
     }
 
@@ -101,48 +136,17 @@ function RegisterPage() {
             }
         }
     }
-        
+    
     function handleSlideLeft() {
         document.querySelectorAll('form').forEach(form => {
             form.style.translate = `-100%`
         })
-        document.querySelector('form').parentElement.style.backgroundPosition = '100%'
     }
 
     function handleSlideRight() {
         document.querySelectorAll('form').forEach(form => {
             form.style.translate = `0%`
         })
-        document.querySelector('form').parentElement.style.backgroundPosition = '0%'
-    }
-
-    function handleShowUserImage(e) {
-        if(e.target.files[0].size < 400000) {
-            setCurrentUserImage(e.target.files[0]);
-        }else {
-            toast.error('Please choose a smaller image', toastOptions)
-        }
-    }
-
-    async function handleSetUserImage(e) {
-        e.preventDefault();
-        // console.log(JSON.parse(localStorage.getItem('user')))
-        const user = JSON.parse(localStorage.getItem('user'));
-        if(currentUserImage) {
-            const formData = new FormData();
-            formData.append('fileupload', currentUserImage);
-            const data = await fetch(`${setProfilePictureRoute}/${user.id}`, {
-                method: 'POST',
-                body: formData, 
-            }).then(res => res.json())
-            .then(data => data);
-
-            if(data.status) {
-                navigate('/') 
-            }
-        }else {
-            toast.error('Please choose an image for your profile',toastOptions)
-        }
     }
 
     return(
@@ -153,7 +157,7 @@ function RegisterPage() {
                         <input type="email" name="email" placeholder='Email' onChange={e => {handleSignUp(e)}} aria-label='Email Input'/>
                         <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input'/>
                         <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input'/>
-                        <button type="button" className="cta" onClick={handleSignUpValidation}>Sign Up</button>
+                        <button type="button" className="cta" onClick={handleSignUpValidation}>Next</button>
                         <p className="hint" onClick={handleSlideLeft}>Already have an account? <span>Login</span></p>
                     </form>
                     <form>
@@ -163,6 +167,11 @@ function RegisterPage() {
                         <p className="hint" onClick={handleSlideRight}>Don't have an account? <span>Sign Up</span></p>
                     </form>
                     <form encType="multipart/form-data" className='profile-picture-form'>
+                        <button type='button' className="form-back-button" onClick={handleSlideRight}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="chevron-left"><rect width="24" height="24" transform="rotate(90 12 12)" opacity="0"/><path d="M13.36 17a1 1 0 0 1-.72-.31l-3.86-4a1 1 0 0 1 0-1.4l4-4a1 1 0 1 1 1.42 1.42L10.9 12l3.18 3.3a1 1 0 0 1 0 1.41 1 1 0 0 1-.72.29z"/></g></g></svg>
+                            back
+                        </button>
+                        <h2>Set your profile picture</h2>
                         <div className="image-container">
                             <img className={currentUserImage ? 'profile-photo' : 'hidden'} src={currentUserImage ? URL.createObjectURL(currentUserImage) : `${process.env.PUBLIC_URL}/logos/person-outline.svg`} alt="profile" />
                         </div>

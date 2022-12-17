@@ -76,7 +76,7 @@ function IssuePage() {
                     <input ref={imageInput} type="file" accept='image/*' id='image-input' onInput={e => {handleShowUserImage(e)}}/>
                     <img src={uploadedImage ? URL.createObjectURL(uploadedImage) : ''} alt="profile" className={uploadedImage ? '' : 'hidden'}/>
                 </div>
-                <button type='button' className='submit-button' onClick={createIssue}>Submit</button>
+                <button type='button' className='cta' onClick={createIssue}>Submit</button>
             </form>
             <ToastContainer/>
         </section>

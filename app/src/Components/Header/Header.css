@@ -3,6 +3,7 @@ header {
     align-items: center; 
     justify-content: space-between;
     padding: 1% 0;
+    /* background-color: var(--secondary-color); */
 }
 .logo {
     color: black;
@@ -12,7 +13,7 @@ header {
     font-size: 2rem;
     font-style: italic;
     letter-spacing: -4px;
-    color: var(--secondary-color);
+    color: #677381;
 }
 nav {
     display: flex;
@@ -20,13 +21,18 @@ nav {
     justify-content: flex-end;
 }
 .user {
-    background-image: linear-gradient(to bottom right, var(--secondary-color), var(--cta-color));
+    background-color: var(--primary-cta-color);
     display: flex;
     align-items: center;
     gap: .8rem;
     padding: .4rem 1rem;
     border-radius: .5rem;
+    cursor: pointer;
+    position: relative;
 }
+/* .user:hover {
+    scale: 1.05;
+} */
 .profile-picture-div {
     width: 2.25rem;
     height: 2.25rem;
@@ -43,4 +49,35 @@ nav {
     font-weight: 500;
     font-size: 1rem;
     /* color: var(--text-color); */
+}
+
+.user-modal {
+    position: absolute;
+    background-color: var(--secondary-color);
+    min-width: 100%;
+    top: 110%;
+    left: 0;
+    padding: .5rem;
+    border-radius: .25rem;
+    translate: 0 -15%;
+    opacity: 0;
+    pointer-events: none;
+}
+.user-modal.visible {
+    translate: none;
+    opacity: 1;
+    pointer-events: all;
+}
+.user-link {
+    text-decoration: none;
+}
+.logout-button {
+    background-color: #82a0aa;
+    border: none;
+    width: 100%;
+    color: #4b4a54;
+}
+.logout-button:hover {
+    background-color: red;
+    cursor: pointer;
 }

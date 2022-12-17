@@ -13,10 +13,10 @@
     translate: 0 -5%;
 }
 .company-item:hover .company-image-wrapper {
-    border: 3px solid var(--secondary-color);
+    border: 3px solid var(--primary-cta-color);
 }
 .company-item:hover .company-info {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-cta-color);
 }
 .company-item .company-image-wrapper {
     display: flex;
@@ -26,7 +26,7 @@
     padding: .75rem 0;
     border-radius: .6rem .6rem 0 0;
     background-color: white;
-    /* border: 3px solid var(--cta-color); */
+    /* border: 3px solid var(--primary-cta-color); */
     border: .25rem solid rgb(55, 55, 55);
     border-bottom: none;
 }
@@ -38,8 +38,7 @@
     align-items: center;
     justify-content: center;
     height: 25%;
-    background-color: rgb(55, 55, 55);
-    /* background-color: var(--primary-color); */
+    background-color: var(--secondary-color);
     padding: .3rem .8rem;
     gap: .5rem;
     border-radius: 0 0 .6rem .6rem;

@@ -71,16 +71,31 @@ module.exports.setProfilePicture = async (req, res, next) => {
     }
 }
 
-// module.exports.getProfilePicture = async (req, res, next) => {
-//     try {
-//         const id = req.params.id;
-//         const user = await Users.findOne({_id: id}); 
-//         res.type('Content-Type', user.profilePicture.ContentType)
-//         return res.status(200).send(user.profilePicture.Data)
-//     } catch(err) {
-//         next(err)
-//     }
-// }
+module.exports.getUser = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await Users.findOne({_id: id}).select([
+            "email",
+            "username", 
+            "_id",
+        ]);
+        return res.json(user);
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.getProfilePicture = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await Users.findOne({_id: id}); 
+        res.type('Content-Type', user.profilePicture.ContentType)
+        return res.status(200).send(user.profilePicture.Data)
+    } catch(err) {
+        next(err)
+    }
+}
+
 module.exports.getAllUsers = async (req, res, next) => {
     try {
         const users = await Users.find({_id:{$ne: req.params.id}}).select([
