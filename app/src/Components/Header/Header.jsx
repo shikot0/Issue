@@ -2,21 +2,10 @@ import {useState, useEffect, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUserRoute, getProfilePictureRoute } from '../../utils/APIRoutes';
 import './Header.css';
-function Header() {
-    let userId = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).id : '';
-    const [user, setUser] = useState('');
-    const navigate = useNavigate();
+function Header({userId, user}) {
     const userModal = useRef();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        if(userId) {
-            fetch(`${getUserRoute}/${userId}`)
-            .then(res => res.json())
-            .then(data => {
-                setUser(data)
-            })
-        }
-    },[userId])
 
     function logout() {
         localStorage.removeItem('user')

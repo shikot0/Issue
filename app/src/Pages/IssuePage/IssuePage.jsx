@@ -1,11 +1,16 @@
 import {useState, useRef} from 'react';
 import {ToastContainer, toast} from 'react-toastify';
-import { createIssueRoute } from '../../utils/APIRoutes';
+import { createIssueRoute, setIssuePictureRoute } from '../../utils/APIRoutes';
 import 'react-toastify/dist/ReactToastify.css';
 import './IssuePage.css';
 
-function IssuePage() {
-    const [issue, setIssue] = useState({})
+function IssuePage({user}) {
+    const [issue, setIssue] = useState({
+        name: '',
+        link: '',
+        description: '',
+        openedBy: user._id
+    })
     const [uploadedImage, setUploadedImage] = useState('');
     const imageInput = useRef();
 
@@ -17,7 +22,7 @@ function IssuePage() {
         autoClose: 8000,
         pauseOnHover: true,
         draggable: true,
-        theme: "light",
+        theme: "dark",
     };
 
     function handleShowUserImage(e) {
@@ -47,8 +52,39 @@ function IssuePage() {
         e.target.classList.remove('drag-over')
     }
 
-    function createIssue() {
+    function handleIssueData(e) {
+        setIssue({...issue, [e.target.name]: e.target.value})
+    }
 
+    function createIssue() {
+        const formData = new FormData();
+        formData.append('fileupload', uploadedImage)
+        if(!issue.name) {
+            toast.error('Please name your issue', toastOptions);
+        }else if(!issue.link) {
+            toast.error('Please add a link to the site', toastOptions);
+        }else if(!uploadedImage) {
+            toast.error('Please add an image of the issue', toastOptions);
+        }else {
+            fetch(`${createIssueRoute}`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(issue)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status) {
+                    fetch(`${setIssuePictureRoute}/${data.id}`, {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        toast.success(data.msg,toastOptions)
+                    })
+                }
+            })
+        }
     }
 
     return (
@@ -67,9 +103,10 @@ function IssuePage() {
             </div>
             <form>
                 <div className="name-and-link">
-                    <input type="text" placeholder='Name of bug'/>
-                    <input type="url" placeholder="Link to the site" />
+                    <input onInput={handleIssueData} type="text" name="name" placeholder='Name of bug'/>
+                    <input onInput={handleIssueData} type="url" name="link" placeholder="Link to the site" />
                 </div>
+                <textarea name="description" id="" className='text-box' placeholder='A short description of the issue'></textarea>
                 <div className="image-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
                     <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>browse</button></p>

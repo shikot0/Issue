@@ -11,9 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(fileuploader());
 app.use('/api/user', userRoutes);
-// app.use('/api/issues', issueRoutes);
+app.use('/api/issue', issueRoutes);
 
-mongoose.set('strictQuery', false) 
+mongoose.set('strictQuery', false)
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

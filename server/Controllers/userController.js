@@ -65,7 +65,7 @@ module.exports.setProfilePicture = async (req, res, next) => {
         user.profilePicture.ContentType = mimetype; 
 
         await user.save();
-        return res.json({status: true})
+        return res.json({status: true});
     } catch(err) {
         next(err)
     }
