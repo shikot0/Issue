@@ -30,11 +30,11 @@ function RegisterPage() {
         theme: "dark",
     }
     
-    // useEffect(() => {
-    //     if(localStorage.getItem('user')) {
-    //         navigate('/')
-    //     }
-    // }, [navigate])
+    useEffect(() => {
+        if(localStorage.getItem('user')) {
+            navigate('/')
+        }
+    }, [navigate])
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -71,8 +71,7 @@ function RegisterPage() {
 
     async function handleSetUserImage(e) {
         e.preventDefault();
-        const {password, confirmPassword, email, username} = signUpData;
-        const user = JSON.parse(localStorage.getItem('user'));
+        const {password, email, username} = signUpData;
         if(currentUserImage) {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);

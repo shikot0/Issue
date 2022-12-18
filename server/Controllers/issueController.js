@@ -2,11 +2,13 @@ const Issues = require('../Models/issueModel');
 
 module.exports.createIssue = async (req, res, next) => {
     try {
-        const {openedBy, name, description} = req.body;
+        const {openedBy, name, link, description} = req.body;
+        console.log(req.body)
         const issue = await Issues.create({
             openedBy,
             name,
-            description
+            description, 
+            link
         });
         return res.json({status: true, id: issue._id});
     } catch(err) {
@@ -14,13 +16,13 @@ module.exports.createIssue = async (req, res, next) => {
     }
 }
 
-module.exports.setIssuePicture = async (req, res,next) => {
+module.exports.setIssueScreenshot = async (req, res,next) => {
     try {
         const id = req.params.id;
         const {data, mimetype} = req.files.fileupload;
         const issue = await Issues.findOne({_id: id})
-        issue.profilePicture.Data = data;
-        issue.profilePicture.ContentType = mimetype; 
+        issue.screenshot.Data = data;
+        issue.screenshot.ContentType = mimetype; 
 
         await issue.save();
         return res.json({msg:'Your issue was successfully created!',status: true});
@@ -31,22 +33,27 @@ module.exports.setIssuePicture = async (req, res,next) => {
 
 module.exports.getAllIssues = async (req, res, next) => {
     try {
-        const user = req.params.user;
-        if(user) {
-            const issues = Issues.findOne({openedBy: user.id}).select([
+        const id = req.params.id; 
+        let issues;
+        if(id) {
+            issues = await Issues.find({openedBy: id}).select([
+                "openedBy",
                 "name",
                 "description",
-                "screenshot",
+                // "screenshot",
                 "resolved"
             ])
         }else {
-            const issues = Issues.find().select([
+            issues = await Issues.find().select([
+                "upenedBy",
                 "name",
                 "description",
-                "screenshot",
+                // "screenshot",
                 "resolved"
             ])
         }
+        console.log(issues)
+        return res.json(issues)
     } catch(err) {
         next(err)
     }

@@ -4,6 +4,9 @@
 	justify-items: center;
 	align-items: center;
 }
+#register-page input {
+	width: 80%;
+}
 .form-wrapper {
     max-width: 23rem;
 	width: 100%;
@@ -13,7 +16,7 @@
 	align-items: center;
 	border-radius: .75rem;
 	grid-auto-flow: column;
-	grid-auto-columns: 100%;
+	grid-auto-columns: 100%; 
     /* background-color: #2a272ac4; */
     background-color: var(--secondary-color);
 	background-size: 200%;
@@ -92,6 +95,9 @@
 .form-back-button svg {
 	fill: var(--primary-text-color);
 	width: 1.5rem;
+}
+.profile-picture-form h2 {
+	font-size: 1.25rem;
 }
 .profile-picture-form .image-container {
     display: flex;

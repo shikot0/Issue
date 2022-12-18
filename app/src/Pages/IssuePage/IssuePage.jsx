@@ -1,22 +1,27 @@
-import {useState, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {ToastContainer, toast} from 'react-toastify';
-import { createIssueRoute, setIssuePictureRoute } from '../../utils/APIRoutes';
+import { createIssueRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
+import {useNavigate} from 'react-router-dom';
+import useUser from '../../utils/useUser';
 import 'react-toastify/dist/ReactToastify.css';
 import './IssuePage.css';
 
-function IssuePage({user}) {
+function IssuePage() {
+    const user = useUser();
     const [issue, setIssue] = useState({
         name: '',
         link: '',
         description: '',
-        openedBy: user._id
+        openedBy: ''
     })
     const [uploadedImage, setUploadedImage] = useState('');
     const imageInput = useRef();
+    const navigate = useNavigate();
 
     function handleFocus() {
         imageInput.current.click();
     }
+
     const toastOptions = {
         position: "top-right",
         autoClose: 8000,
@@ -24,6 +29,12 @@ function IssuePage({user}) {
         draggable: true,
         theme: "dark",
     };
+
+    useEffect(() => {
+        if(!localStorage.getItem('user')) {
+            navigate('/register')
+        }
+    },[navigate])
 
     function handleShowUserImage(e) {
         e.preventDefault();
@@ -51,21 +62,26 @@ function IssuePage({user}) {
         e.preventDefault();
         e.target.classList.remove('drag-over')
     }
-
+    
     function handleIssueData(e) {
         setIssue({...issue, [e.target.name]: e.target.value})
     }
-
+    
     function createIssue() {
+        setIssue(prev => {
+            return {...prev, openedBy: user._id}
+        })
         const formData = new FormData();
-        formData.append('fileupload', uploadedImage)
+        formData.append('fileupload', uploadedImage);
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);
         }else if(!issue.link) {
             toast.error('Please add a link to the site', toastOptions);
+        }else if(!issue.description) {
+            toast.error('Please add a short description of the issue', toastOptions)
         }else if(!uploadedImage) {
             toast.error('Please add an image of the issue', toastOptions);
-        }else {
+        }else if(issue.openedBy){
             fetch(`${createIssueRoute}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -74,7 +90,7 @@ function IssuePage({user}) {
             .then(res => res.json())
             .then(data => {
                 if(data.status) {
-                    fetch(`${setIssuePictureRoute}/${data.id}`, {
+                    fetch(`${setIssueScreenshotRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
                     })
@@ -106,7 +122,7 @@ function IssuePage({user}) {
                     <input onInput={handleIssueData} type="text" name="name" placeholder='Name of bug'/>
                     <input onInput={handleIssueData} type="url" name="link" placeholder="Link to the site" />
                 </div>
-                <textarea name="description" id="" className='text-box' placeholder='A short description of the issue'></textarea>
+                <textarea onInput={handleIssueData} name="description" className='text-box' placeholder='A short description of the issue'></textarea>
                 <div className="image-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
                     <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>browse</button></p>

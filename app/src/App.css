@@ -1,6 +1,6 @@
 :root {
   /* --primary-color: #00cde4; */
-  --primary-color: #6cff23;
+  --primary-color: #1d1d1d;
   --secondary-color: #242424;
   --tertiary-color: #303030;
   /* --primary-cta-color: #a3cfcd; */
@@ -21,7 +21,8 @@ main {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-image: radial-gradient(circle, #0f0f0f, #131313, #161616, #191919, #1c1c1c);
+  background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
+  /* background-image: radial-gradient(circle, #0f0f0f, #1a1a1a); */
   /* background-attachment: fixed; */
 }
 header {
@@ -29,31 +30,31 @@ header {
   width: 95%;
   margin: 0 auto;
 }
-#register-page, #website-list-page, #issue-page {
+#register-page, #website-list-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   margin: 3% 0 0;
 }
-/* input[type$=text], input[type$=url], input[type$=email], input[type$=password] {
-  padding: .5rem 0 .5rem 1rem;
-  border-radius: .4rem;
-  border: 2px solid #40bde0;
-}
-input[type$=text]:focus, input[type$=url]:focus, input[type$=email]:focus, input[type$=password]:focus {
-  outline: none;
-  border: 2px solid rgba(115, 80, 148, 0.5);
-} */
-input {
+input, .text-box {
   padding: .5rem 0 .5rem 1rem;
   border-radius: .4rem;
   font-weight: 600;
+  background-color: #ecfbff;
   color: var(--primary-text-color);
   border: 3px solid var(--primary-cta-color);
 }
-input:focus {
+input:focus, .text-box:focus {
   outline: none;
   /* border: 3px solid var(--secondary-color); */
   border: 3px solid var(--primary-cta-color);
+}
+.text-box {
+  width: 100%;
+  max-width: 50rem;
+  resize: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  min-height: 10rem;
+  padding: .5rem 1rem;
 }
 
 .cta {
@@ -100,4 +101,9 @@ input:focus {
   border-bottom: .15rem solid var(--secondary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
   transition-delay: .25s;
+}
+.gradient-text {
+  background-image: linear-gradient(to right, var(--secondary-cta-color), var(--primary-cta-color));
+  background-clip: text;
+  color: transparent;
 }
