@@ -29,6 +29,7 @@ header .user {
     border-radius: .5rem;
     cursor: pointer;
     position: relative;
+    margin: 0;
 }
 /* .user:hover {
     scale: 1.05;

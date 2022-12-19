@@ -2,7 +2,7 @@
   /* --primary-color: #00cde4; */
   --primary-color: #1d1d1d;
   --secondary-color: #242424;
-  --tertiary-color: #303030;
+  --tertiary-color: #363636;
   /* --primary-cta-color: #a3cfcd; */
   --primary-cta-color: #58adc5;
   --secondary-cta-color: #735094;
@@ -24,6 +24,7 @@ main {
   background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
   /* background-image: radial-gradient(circle, #0f0f0f, #1a1a1a); */
   /* background-attachment: fixed; */
+  overflow: hidden;
 }
 header {
   max-width: 75rem;

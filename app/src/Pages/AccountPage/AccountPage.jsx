@@ -4,6 +4,7 @@ import { getProfilePictureRoute, getAllIssuesRoute } from '../../utils/APIRoutes
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
 import useUser from '../../utils/useUser';
 import './AccountPage.css';
+import IssueItem from '../../Components/IssueItem/IssueItem';
 
 function AccountPage() {
     const [issues, setIssues] = useState([]);
@@ -22,13 +23,13 @@ function AccountPage() {
         .then(res => res.json())
         .then(data => {
             setIssues(data)
-            console.log(data)
         })
     },[id])
+
     return(
         <section id="account-page">
             <div className="user">
-                { user ? 
+                {user ? 
                 <>
                     <div className="profile-picture-wrapper">
                         <img src={`${getProfilePictureRoute}/${user._id}`} alt="" className="profile-picture" />
@@ -44,6 +45,16 @@ function AccountPage() {
                 </>    
                 : null}
             </div>
+            {issues.length !== 0 ? 
+                <div className="issues-grid">
+                    {issues.map((issue,index) => {
+                        return <IssueItem key={index} issue={issue}/>
+                    })}
+                </div>
+            : null}
+            {issues.length === 0 ?
+                <h3 className='no-issues-hint'>This user has no issues.</h3> 
+            : null}
         </section>
     )
 }

@@ -1,0 +1,20 @@
+.issue {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* background-image: linear-gradient(to bottom right, var(--tertiary-color), var(--secondary-color)); */
+    background-color: var(--tertiary-color);
+    word-wrap: break-word;
+    border-radius: .5rem;
+    padding: .5rem;
+    height: 100%;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    cursor: pointer;
+}
+.issue:hover {
+    scale: 1.025;
+    /* opacity: 1; */
+    translate: 0 -10%;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
+}

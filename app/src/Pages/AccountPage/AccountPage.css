@@ -5,10 +5,10 @@
     justify-content: start;
     align-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     max-height: 7vw;
-    margin: 1.5rem auto 0;
+    margin: 1.5rem auto 5rem;
     border-radius: 5rem;
     border-top: .15rem solid var(--primary-cta-color);
     border-right: .15rem solid var(--primary-cta-color);
@@ -20,7 +20,7 @@
 }
 @keyframes slide-out {
     from {
-        width: 30%;
+        width: 35%;
     }
 }
 .profile-picture-wrapper {
@@ -48,4 +48,21 @@
     font-weight: 600;
     /* align-self: center; */
     /* translate: 0 45%; */
+}
+.issues-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
+    background-color: var(--secondary-color);
+    border-radius: .5rem;
+    padding: 1rem;
+    grid-auto-rows: 12rem;
+    gap: 1.6rem;
+}
+.issues-grid:hover .issue:not(:hover) {
+    opacity: .5;
+}
+.no-issues-hint {
+    text-align: center;
 }
