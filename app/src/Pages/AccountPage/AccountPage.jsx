@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import { getProfilePictureRoute, getAllIssuesRoute } from '../../utils/APIRoutes';
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
-import {motion, AnimatePresence} from 'framer-motion';
+import {motion} from 'framer-motion';
 import useUser from '../../utils/useUser';
 import './AccountPage.css';
 import IssueItem from '../../Components/IssueItem/IssueItem';
