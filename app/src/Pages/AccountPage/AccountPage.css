@@ -26,7 +26,7 @@
 .profile-picture-wrapper {
     width: 11vw;
     height: 11vw;
-    border-radius: 10rem;
+    border-radius: 100rem;
     position: relative;
     display: flex;
     align-items: center;
@@ -51,17 +51,33 @@
 }
 .issues-grid {
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
     /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
-    background-color: var(--secondary-color);
-    border-radius: .5rem;
-    padding: 1rem;
+    background-color: var(--secondary-color); 
+    border-radius: .75rem;
+    padding: 1.6rem;
     grid-auto-rows: 12rem;
     gap: 1.6rem;
 }
 .issues-grid:hover .issue:not(:hover) {
     opacity: .5;
+}
+.filter-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    margin: 1rem;
+}
+.filter-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.filter-button.selected {
+    color: var(--primary-cta-color);
+    font-weight: 600;
+    text-decoration: underline;
 }
 .no-issues-hint {
     text-align: center;

@@ -19,21 +19,43 @@ header nav {
     display: flex;
     align-items: center; 
     justify-content: flex-end;
+    border-radius: 5rem;
+    background-color: var(--secondary-color);
+    padding: .5rem 1.5rem;
+    gap: 1.75rem;
+    position: relative;
+}
+/* header nav::after {
+    content: '';
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    background-color: var(--primary-text-color);
+    border-radius: inherit;
+    left: 0;
+    top: 0;
+    opacity: .4;
+} */
+.header-link {
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+.header-link.active-page {
+    /* background-color: var(--primary-cta-color); */
+    color: var(--primary-cta-color);
 }
 header .user {
     background-color: var(--primary-cta-color);
     display: flex;
     align-items: center;
     gap: .8rem;
-    padding: .4rem 1rem;
+    padding: .5rem 1rem;
     border-radius: .5rem;
     cursor: pointer;
     position: relative;
     margin: 0;
+    width: initial;
 }
-/* .user:hover {
-    scale: 1.05;
-} */
 header .profile-picture-div {
     width: 2.25rem;
     height: 2.25rem;
@@ -71,9 +93,6 @@ header .user-modal.visible {
     translate: none;
     opacity: 1;
     pointer-events: all;
-}
-header .user-link {
-    text-decoration: none;
 }
 header .user-link:hover {
     color: var(--primary-cta-color);

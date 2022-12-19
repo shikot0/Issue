@@ -1,20 +1,48 @@
 .issue {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .9rem;
     /* background-image: linear-gradient(to bottom right, var(--tertiary-color), var(--secondary-color)); */
     background-color: var(--tertiary-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     word-wrap: break-word;
     border-radius: .5rem;
     padding: .5rem;
     height: 100%;
     text-overflow: ellipsis;
     overflow-y: hidden;
+    position: relative;
     cursor: pointer;
+    transition: .2s cubic-bezier(0.5,-0.21, 0.55, 1.44);
 }
 .issue:hover {
     scale: 1.025;
     /* opacity: 1; */
     translate: 0 -10%;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
+}
+.issue:hover::before {
+    opacity: 1;
+}
+.issue::before {
+    content: '';
+    position: absolute;
+    background-image: radial-gradient(25rem circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.075), transparent 40%);
+    /* background-image: radial-gradient(5rem circle at var(--mouse-x) var(--mouse-y), white, black); */
+    border-radius: inherit;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: .5s;
+}
+.issue-main {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+}
+.issue-description {
+    color: var(--secondary-text-color);
 }

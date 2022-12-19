@@ -5,3 +5,8 @@
     gap: 1.6rem;
     min-height: 15rem;
 }
+#website-list-page h2 {
+    text-align: center;
+    margin: 3% 0;
+    font-size: 1.4rem;
+}

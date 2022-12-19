@@ -1,13 +1,13 @@
 :root {
   /* --primary-color: #00cde4; */
   --primary-color: #1d1d1d;
-  --secondary-color: #242424;
-  --tertiary-color: #363636;
-  /* --primary-cta-color: #a3cfcd; */
+  /* --secondary-color: #221f1f; */
+  --secondary-color: #232728;
+  --tertiary-color: #3b3e3e;
   --primary-cta-color: #58adc5;
   --secondary-cta-color: #735094;
-  --primary-text-color: #5a6496;
-  --secondary-text-color: #82a0aa;
+  --primary-text-color: #8e94af;
+  --secondary-text-color: #717589;
 }
 *, *::before, *::after {
   box-sizing: border-box;

@@ -1,8 +1,6 @@
-import {useState, useEffect} from 'react';
-import { getUserRoute } from './utils/APIRoutes.js';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Header from './Components/Header/Header.jsx';
-import WebsiteListPage from './Pages/WebsiteListPage/WebsiteListPage';
+import Home from './Pages/Home/Home';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
@@ -15,9 +13,9 @@ function App() {
         <BrowserRouter>
           <Header/>
           <Routes>
-            <Route path="/" element={<WebsiteListPage/>}/>
+            <Route path="/home" element={<Home/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/account/:id" element={<AccountPage/>}/>
+            <Route path="/u/:id" element={<AccountPage/>}/>
             <Route path="/issue" element={<IssuePage/>}/>
           </Routes>
         </BrowserRouter>

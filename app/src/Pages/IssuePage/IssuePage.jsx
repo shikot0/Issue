@@ -96,7 +96,10 @@ function IssuePage() {
                     })
                     .then(res => res.json())
                     .then(data => {
-                        toast.success(data.msg,toastOptions)
+                        if(data.status) {
+                            toast.success(data.msg,toastOptions);
+                            setTimeout(navigate('/home'), 2000)
+                        }
                     })
                 }
             })

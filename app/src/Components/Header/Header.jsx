@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useUser from '../../utils/useUser';
 import { getProfilePictureRoute } from '../../utils/APIRoutes';
@@ -17,6 +17,18 @@ function Header() {
     function showUserModal() {
         userModal.current.classList.toggle('visible');
     }
+    const location = window.location.pathname;
+    useEffect(() => {
+        const navLinks = document.querySelectorAll('.header-link');
+        navLinks.forEach(link => {
+            if(link.href.includes(`${location}`)) {
+                link.classList.add('active-page');
+            }else {
+                link.classList.remove('active-page');
+            }
+            
+        })
+    }, [location])
     return (
         <header>
             <div className="logo">
@@ -24,19 +36,20 @@ function Header() {
                 <a href="issue.com" className='logo'>ISSUE</a>
             </div>
             <nav>
-                {user ? 
-                <div className="user" onClick={showUserModal}>
-                    <div className="profile-picture-div">
-                        <img className='profile-picture' src={`${getProfilePictureRoute}/${userId}`} alt="" />
-                    </div>
-                    <p className="username">{user ? user.username : 'user'}</p>
-                    <div ref={userModal} className="user-modal">
-                        <Link className='user-link' to={`/account/${user._id}`}>Account</Link>
-                        <button className='logout-button' onClick={logout}>Log Out</button>
-                    </div>
-                </div>
-                : ''}
+                <Link to="/home" className='header-link'>Home</Link>
+                <Link className='header-link' to={`/u/${user._id}`}>Account</Link>
             </nav>
+            {user ? 
+            <div className="user" onClick={showUserModal}>
+                <div className="profile-picture-div">
+                    <img className='profile-picture' src={`${getProfilePictureRoute}/${userId}`} alt="" />
+                </div>
+                <p className="username">{user ? user.username : 'user'}</p>
+                <div ref={userModal} className="user-modal">
+                    <button className='logout-button' onClick={logout}>Log Out</button>
+                </div>
+            </div>
+            : ''}
         </header>
     )
 }

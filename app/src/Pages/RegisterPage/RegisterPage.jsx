@@ -32,7 +32,7 @@ function RegisterPage() {
     
     useEffect(() => {
         if(localStorage.getItem('user')) {
-            navigate('/')
+            navigate('/home')
         }
     }, [navigate])
         
