@@ -19,7 +19,7 @@ function IssueItem({issue}) {
         setTimeout(() => {
             target.style.setProperty('--mouse-x', `${x}px`);
             target.style.setProperty('--mouse-y', `${y}px`);
-        }, 50)
+        }, 25)
     }
 
     return (

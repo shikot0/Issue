@@ -87,7 +87,7 @@ function RegisterPage() {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    username,
+                    username: username.toLowerCase(),
                     email,
                     password   
                 })
@@ -101,7 +101,7 @@ function RegisterPage() {
                     }).then(res => res.json())
                       .then(data => {
                         if(data.status) {
-                            navigate('/');
+                            navigate('/home');
                         }
                     })
                 }
@@ -131,7 +131,7 @@ function RegisterPage() {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === true) {
                 localStorage.setItem('user', JSON.stringify(response.returnedUser));
-                navigate('/')
+                navigate('/home')
             }
         }
     }

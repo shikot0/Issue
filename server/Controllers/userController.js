@@ -73,8 +73,8 @@ module.exports.setProfilePicture = async (req, res, next) => {
 
 module.exports.getUser = async (req, res, next) => {
     try {
-        const id = req.params.id;
-        const user = await Users.findOne({_id: id}).select([
+        const username = req.params.username.toLowerCase();
+        const user = await Users.findOne({username: username}).select([
             "email",
             "username", 
             "_id",

@@ -38,6 +38,9 @@
     opacity: 0;
     transition: .5s;
 }
+.issue-company-name {
+    font-weight: 600;
+}
 .issue-main {
     display: flex;
     flex-direction: column;

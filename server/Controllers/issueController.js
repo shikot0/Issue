@@ -1,3 +1,4 @@
+const Users = require('../Models/userModel');
 const Issues = require('../Models/issueModel');
 
 module.exports.createIssue = async (req, res, next) => {
@@ -33,10 +34,11 @@ module.exports.setIssueScreenshot = async (req, res,next) => {
 
 module.exports.getAllIssues = async (req, res, next) => {
     try {
-        const id = req.params.id; 
+        const username = req.params.username.toLowerCase();
+        const user = await Users.findOne({username: username}); 
         let issues;
-        if(id) {
-            issues = await Issues.find({openedBy: id}).select([
+        if(user) {
+            issues = await Issues.find({openedBy: user._id}).select([
                 "openedBy",
                 "name",
                 "description",
@@ -52,7 +54,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "resolved"
             ])
         }
-        console.log(issues)
+        // console.log(issues)
         return res.json(issues)
     } catch(err) {
         next(err)

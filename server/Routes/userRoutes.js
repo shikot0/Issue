@@ -6,7 +6,7 @@ router.post('/register', register);
 router.post('/login', login);
 router.post('/setprofilepicture/:id', setProfilePicture);
 router.get('/getprofilepicture/:id', getProfilePicture);
-router.get('/getuser/:id', getUser);
+router.get('/getuser/:username', getUser);
 // router.get('/allusers/:id', getAllUsers);
 
 module.exports = router;

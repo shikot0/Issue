@@ -11,8 +11,8 @@ function AccountPage() {
     const [issues, setIssues] = useState([]);
     const [noIssues, setNoIssues] = useState(false);
     const [filter, setFilter] = useState('');
-    const {id} = useParams();
-    const user = useUser(id);
+    const {username} = useParams();
+    const user = useUser(username);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +22,7 @@ function AccountPage() {
     },[navigate])
     
     useEffect(() => {
-        fetch(`${getAllIssuesRoute}/${id}`)
+        fetch(`${getAllIssuesRoute}/${username}`)
         .then(res => res.json())
         .then(data => {
             setIssues(data);
@@ -30,7 +30,7 @@ function AccountPage() {
                 setNoIssues(true);
             }
         })
-    },[id])
+    },[username])
 
     function handleFilter(e) {
         setFilter(e.target.value);

@@ -1,19 +1,25 @@
-.user {
-    width: 100%;
+#account-page {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    height: 200vh;
+}
+#account-page .user {
+    width: 35%;
     display: grid;
     grid-auto-flow: column;
     justify-content: start;
     align-content: center;
     align-items: center;
+    margin: 2rem 0 0;
+    position: sticky;
+    top: 20rem;
+    left: 0rem;
     gap: 1.5rem;
+    max-height: 7rem;
     background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    max-height: 7vw;
-    margin: 1.5rem auto 5rem;
     border-radius: 5rem;
-    border-top: .15rem solid var(--primary-cta-color);
-    border-right: .15rem solid var(--primary-cta-color);
-    border-bottom: .15rem solid var(--secondary-cta-color); 
-    border-left: .15rem solid var(--secondary-cta-color);
+    border-radius: 5rem 1rem 1rem 5rem;
 }
 #account-page .user {
     animation: slide-out .5s .4s cubic-bezier(.68,-0.55,.27,1.55) 1 backwards;
@@ -33,7 +39,7 @@
     justify-content: center;
     overflow: hidden; 
     background: linear-gradient(transparent, transparent) padding-box,
-    linear-gradient(45deg, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
+                linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;
     border: .3rem solid transparent;
     translate: -5% 0;
 }
@@ -46,8 +52,10 @@
 .username {
     font-size: clamp(1rem, 2vw, 1.5rem);
     font-weight: 600;
-    /* align-self: center; */
-    /* translate: 0 45%; */
+}
+
+.issues-grid-wrapper {
+    width: 65%;
 }
 .issues-grid {
     display: grid;
@@ -67,7 +75,7 @@
     align-items: center;
     justify-content: center;
     gap: .75rem;
-    margin: 1rem;
+    margin: 0 0 1rem;
 }
 .filter-button {
     border: none;

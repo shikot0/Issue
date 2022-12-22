@@ -35,20 +35,22 @@ function Header() {
                 {/* <img src="" alt="" /> */}
                 <a href="issue.com" className='logo'>ISSUE</a>
             </div>
-            <nav>
-                <Link to="/home" className='header-link'>Home</Link>
-                <Link className='header-link' to={`/u/${user._id}`}>Account</Link>
-            </nav>
-            {user ? 
-            <div className="user" onClick={showUserModal}>
-                <div className="profile-picture-div">
-                    <img className='profile-picture' src={`${getProfilePictureRoute}/${userId}`} alt="" />
+            {user && userId ? 
+            <>
+                <nav>
+                    <Link to="/home" className='header-link'>Home</Link>
+                    <Link className='header-link' to={`/u/${user.username}`}>Account</Link>
+                </nav>
+                <div className="user" onClick={showUserModal}>
+                    <div className="profile-picture-div">
+                        <img className='profile-picture' src={`${getProfilePictureRoute}/${userId}`} alt="" />
+                    </div>
+                    <p className="username gradient-text">{user ? user.username : 'user'}</p>
+                    <div ref={userModal} className="user-modal">
+                        <button className='logout-button' onClick={logout}>Log Out</button>
+                    </div>
                 </div>
-                <p className="username">{user ? user.username : 'user'}</p>
-                <div ref={userModal} className="user-modal">
-                    <button className='logout-button' onClick={logout}>Log Out</button>
-                </div>
-            </div>
+            </>
             : ''}
         </header>
     )

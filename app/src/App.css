@@ -23,7 +23,7 @@ main {
   min-height: 100vh;
   background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
   /* background-image: radial-gradient(circle, #0f0f0f, #1a1a1a); */
-  /* background-attachment: fixed; */
+  background-attachment: fixed;
   overflow: hidden;
 }
 header {

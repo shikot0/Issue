@@ -1,26 +1,25 @@
 import {useState, useEffect} from 'react';
 import {getUserRoute} from './APIRoutes';
 
-function useUser(id) {
+function useUser(username) {
     const [user, setUser] = useState('');
-    let userId = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).id : '';
+    let savedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
   
     useEffect(() => {
-        if(id) {
-            fetch(`${getUserRoute}/${id}`)
+        if(username) {
+            fetch(`${getUserRoute}/${username}`)
             .then(res => res.json())
             .then(data => {
                 setUser(data)
             })
-
-        }else if(userId) {
-            fetch(`${getUserRoute}/${userId}`)
+        }else if(savedUser) {
+            fetch(`${getUserRoute}/${savedUser.username}`)
             .then(res => res.json())
             .then(data => {
                 setUser(data)
             })
         }
-    },[id,userId]); 
+    },[username,savedUser]); 
 
     return user
 }
