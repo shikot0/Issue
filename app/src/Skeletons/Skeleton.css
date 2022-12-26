@@ -18,6 +18,8 @@
 .profile-picture-skeleton {
     width: 11vw;
     height: 11vw;
+    max-width: 10rem;
+    max-height: 10rem;
     border-radius: 10rem;
     position: relative;
     display: flex;
@@ -25,7 +27,7 @@
     justify-content: center;
     overflow: hidden; 
     background: linear-gradient(to right, var(--secondary-color), var(--tertiary-color)) padding-box,
-    linear-gradient(45deg, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
+                linear-gradient(45deg, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
     background-size: 200%;
     border: .3rem solid transparent;
     translate: -5% 0;
@@ -34,8 +36,23 @@
 .username-skeleton {
     background-size: 200%;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
-    width: 7rem;
     height: 1.75rem;
     border-radius: .25rem;
     animation: animated-background 10s linear infinite forwards;
+}
+.issue-skeleton {
+    width: 50vw;
+    min-width: 17rem;
+    max-width: 18rem;
+    scroll-snap-align: center;
+    background-color: var(--tertiary-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* background: linear-gradient(to right, var(--secondary-color), var(--tertiary-color)) padding-box,
+    linear-gradient(45deg, var(--secondary-cta-color), var(--primary-cta-color)) border-box; */
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    background-size: 200%;
+    border-radius: .5rem;
+    height: 10rem;
+    height: 168.6px;
+    animation: animated-background 3s linear infinite forwards;
 }

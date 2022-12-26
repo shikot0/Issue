@@ -9,17 +9,17 @@ import './App.css';
 function App() {
   return (
     <>
+      <BrowserRouter>
+        <Header/>
       <main>
-        <BrowserRouter>
-          <Header/>
           <Routes>
             <Route path="/home" element={<Home/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
             <Route path="/u/:username" element={<AccountPage/>}/>
             <Route path="/issue" element={<IssuePage/>}/>
           </Routes>
-        </BrowserRouter>
       </main> 
+      </BrowserRouter>
     </> 
   );
 }

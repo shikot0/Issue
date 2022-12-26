@@ -73,13 +73,13 @@ module.exports.setProfilePicture = async (req, res, next) => {
 
 module.exports.getUser = async (req, res, next) => {
     try {
-        const username = req.params.username.toLowerCase();
+        const username = req.params.username;
         const user = await Users.findOne({username: username}).select([
             "email",
             "username", 
             "_id",
         ]);
-        return res.json(user);
+        return await res.json(user);
     } catch(err) {
         next(err);
     }

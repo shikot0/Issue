@@ -1,7 +1,3 @@
-// import './IssuePage.css';
-// import './RegisterPage.css';
-// import './WebsiteListPage.css';
-// import './AccountPage.css';
 import './Skeleton.css'
 
 function UsernameSkeleton() {
@@ -16,4 +12,10 @@ function ProfilePictureSkeleton() {
     )
 }
 
-export {UsernameSkeleton, ProfilePictureSkeleton}
+function IssueSkeleton() {
+    return (
+        <div className="issue-skeleton"></div>
+    )
+}
+
+export {UsernameSkeleton, ProfilePictureSkeleton, IssueSkeleton}

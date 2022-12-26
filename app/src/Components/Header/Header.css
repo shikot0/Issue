@@ -1,9 +1,19 @@
 header {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.header-content {
+    display: flex;
     align-items: center; 
     justify-content: space-between;
     padding: 1% 0;
-    /* background-color: var(--secondary-color); */
+    max-width: 75rem;
+    width: 95%;
 }
 header .logo {
     color: black;
@@ -21,28 +31,22 @@ header nav {
     justify-content: flex-end;
     border-radius: 5rem;
     background-color: var(--secondary-color);
-    padding: .5rem 1.5rem;
+    padding: .5rem 1.5rem .25rem;
     gap: 1.75rem;
     position: relative;
 }
-/* header nav::after {
-    content: '';
-    position: absolute;
-    width: 45%;
-    height: 100%;
-    background-color: var(--primary-text-color);
-    border-radius: inherit;
-    left: 0;
-    top: 0;
-    opacity: .4;
-} */
 .header-link {
     text-decoration: none;
     color: var(--primary-text-color);
 }
+.header-link svg {
+    width: 1.4rem;
+}
 .header-link.active-page {
-    /* background-color: var(--primary-cta-color); */
     color: var(--primary-cta-color);
+}
+.header-link.active-page svg {
+    fill: var(--primary-cta-color);
 }
 header .user {
     background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));

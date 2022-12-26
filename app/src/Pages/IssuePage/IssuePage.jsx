@@ -2,12 +2,12 @@ import {useState, useEffect, useRef} from 'react';
 import {ToastContainer, toast} from 'react-toastify';
 import { createIssueRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
 import {useNavigate} from 'react-router-dom';
-import useUser from '../../utils/useUser';
+import useUsers from '../../utils/useUsers';
 import 'react-toastify/dist/ReactToastify.css';
 import './IssuePage.css';
 
 function IssuePage() {
-    const user = useUser();
+    const user = useUsers();
     const [issue, setIssue] = useState({
         name: '',
         link: '',

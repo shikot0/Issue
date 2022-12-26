@@ -1,9 +1,6 @@
 .company-item {
-    /* position: relative; */
     display: flex;
     flex-direction: column;
-    /* border-radius: .75rem; */
-    /* border: 3px solid rgba(0, 0, 0, 0.15); */
     overflow: hidden;
     transition: .25s cubic-bezier(.68,-0.55,.27,1.55);
     cursor: pointer;

@@ -1,37 +1,27 @@
 #account-page {
     display: flex;
-    align-items: flex-start;
+    /* align-items: flex-start; */
     gap: 2rem;
     height: 200vh;
 }
 #account-page .user {
     width: 35%;
+    margin: 2rem 0 0;
+    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     display: grid;
     grid-auto-flow: column;
     justify-content: start;
     align-content: center;
     align-items: center;
-    margin: 2rem 0 0;
-    position: sticky;
-    top: 20rem;
-    left: 0rem;
-    gap: 1.5rem;
-    max-height: 7rem;
-    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    border-radius: 5rem;
+    gap: 1.25rem;
+    max-height: 6.5rem;
     border-radius: 5rem 1rem 1rem 5rem;
-}
-#account-page .user {
-    animation: slide-out .5s .4s cubic-bezier(.68,-0.55,.27,1.55) 1 backwards;
-}
-@keyframes slide-out {
-    from {
-        width: 35%;
-    }
 }
 .profile-picture-wrapper {
     width: 11vw;
     height: 11vw;
+    max-width: 10rem;
+    max-height: 10rem;
     border-radius: 100rem;
     position: relative;
     display: flex;
@@ -89,4 +79,6 @@
 }
 .no-issues-hint {
     text-align: center;
+    padding: 2rem 0 0;
+    width: 100%;
 }

@@ -42,15 +42,13 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
-                // "screenshot",
                 "resolved"
             ])
-        }else {
+        }else if(username === 'all') {
             issues = await Issues.find().select([
                 "upenedBy",
                 "name",
                 "description",
-                // "screenshot",
                 "resolved"
             ])
         }

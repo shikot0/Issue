@@ -1,18 +1,19 @@
 import {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { getProfilePictureRoute, getAllIssuesRoute } from '../../utils/APIRoutes';
+import { getProfilePictureRoute } from '../../utils/APIRoutes';
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
 import {motion} from 'framer-motion';
-import useUser from '../../utils/useUser';
+import useUsers from '../../utils/useUsers';
+import useIssues from '../../utils/useIssues';
 import './AccountPage.css';
 import IssueItem from '../../Components/IssueItem/IssueItem';
 
 function AccountPage() {
-    const [issues, setIssues] = useState([]);
     const [noIssues, setNoIssues] = useState(false);
     const [filter, setFilter] = useState('');
     const {username} = useParams();
-    const user = useUser(username);
+    const user = useUsers(username);
+    const issues = useIssues(username);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,16 +22,14 @@ function AccountPage() {
         }
     },[navigate])
     
+    
     useEffect(() => {
-        fetch(`${getAllIssuesRoute}/${username}`)
-        .then(res => res.json())
-        .then(data => {
-            setIssues(data);
-            if(data.length === 0) {
-                setNoIssues(true);
-            }
-        })
-    },[username])
+        if(issues.length === 0) {
+            setNoIssues(true);
+        }else {
+            setNoIssues(false);
+        }
+    },[issues])
 
     function handleFilter(e) {
         setFilter(e.target.value);
@@ -41,6 +40,7 @@ function AccountPage() {
         e.target.classList.add('selected');
     }
     return(
+        <>
         <section id="account-page">
             <div className="user">
                 {user ? 
@@ -84,10 +84,11 @@ function AccountPage() {
                     </motion.div>
                 </div>
             : null}
-            {noIssues? 
+            {noIssues ? 
                 <h3 className='no-issues-hint'>This user has no issues.</h3> 
             : null}
         </section>
+        </>
     )
 }
 
