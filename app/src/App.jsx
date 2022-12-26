@@ -4,6 +4,7 @@ import Home from './Pages/Home/Home';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
+import Footer from './Components/Footer/Footer';
 import './App.css';
 
 function App() {
@@ -11,14 +12,15 @@ function App() {
     <>
       <BrowserRouter>
         <Header/>
-      <main>
-          <Routes>
-            <Route path="/home" element={<Home/>}/>
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/u/:username" element={<AccountPage/>}/>
-            <Route path="/issue" element={<IssuePage/>}/>
-          </Routes>
-      </main> 
+        <main>
+            <Routes>
+              <Route path="/home" element={<Home/>}/>
+              <Route path="/register" element={<RegisterPage/>}/>
+              <Route path="/u/:username" element={<AccountPage/>}/>
+              <Route path="/issue" element={<IssuePage/>}/>
+            </Routes>
+        </main> 
+        <Footer/>
       </BrowserRouter>
     </> 
   );

@@ -1,36 +1,18 @@
 .latest-issues-wrapper {
     display: grid;
+    justify-content: start;
     grid-auto-flow: column;
     grid-auto-columns: auto;
-    gap: 3rem;
+    gap: 2rem;
     overflow-x: scroll;
     scrollbar-width: none;
-    cursor: grab;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     margin: 3% 0;
     border-radius: .25rem;
-    /* padding: 0 2rem; */
+    padding: .1rem 0;
     position: relative;
 }
-/* .latest-issues-wrapper::before {
-    content: '';
-    position: absolute;
-    left: 5vw;
-    width: 15%;
-    height: 100%;
-    z-index: 20;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
-} */
-/* .latest-issues-wrapper::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 15%;
-    height: 100%;
-    z-index: 20;
-    background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
-} */
 .latest-issues-wrapper::-webkit-scrollbar {
     width: 0px;
     height: 0px;

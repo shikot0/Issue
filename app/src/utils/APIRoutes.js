@@ -7,3 +7,4 @@ export const getProfilePictureRoute = `${host}/api/user/getprofilepicture`;
 export const createIssueRoute = `${host}/api/issue/createissue`;
 export const setIssueScreenshotRoute = `${host}/api/issue/setissuescreenshot`;
 export const getAllIssuesRoute = `${host}/api/issue/getallissues`;
+export const getLatestIssuesRoute = `${host}/api/issue/getlatestissues`;

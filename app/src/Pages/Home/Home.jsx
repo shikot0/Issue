@@ -13,7 +13,7 @@ function Home() {
         }
     },[navigate])
     return (
-        <section id="website-list-page">
+        <section id="home-page">
             <SearchBar/>
             <LatestIssues/>
             <h2>Click on a company to open an issue!</h2>

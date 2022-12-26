@@ -4,12 +4,12 @@ const Issues = require('../Models/issueModel');
 module.exports.createIssue = async (req, res, next) => {
     try {
         const {openedBy, name, link, description} = req.body;
-        console.log(req.body)
         const issue = await Issues.create({
-            openedBy,
+            openedBy, 
             name,
             description, 
-            link
+            link,
+            dateOfCreation: new Date().toDateString()
         });
         return res.json({status: true, id: issue._id});
     } catch(err) {
@@ -38,7 +38,7 @@ module.exports.getAllIssues = async (req, res, next) => {
         const user = await Users.findOne({username: username}); 
         let issues;
         if(user) {
-            issues = await Issues.find({openedBy: user._id}).select([
+            issues = await Issues.find({openedBy: user.username}).select([
                 "openedBy",
                 "name",
                 "description",
@@ -46,15 +46,29 @@ module.exports.getAllIssues = async (req, res, next) => {
             ])
         }else if(username === 'all') {
             issues = await Issues.find().select([
-                "upenedBy",
+                "openedBy",
                 "name",
                 "description",
                 "resolved"
             ])
         }
-        // console.log(issues)
         return res.json(issues)
     } catch(err) {
+        next(err)
+    }
+}
+
+module.exports.getLatestIssues = async(req, res, next) => {
+    try {
+        let currentDate = new Date().toDateString();
+        let issues = await Issues.find({dateOfCreation: currentDate}).select([
+            'name',
+            'description',
+            'resolved',
+            'openedBy'
+        ]);
+        res.json(issues)
+    }catch(err) {
         next(err)
     }
 }

@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 
 const issueSchema = new mongoose.Schema({
         openedBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
+            type: String,
+            required: true
         },
         // company: {
         //     type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +29,10 @@ const issueSchema = new mongoose.Schema({
         resolved: {
             type: Boolean,
             default: false,
+        },
+        dateOfCreation: {
+            type: Date,
+            required: true, 
         }
     }, {
         timestamps: true,

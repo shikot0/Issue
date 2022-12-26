@@ -1,5 +1,5 @@
 @keyframes animated-background {
-    /* 0% {
+    0% {
         background-position: 0%;
     }
     50% {
@@ -7,13 +7,14 @@
     }
     100% {
         background-position: 0%;
-    } */
-    0% {
+    }
+
+    /* 0% {
         background-position: 0%;
     }
     100% {
         background-position: 100%;
-    }
+    } */
 }
 .profile-picture-skeleton {
     width: 11vw;

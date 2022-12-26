@@ -1,11 +1,11 @@
 :root {
-  /* --primary-color: #00cde4; */
   --primary-color: #1d1d1d;
-  /* --secondary-color: #221f1f; */
   --secondary-color: #232728;
   --tertiary-color: #3b3e3e;
-  --primary-cta-color: #58adc5;
-  --secondary-cta-color: #735094;
+  /* --primary-cta-color: #58adc5; */
+  --primary-cta-color: #00F6FF;
+  /* --secondary-cta-color: #735094; */
+  --secondary-cta-color: #FF00DD;
   --primary-text-color: #8e94af;
   --secondary-text-color: #717589;
 }
@@ -13,12 +13,12 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Poppins';
+  font-family: 'Red Hat Text';
   color: var(--primary-text-color);
 }
 body {
   background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
-  /* background-color: rgb(44, 0, 50); */
+  overflow-x: hidden;
 }
 main {
   display: flex;
@@ -29,7 +29,7 @@ main {
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #website-list-page, #issue-page, #account-page {
+#register-page, #home-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   margin: 3% 0 0;
@@ -102,7 +102,8 @@ input:focus, .text-box:focus {
   transition-delay: .25s;
 }
 .gradient-text {
-  background-image: linear-gradient(to right, var(--secondary-cta-color), var(--primary-cta-color));
+  background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
+  background-size: 150%;
   background-clip: text;
   color: transparent;
 }

@@ -1,8 +1,6 @@
 #account-page {
     display: flex;
-    /* align-items: flex-start; */
     gap: 2rem;
-    height: 200vh;
 }
 #account-page .user {
     width: 35%;
@@ -14,14 +12,16 @@
     align-content: center;
     align-items: center;
     gap: 1.25rem;
-    max-height: 6.5rem;
+    height: 10vh;
+    min-height: 4rem; 
+    max-height: 6rem;
     border-radius: 5rem 1rem 1rem 5rem;
 }
 .profile-picture-wrapper {
     width: 11vw;
     height: 11vw;
-    max-width: 10rem;
-    max-height: 10rem;
+    max-width: 9rem;
+    max-height: 9rem;
     border-radius: 100rem;
     position: relative;
     display: flex;
@@ -49,12 +49,12 @@
 }
 .issues-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
     background-color: var(--secondary-color); 
     border-radius: .75rem;
     padding: 1.6rem;
-    grid-auto-rows: 12rem;
+    grid-auto-rows: 11rem;
     gap: 1.6rem;
 }
 .issues-grid:hover .issue:not(:hover) {
@@ -81,4 +81,22 @@
     text-align: center;
     padding: 2rem 0 0;
     width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+    #account-page {
+        flex-direction: column;
+    }
+    #account-page .user {
+        width: 100%;
+    }
+    .issues-grid-wrapper {
+        width: 100%;
+    }
+    .profile-picture-wrapper {
+        width: 20vw;
+        height: 20vw;
+        max-width: 11rem;
+        max-height: 11rem;
+    }
 }

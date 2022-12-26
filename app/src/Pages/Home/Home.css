@@ -1,3 +1,6 @@
+#home-page {
+    padding: 1rem 0 0;
+}
 .companies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
@@ -5,8 +8,17 @@
     gap: 1.6rem;
     min-height: 15rem;
 }
-#website-list-page h2 {
+#home-page h2 {
     text-align: center;
     margin: 0 0 3%;
     font-size: 1.4rem;
+}
+
+@media screen and (max-width: 800px) {
+    #home-page {
+        padding: 2rem 0 0;
+    }
+    .latest-issues-wrapper {
+        padding: 5% 0;
+    }
 }

@@ -1,16 +1,21 @@
 import {useState, useRef} from 'react';
 import IssueItem from "../IssueItem/IssueItem";
-import useIssues from "../../utils/useIssues";
 import {IssueSkeleton} from '../../Skeletons/Skeletons';
 import './LatestIssues.css';
 import { useEffect } from 'react';
+import { getLatestIssuesRoute } from '../../utils/APIRoutes';
 function LatestIssues() {
-    const issues = useIssues();
+    const [issues, setIssues] = useState([]);
     const slider = useRef();
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [noIssues, setNoIssues] = useState(false);
+
+    useEffect(() => {
+        fetch(getLatestIssuesRoute).then(res => res.json())
+        .then(data => {setIssues(data)})
+    },[])
 
     function handleMouseDown(e) {
         e.preventDefault();
@@ -38,6 +43,7 @@ function LatestIssues() {
             setNoIssues(false);
         }
     },[issues])
+    
     return (
         <div ref={slider} className="latest-issues-wrapper"
          onMouseDown={handleMouseDown}
@@ -53,9 +59,14 @@ function LatestIssues() {
                 <IssueSkeleton/>
                 <IssueSkeleton/>
                 <IssueSkeleton/>
+                <IssueSkeleton/>
                 </>
             : null}
+            {noIssues ? 
+                <h2>There have been no issues reported today.</h2>
+            : null}
         </div>
+        // <></>
     )
 }
 

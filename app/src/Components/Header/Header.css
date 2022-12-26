@@ -5,13 +5,14 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
 }
 .header-content {
     display: flex;
     align-items: center; 
     justify-content: space-between;
-    padding: 1% 0;
+    padding: .5rem 0;
     max-width: 75rem;
     width: 95%;
 }
@@ -31,25 +32,49 @@ header nav {
     justify-content: flex-end;
     border-radius: 5rem;
     background-color: var(--secondary-color);
-    padding: .5rem 1.5rem .25rem;
+    padding: .5rem 1.5rem;
     gap: 1.75rem;
     position: relative;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    background-size: 200%;
 }
 .header-link {
     text-decoration: none;
     color: var(--primary-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.header-link::after {
+    content: '';
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    translate: -50% -50%;
+    height: 3px;
+    width: 50%;
+    border-radius: .25rem;
+    background-color: var(--primary-cta-color);
+    opacity: 0;
+    transition: .2s;
 }
 .header-link svg {
     width: 1.4rem;
+    fill: rgba(255, 255, 255, 0.75);
 }
 .header-link.active-page {
     color: var(--primary-cta-color);
+}
+.header-link.active-page::after {
+    opacity: 1;
+    translate: -50% 0;
 }
 .header-link.active-page svg {
     fill: var(--primary-cta-color);
 }
 header .user {
-    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    /* background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); */
     display: flex;
     align-items: center;
     gap: .8rem;
@@ -59,6 +84,8 @@ header .user {
     position: relative;
     margin: 0;
     width: initial;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    background-size: 200%;
 }
 header .profile-picture-div {
     width: 2.25rem;
@@ -67,7 +94,7 @@ header .profile-picture-div {
     overflow: hidden;
     border: 2px solid transparent;
     background: linear-gradient(transparent, transparent) padding-box,
-                linear-gradient(45deg, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
+                linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
 }
 header .profile-picture {
     width: 100%;
@@ -77,7 +104,6 @@ header .profile-picture {
 header .username {
     font-weight: 500;
     font-size: 1rem;
-    /* color: var(--text-color); */
 }
 
 header .user-modal {
@@ -113,4 +139,10 @@ header .logout-button {
 header .logout-button:hover {
     background-color: red;
     cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    header nav {
+        display: none;
+    }
 }

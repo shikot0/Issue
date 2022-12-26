@@ -12,7 +12,7 @@ function IssuePage() {
         name: '',
         link: '',
         description: '',
-        openedBy: ''
+        openedBy: '',
     })
     const [uploadedImage, setUploadedImage] = useState('');
     const imageInput = useRef();
@@ -69,7 +69,7 @@ function IssuePage() {
     
     function createIssue() {
         setIssue(prev => {
-            return {...prev, openedBy: user._id}
+            return {...prev, openedBy: user.username}
         })
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);

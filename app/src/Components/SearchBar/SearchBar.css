@@ -1,12 +1,17 @@
 .searchbar {
     display: block;
     border-radius: .5rem;
-    /* background-color: white; */
     font-weight: 700;
-    padding: .5rem .5rem .5rem 1rem;
+    padding: .6rem .5rem .6rem 1rem;
     width: 25rem;
     max-width: 90%;
     margin: 0 auto;
+    border: 3px solid transparent;
+    color: #001d23;
+    /* background-image: linear-gradient(to bottom right, #00DCFF, #006E80); */
+    background-image: linear-gradient(to left, var(--secondary-cta-color), var(--primary-cta-color));
+    background-size: 200%;
+    animation: animated-background 120s linear infinite forwards;
 }
 .searchbar:focus {
     outline: none;
