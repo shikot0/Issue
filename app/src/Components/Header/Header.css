@@ -32,13 +32,13 @@ header nav {
     justify-content: flex-end;
     border-radius: 5rem;
     background-color: var(--secondary-color);
-    padding: .5rem 1.5rem;
+    padding: .75rem 1.5rem;
     gap: 1.75rem;
     position: relative;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
 }
-.header-link {
+.navigation-link {
     text-decoration: none;
     color: var(--primary-text-color);
     display: flex;
@@ -46,7 +46,10 @@ header nav {
     justify-content: center;
     position: relative;
 }
-.header-link::after {
+.navigation-link:hover svg {
+    scale: 1.05;
+}
+.navigation-link::after {
     content: '';
     position: absolute;
     top: 110%;
@@ -59,18 +62,20 @@ header nav {
     opacity: 0;
     transition: .2s;
 }
-.header-link svg {
+.navigation-link svg {
     width: 1.4rem;
     fill: rgba(255, 255, 255, 0.75);
 }
-.header-link.active-page {
+.navigation-link.active-page {
+    translate: 0 -10%;
+    scale: 1.05;
     color: var(--primary-cta-color);
 }
-.header-link.active-page::after {
+.navigation-link.active-page::after {
     opacity: 1;
-    translate: -50% 0;
+    translate: -45% 0;
 }
-.header-link.active-page svg {
+.navigation-link.active-page svg {
     fill: var(--primary-cta-color);
 }
 header .user {
@@ -130,11 +135,13 @@ header .user-link:hover {
     color: var(--primary-cta-color);
 }
 header .logout-button {
-    background-color: #82a0aa;
+    font-weight: 700;
+    background-color: var(--secondary-cta-color);
     border: none;
     width: 100%;
-    color: #4b4a54;
+    color: var(--primary-color);
     border-radius: .25rem;
+    padding: .25rem 0;
 }
 header .logout-button:hover {
     background-color: red;

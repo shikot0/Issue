@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #40bde0;
+    border: 3px solid var(--primary-cta-color);
     border-radius: 1rem; 
     padding: 1rem 0;
     width: 19%;
@@ -58,6 +58,10 @@ form {
     justify-content: center;
     width: 100%;
     gap: 3vw;
+}
+.name-and-link input {
+    width: 40%;
+    max-width: 20rem;
 }
 .image-input-wrapper {
     display: flex;

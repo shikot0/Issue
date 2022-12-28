@@ -148,20 +148,46 @@ function RegisterPage() {
         })
     }
 
+    function handlePasswordVisiblity(e) {
+        if(e.currentTarget.parentElement.childNodes[0].type === 'text') {
+            e.currentTarget.parentElement.childNodes[0].type = 'password';
+            e.currentTarget.childNodes[0].src = `${process.env.PUBLIC_URL}/icons/eye-outline.svg`;
+        }else {
+            e.currentTarget.parentElement.childNodes[0].type = 'text';
+            e.currentTarget.childNodes[0].src = `${process.env.PUBLIC_URL}/icons/eye-off-outline.svg`;
+        }
+        console.log(e.currentTarget)
+    }
+
     return(
-        <section id="register-page">
+        <section id="register-page"> 
                 <div className="form-wrapper">
                     <form>
                         <input type="text" name="username" placeholder='Username' onChange={e => {handleSignUp(e)}} aria-label='Username Input'/>
                         <input type="email" name="email" placeholder='Email' onChange={e => {handleSignUp(e)}} aria-label='Email Input'/>
-                        <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input'/>
-                        <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input'/>
+                        <div className="password-input-wrapper">
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input'/>
+                            <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
+                                <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
+                            </button>
+                        </div>
+                        <div className="password-input-wrapper">
+                            <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input'/>
+                            <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
+                                <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
+                            </button>
+                        </div>
                         <button type="button" className="cta" onClick={handleSignUpValidation}>Next</button>
                         <p className="hint" onClick={handleSlideLeft}>Already have an account? <span>Login</span></p>
                     </form>
                     <form>
                         <input type="text" name="username" placeholder='Username' onChange={e => {handleLogin(e)}} aria-label='Username Input'/>
-                        <input type="password" name="password" placeholder='Password' onChange={e => {handleLogin(e)}} aria-label='Password Input'/>
+                        <div className="password-input-wrapper">
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleLogin(e)}} aria-label='Password Input'/>
+                            <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
+                                <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
+                            </button>
+                        </div>
                         <button type="button" className="cta" onClick={handleLoginValidation}>Login</button>
                         <p className="hint" onClick={handleSlideRight}>Don't have an account? <span>Sign Up</span></p>
                     </form>

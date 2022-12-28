@@ -30,6 +30,9 @@
     overflow: hidden; 
     background: linear-gradient(transparent, transparent) padding-box,
                 linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;
+    
+    background: linear-gradient(transparent, transparent) padding-box,
+                linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
     border: .3rem solid transparent;
     translate: -5% 0;
 }
@@ -98,5 +101,8 @@
         height: 20vw;
         max-width: 11rem;
         max-height: 11rem;
+    }
+    .issues-grid {
+        grid-auto-rows: 9rem;
     }
 }

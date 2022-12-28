@@ -14,7 +14,13 @@ function LatestIssues() {
 
     useEffect(() => {
         fetch(getLatestIssuesRoute).then(res => res.json())
-        .then(data => {setIssues(data)})
+        .then(data => {
+            if(data.length !== 0) {
+                setIssues(data);
+            }else {
+                setNoIssues(true);
+            }
+        })
     },[])
 
     function handleMouseDown(e) {
@@ -45,7 +51,8 @@ function LatestIssues() {
     },[issues])
     
     return (
-        <div ref={slider} className="latest-issues-wrapper"
+        <>
+        {!noIssues ? <div ref={slider} className="latest-issues-wrapper"
          onMouseDown={handleMouseDown}
          onMouseLeave={handleMouseUp}
          onMouseUp={handleMouseUp}
@@ -54,7 +61,7 @@ function LatestIssues() {
             {issues.length !== 0 ? issues.map((issue,index) => {
                 return <IssueItem key={index} issue={issue}/>
             }): null}
-            {issues.length === 0 ? 
+            {issues.length && !noIssues === 0 ? 
                 <>
                 <IssueSkeleton/>
                 <IssueSkeleton/>
@@ -62,11 +69,11 @@ function LatestIssues() {
                 <IssueSkeleton/>
                 </>
             : null}
-            {noIssues ? 
-                <h2>There have been no issues reported today.</h2>
-            : null}
-        </div>
-        // <></>
+        </div> : null}
+        {noIssues ? 
+            <h2>There have been no issues reported today.</h2>
+        : null}
+        </>
     )
 }
 

@@ -53,7 +53,7 @@ input:focus, .text-box:focus {
   resize: none;
   background-color: rgba(0, 0, 0, 0.3);
   min-height: 10rem;
-  padding: .5rem 1rem;
+  padding: 1rem;
 }
 
 .cta {

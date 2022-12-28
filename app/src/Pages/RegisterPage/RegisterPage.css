@@ -4,9 +4,9 @@
 	justify-items: center;
 	align-items: center;
 }
-#register-page input {
+/* #register-page input[type$='text'],  #register-page input[type$='email']{
 	width: 80%;
-}
+} */
 .form-wrapper {
     max-width: 23rem;
 	width: 100%;
@@ -24,6 +24,12 @@
 	animation: fade-in 1s cubic-bezier(.68,-0.55,.27,1.55) 1 forwards;
 	scroll-snap-type: inline mandatory;
 	transition: .4s;
+}
+.form-wrapper form {
+	padding: 0 3rem;
+}
+.form-wrapper input {
+	width: 100%;
 }
 @keyframes fade-in {
 	from {
@@ -51,6 +57,34 @@
 	gap: 1.5rem;
 	scroll-snap-align: center;
 	transition: .75s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.password-input-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+/* .password-input-wrapper input {
+	width: 100%;
+} */
+.toggle-password-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background-color: transparent;
+	position: absolute;
+	right: 5%;
+	top: 50%;
+	translate: 0 -50%;
+	cursor: pointer;
+}
+.toggle-password-button:hover {
+	scale: 1.1;
+}
+.toggle-password-button img{
+	width: 1rem;
 }
 .hint {
 	font-weight: 500;

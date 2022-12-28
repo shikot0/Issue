@@ -67,6 +67,11 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'resolved',
             'openedBy'
         ]);
+        // if(issues.length !== 0) {
+        //     res.json(issues)
+        // }else {
+        //     res.json({msg:'No issues'})
+        // }
         res.json(issues)
     }catch(err) {
         next(err)

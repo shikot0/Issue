@@ -1,4 +1,5 @@
-import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 import Header from './Components/Header/Header.jsx';
 import Home from './Pages/Home/Home';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
@@ -8,9 +9,15 @@ import Footer from './Components/Footer/Footer';
 import './App.css';
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(window.location.pathname === '/') {
+      navigate('/register')
+
+    }
+  },[navigate])
   return (
     <>
-      <BrowserRouter>
         <Header/>
         <main>
             <Routes>
@@ -21,7 +28,6 @@ function App() {
             </Routes>
         </main> 
         <Footer/>
-      </BrowserRouter>
     </> 
   );
 }

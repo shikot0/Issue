@@ -36,6 +36,12 @@ function IssuePage() {
         }
     },[navigate])
 
+    useEffect(() => {
+        setIssue(prev => {
+            return {...prev, openedBy: user.username}
+        })
+    },[user])
+
     function handleShowUserImage(e) {
         e.preventDefault();
         if(e.target.files[0].size < 400000) {
@@ -68,9 +74,6 @@ function IssuePage() {
     }
     
     function createIssue() {
-        setIssue(prev => {
-            return {...prev, openedBy: user.username}
-        })
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);
         if(!issue.name) {
@@ -98,7 +101,7 @@ function IssuePage() {
                     .then(data => {
                         if(data.status) {
                             toast.success(data.msg,toastOptions);
-                            setTimeout(navigate('/home'), 2000)
+                            setTimeout(() => {navigate('/home')}, 2000)
                         }
                     })
                 }
