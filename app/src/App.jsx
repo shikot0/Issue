@@ -29,9 +29,9 @@ function App() {
               <Route path="/issue" element={<IssuePage/>}/>
             </Routes>
             {/* <AnalyticsWrapper/> */}
-            <Analytics/>
         </main> 
         <Footer/>
+      <Analytics/>
     </> 
   );
 }
