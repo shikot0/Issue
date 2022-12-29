@@ -21,7 +21,7 @@ function LatestIssues() {
                 setNoIssues(true);
             }
         }).catch(err => {
-            console.log(err)
+            console.error(err.message)
         })
     },[])
 

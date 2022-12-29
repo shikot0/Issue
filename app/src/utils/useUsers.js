@@ -13,7 +13,7 @@ function useUsers(username) {
             .then(data => {
                 setUser(data);
             }).catch(err => {
-                console.log(err)
+                console.error(err.message)
             })
         }else{
             let savedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
@@ -23,7 +23,7 @@ function useUsers(username) {
                 .then(data => {
                     setUser(data);
                 }).catch(err => {
-                    console.log(err)
+                    console.error(err.message)
                 })
             }
         }

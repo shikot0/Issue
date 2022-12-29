@@ -104,11 +104,11 @@ function IssuePage() {
                             setTimeout(() => {navigate('/home')}, 2000)
                         }
                     }).catch(err => {
-                        console.log(err)
+                        console.error(err.message)
                     })
                 }
             }).catch(err => {
-                console.log(err);
+                console.error(err.message);
             })
         }
     }

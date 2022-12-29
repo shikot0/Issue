@@ -86,7 +86,7 @@ function RegisterPage() {
                     password   
                 })
             }).then(res => res.json())
-            .then(data => {
+              .then(data => {
                 if(data.status) {
                     localStorage.setItem('user', JSON.stringify(data.returnedUser));
                     fetch(`${setProfilePictureRoute}/${data.returnedUser.id}`, {
@@ -98,10 +98,12 @@ function RegisterPage() {
                             navigate('/home');
                         }
                     }).catch(err => {
-                        console.log(err)
+                        console.error(err.message)
                     })
                 }
-            })
+               }).catch(err => {
+                    console.error(err.message)
+               })
         }else {
             toast.error('Please choose an image for your profile',toastOptions)
         }
@@ -122,7 +124,7 @@ function RegisterPage() {
                     password    
                 })
             }).catch(err => {
-                console.log(err);
+                console.error(err.message);
             })
             const response = await data.json();
             if(response.status === false) {
