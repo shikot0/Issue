@@ -76,12 +76,6 @@ function RegisterPage() {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
 
-            // const data = await fetch(`${setProfilePictureRoute}/${user.id}`, {
-            //     method: 'POST',
-            //     body: formData, 
-            // }).then(res => res.json())
-            // .then(data => data);
-
             
             fetch(registerRoute, {
                 method: "POST",
@@ -103,6 +97,8 @@ function RegisterPage() {
                         if(data.status) {
                             navigate('/home');
                         }
+                    }).catch(err => {
+                        console.log(err)
                     })
                 }
             })
@@ -125,6 +121,8 @@ function RegisterPage() {
                     username,
                     password    
                 })
+            }).catch(err => {
+                console.log(err);
             })
             const response = await data.json();
             if(response.status === false) {

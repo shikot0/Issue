@@ -1,6 +1,5 @@
 export const host  = 'https://issue-j83z.onrender.com';
-// require('dotenv').config()
-// const host = process.env.SERVER;
+// export const host = 'localhost:5000';
 export const loginRoute = `${host}/api/user/login`;
 export const registerRoute = `${host}/api/user/register`;
 export const getUserRoute = `${host}/api/user/getuser`;

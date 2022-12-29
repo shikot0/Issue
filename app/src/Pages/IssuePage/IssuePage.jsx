@@ -103,8 +103,12 @@ function IssuePage() {
                             toast.success(data.msg,toastOptions);
                             setTimeout(() => {navigate('/home')}, 2000)
                         }
+                    }).catch(err => {
+                        console.log(err)
                     })
                 }
+            }).catch(err => {
+                console.log(err);
             })
         }
     }

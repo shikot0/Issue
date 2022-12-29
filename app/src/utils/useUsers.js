@@ -12,6 +12,8 @@ function useUsers(username) {
             .then(res => res.json())
             .then(data => {
                 setUser(data);
+            }).catch(err => {
+                console.log(err)
             })
         }else{
             let savedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
@@ -20,6 +22,8 @@ function useUsers(username) {
                 .then(res => res.json())
                 .then(data => {
                     setUser(data);
+                }).catch(err => {
+                    console.log(err)
                 })
             }
         }

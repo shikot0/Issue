@@ -20,6 +20,8 @@ function LatestIssues() {
             }else {
                 setNoIssues(true);
             }
+        }).catch(err => {
+            console.log(err)
         })
     },[])
 
