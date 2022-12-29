@@ -1,4 +1,4 @@
-export const host  = 'http://localhost:5000';
+export const host  = 'https://issue-j83z.onrender.com';
 // require('dotenv').config()
 // const host = process.env.SERVER;
 export const loginRoute = `${host}/api/user/login`;
