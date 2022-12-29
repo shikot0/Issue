@@ -1,5 +1,5 @@
 export const host  = 'http://localhost:5000';
-require('dotenv').config()
+// require('dotenv').config()
 // const host = process.env.SERVER;
 export const loginRoute = `${host}/api/user/login`;
 export const registerRoute = `${host}/api/user/register`;
