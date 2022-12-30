@@ -6,7 +6,7 @@ import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
 import Footer from './Components/Footer/Footer';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 // import AnalyticsWrapper from './utils/analytics.jsx';
 import './App.css';
 
@@ -28,10 +28,9 @@ function App() {
               <Route path="/u/:username" element={<AccountPage/>}/>
               <Route path="/issue" element={<IssuePage/>}/>
             </Routes>
-            {/* <AnalyticsWrapper/> */}
         </main> 
         <Footer/>
-      {/* <Analytics/> */}
+      <Analytics/>
     </> 
   );
 }
