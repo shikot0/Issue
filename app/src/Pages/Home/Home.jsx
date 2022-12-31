@@ -12,6 +12,7 @@ function Home() {
             navigate('/register')
         }
     },[navigate])
+    
     return (
         <section id="home-page">
             <SearchBar/>

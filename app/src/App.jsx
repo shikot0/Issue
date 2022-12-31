@@ -6,8 +6,7 @@ import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
 import Footer from './Components/Footer/Footer';
-import { Analytics } from '@vercel/analytics/react';
-// import AnalyticsWrapper from './utils/analytics.jsx';
+// import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
             </Routes>
         </main> 
         <Footer/>
-      <Analytics/>
+      {/* <Analytics/> */}
     </> 
   );
 }
