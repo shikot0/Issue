@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { registerRoute, loginRoute, setProfilePictureRoute } from '../../utils/APIRoutes';
 import 'react-toastify/dist/ReactToastify.css';
-import './RegisterPage.css'
+import './RegisterPage.css';
 
 function RegisterPage() {
     const [currentUserImage, setCurrentUserImage] = useState();
@@ -29,12 +29,13 @@ function RegisterPage() {
         draggable: true,
         theme: "dark",
     }
-    
-    useEffect(() => {
-        if(localStorage.getItem('user')) {
-            navigate('/home')
-        }
-    }, [navigate])
+     
+
+    // useEffect(() => {
+    //     if(localStorage.getItem('user')) {
+    //         navigate('/home')
+    //     }
+    // }, [navigate])
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -88,7 +89,7 @@ function RegisterPage() {
             }).then(res => res.json())
               .then(data => {
                 if(data.status) {
-                    localStorage.setItem('user', JSON.stringify(data.returnedUser));
+                    // localStorage.setItem('user', JSON.stringify(data.returnedUser));
                     fetch(`${setProfilePictureRoute}/${data.returnedUser.id}`, {
                         method: "POST",
                         body: formData
@@ -129,10 +130,11 @@ function RegisterPage() {
             const response = await data.json();
             if(response.status === false) {
                 toast.error(response.msg, toastOptions);
-            }else if(response.status === true) {
-                localStorage.setItem('user', JSON.stringify(response.returnedUser));
-                navigate('/home')
             }
+            // else if(response.status === true) {
+            //     localStorage.setItem('user', JSON.stringify(response.returnedUser));
+            //     navigate('/home')
+            // }
         }
     }
     
@@ -156,7 +158,7 @@ function RegisterPage() {
             e.currentTarget.parentElement.childNodes[0].type = 'text';
             e.currentTarget.childNodes[0].src = `${process.env.PUBLIC_URL}/icons/eye-off-outline.svg`;
         }
-        console.log(e.currentTarget)
+        // console.log(e.currentTarget)
     }
 
     return(

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Users = require('../Models/userModel');
+const generateToken = require('../utils/generateToken'); 
 
 module.exports.register = async (req,res,next) => {
     try {
@@ -14,18 +15,19 @@ module.exports.register = async (req,res,next) => {
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await Users.create({
+        await Users.create({
             email,
             username,
             password: hashedPassword
         });
 
-        const returnedUser = {
-            id: user._id,
-            username: user.username,
-            email: user.email
-        };
+
         // console.log(returnedUser)
+        res.cookie('user-auth', `user=${self.crypto.randomUUID(), {
+            secure: false,
+            httpOnly: true,
+            expires: new Date(2024-12-31)
+        }}`)
         return res.json({status: true, returnedUser})
     } catch(err) {
         next(err);
@@ -74,6 +76,7 @@ module.exports.setProfilePicture = async (req, res, next) => {
 module.exports.getUser = async (req, res, next) => {
     try {
         const username = req.params.username;
+        // console.log(username)
         const user = await Users.findOne({username: username}).select([
             "email",
             "username", 

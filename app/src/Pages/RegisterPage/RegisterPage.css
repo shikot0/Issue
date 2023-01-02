@@ -79,6 +79,7 @@
 	top: 50%;
 	translate: 0 -50%;
 	cursor: pointer;
+	z-index: 10;
 }
 .toggle-password-button:hover {
 	scale: 1.1;

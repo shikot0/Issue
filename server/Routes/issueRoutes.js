@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 router.post('/createissue', createIssue);
 router.post('/setissuescreenshot/:id', setIssueScreenshot);
-router.get('/getlatestissues', getLatestIssues);
-router.get('/getallissues/:username', getAllIssues);
+router.get('/latestissues', getLatestIssues);
+router.get('/allissues/:username', getAllIssues);
 
 module.exports = router; 

@@ -11,6 +11,7 @@ header {
 .header-content {
     display: flex;
     align-items: center; 
+    /* justify-content: center; */
     justify-content: space-between;
     padding: .5rem 0;
     max-width: 75rem;
