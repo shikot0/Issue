@@ -15,19 +15,19 @@ module.exports.register = async (req,res,next) => {
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        await Users.create({
+        const user = await Users.create({
             email,
             username,
             password: hashedPassword
         });
-
+        // const returnedUser = {email: user.email, username: user.username}
 
         // console.log(returnedUser)
-        res.cookie('user-auth', `user=${self.crypto.randomUUID(), {
+        res.cookie('user-auth', generateToken(user._id), {
             secure: false,
             httpOnly: true,
-            expires: new Date(2024-12-31)
-        }}`)
+            expires: new Date().setFullYear(new Date().getFullYear() + 5, new Date().getMonth(), new Date().getDate())
+        })
         return res.json({status: true, returnedUser})
     } catch(err) {
         next(err);
