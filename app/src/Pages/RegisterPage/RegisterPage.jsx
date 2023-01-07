@@ -31,11 +31,13 @@ function RegisterPage() {
     }
      
 
-    // useEffect(() => {
-    //     if(localStorage.getItem('user')) {
-    //         navigate('/home')
-    //     }
-    // }, [navigate])
+    useEffect(() => {
+        if(document.cookie) {
+            navigate('/home')
+        }
+    }, [navigate])
+
+
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -86,16 +88,18 @@ function RegisterPage() {
                     email,
                     password   
                 })
-            }).then(res => res.json())
+            })
+            .then(res => res.json()) 
               .then(data => {
-                if(data.status) {
-                    // localStorage.setItem('user', JSON.stringify(data.returnedUser));
-                    fetch(`${setProfilePictureRoute}/${data.returnedUser.id}`, {
+                if(data.status === 200) {
+                    document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+                    document.cookie = `token=${data.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
+                    fetch(`${setProfilePictureRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
                     }).then(res => res.json())
                       .then(data => {
-                        if(data.status) {
+                        if(data.status === 200) {
                             navigate('/home');
                         }
                     }).catch(err => {
@@ -127,14 +131,16 @@ function RegisterPage() {
             }).catch(err => {
                 console.error(err.message);
             })
+
             const response = await data.json();
-            if(response.status === false) {
+
+            if(response.status === 400) {
                 toast.error(response.msg, toastOptions);
+            }else if(response.status === 200) {
+                document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+                document.cookie = `token=test; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
+                navigate('/home')
             }
-            // else if(response.status === true) {
-            //     localStorage.setItem('user', JSON.stringify(response.returnedUser));
-            //     navigate('/home')
-            // }
         }
     }
     
@@ -203,7 +209,7 @@ function RegisterPage() {
                             <img className={currentUserImage ? 'profile-photo' : 'hidden'} src={currentUserImage ? URL.createObjectURL(currentUserImage) : `${process.env.PUBLIC_URL}/logos/person-outline.svg`} alt="profile" />
                         </div>
                         <input type="file" accept="image/*" onInput={handleShowUserImage}/>
-                        <button type='submit' className='cta' onClick={handleSetUserImage}>Submit</button>
+                        <button type='button' className='cta' onClick={handleSetUserImage}>Submit</button>
                     </form>
                 </div>
             <ToastContainer/>

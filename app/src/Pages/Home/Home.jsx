@@ -8,7 +8,7 @@ import './Home.css';
 function Home() {
     const navigate = useNavigate();
     useEffect(() => {
-        if(!localStorage.getItem('user')) {
+        if(!document.cookie) {
             navigate('/register')
         }
     },[navigate])

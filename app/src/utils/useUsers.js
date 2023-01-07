@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import {getUserRoute} from './APIRoutes';
+import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
     // username = username.toLowerCase();
@@ -16,12 +17,13 @@ function useUsers(username) {
                 console.error(err.message)
             })
         }else{
-            let savedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : '';
+            let savedUser = document.cookie ? document.cookie.split('=')[1] : '';
             if(savedUser) {
-                fetch(`${getUserRoute}/${savedUser.username}`)
+                fetch(`${getCurrentUserRoute}/${savedUser}`)
                 .then(res => res.json())
                 .then(data => {
                     setUser(data);
+                    // console.log(data)
                 }).catch(err => {
                     console.error(err.message)
                 })

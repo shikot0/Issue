@@ -8,10 +8,14 @@
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    margin: 0 0 3%;
+    margin: 0 0 3%; 
     border-radius: .25rem;
     padding: .1rem 0;
     position: relative;
+    cursor: grab;
+}
+.latest-issues-wrapper:active {
+    cursor: grabbing;
 }
 .latest-issues-wrapper::-webkit-scrollbar {
     width: 0px;
@@ -24,6 +28,9 @@
     scroll-snap-align: center;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
+}
+.latest-issues-wrapper a {
+    text-decoration: none;
 }
 .latest-issues-wrapper .issue:hover {
     translate: none;

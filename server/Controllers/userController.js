@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt');
 const Users = require('../Models/userModel');
 const generateToken = require('../utils/generateToken'); 
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
-module.exports.register = async (req,res,next) => {
+module.exports.register = async (req, res, next) => {
     try {
         const {username, email, password} = req.body;
-        const usernameCheck = await Users.findOne({username});
+        const usernameCheck = await Users.findOne({username: username.toLowerCase()});
         const emailCheck = await Users.findOne({email})
         if(usernameCheck) {
             return res.json({msg: 'Username is already in use', status: false});
@@ -14,45 +16,38 @@ module.exports.register = async (req,res,next) => {
             return res.json({msg: 'Email is already in use', status: false});
         }
         
+        
+        const token = jwt.sign({password}, process.env.SECRET);
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const user = await Users.create({
             email,
             username,
+            token,
             password: hashedPassword
         });
-        // const returnedUser = {email: user.email, username: user.username}
-
-        // console.log(returnedUser)
-        res.cookie('user-auth', generateToken(user._id), {
-            secure: false,
-            httpOnly: true,
-            expires: new Date().setFullYear(new Date().getFullYear() + 5, new Date().getMonth(), new Date().getDate())
-        })
-        return res.json({status: true, returnedUser})
+        console.log(user) 
+        return res.json({id: user._id, token, status: 200})
     } catch(err) {
         next(err);
     }
 }
 
+
 module.exports.login = async (req, res, next) => {
     try {
         const {username, password} = req.body;
         const user = await Users.findOne({username});
-
         if(!user) { 
-            return res.json({msg: 'Incorrect username or password', status: false});
+            return res.json({msg: 'Incorrect username or password', status: 400});
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if(!isPasswordValid) {
-            return res.json({msg: 'Incorrect username or password', status: false});
+            return res.json({msg: 'Incorrect username or password', status: 400});
         }
-        const returnedUser = {
-            id: user._id,
-            username: user.username,
-            email: user.email
-        };
-        return res.json({status: true, returnedUser})
+        
+        return res.json({token: user.token, status: 200})
     } catch(err) {
         next(err)
     }
@@ -67,20 +62,20 @@ module.exports.setProfilePicture = async (req, res, next) => {
         user.profilePicture.ContentType = mimetype; 
 
         await user.save();
-        return res.json({status: true});
+        return res.json({status: 200});
     } catch(err) {
         next(err)
     }
 }
 
-module.exports.getUser = async (req, res, next) => {
+module.exports.user = async (req, res, next) => {
     try {
         const username = req.params.username;
         // console.log(username)
         const user = await Users.findOne({username: username}).select([
+            "_id",
             "email",
             "username", 
-            "_id",
         ]);
         return await res.json(user);
     } catch(err) {
@@ -88,7 +83,26 @@ module.exports.getUser = async (req, res, next) => {
     }
 }
 
-module.exports.getProfilePicture = async (req, res, next) => {
+// module.exports.currentUser = async (req, res, next) => {    
+//     console.log('test')
+// }
+
+module.exports.currentUser = async (req, res, next) => {
+    try {
+        const userToken = req.params.token;
+        const user = await Users.findOne({token: userToken}).select([
+                "_id",
+                "email",
+                "username", 
+            ]);
+        // console.log(user)
+        res.json(user)          
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.profilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
         const user = await Users.findOne({_id: id}); 
@@ -99,7 +113,7 @@ module.exports.getProfilePicture = async (req, res, next) => {
     }
 }
 
-module.exports.getAllUsers = async (req, res, next) => {
+module.exports.allUsers = async (req, res, next) => {
     try {
         const users = await Users.find({_id:{$ne: req.params.id}}).select([
             "email",

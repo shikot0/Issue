@@ -32,6 +32,35 @@ module.exports.setIssueScreenshot = async (req, res,next) => {
     }
 }
 
+module.exports.getIssueScreenshot = async (req, res, next) => {
+    try {   
+        const id = req.params.id;
+        const issue = await Issues.findOne({_id: id}); 
+        res.type('Content-Type', issue.screenshot.ContentType)
+        return res.status(200).send(issue.screenshot.Data)
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.getIssue = async (req, res, next) => {
+    try {   
+        const id = req.params.id;
+        const issue = await Issues.find({_id:id}).select([
+            "_id",
+            "openedBy",
+            "name",
+            "description",
+            "resolved",
+            "dateOfCreation"
+        ]);
+        console.log(issue)
+        return res.json(...issue);
+    } catch(err) {
+        next(err);
+    }
+}
+
 module.exports.getAllIssues = async (req, res, next) => {
     try {
         const username = req.params.username.toLowerCase();
@@ -67,6 +96,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'resolved',
             'openedBy'
         ]);
+        // console.log(issues) 
         // if(issues.length !== 0) {
         //     res.json(issues)
         // }else {

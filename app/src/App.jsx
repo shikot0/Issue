@@ -3,6 +3,7 @@ import {useEffect} from 'react';
 import Header from './Components/Header/Header.jsx';
 import Home from './Pages/Home/Home';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
+import NewIssuePage from './Pages/NewIssuePage/NewIssuePage';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
 import Footer from './Components/Footer/Footer';
@@ -14,9 +15,8 @@ function App() {
   useEffect(() => {
     if(window.location.pathname === '/') {
       navigate('/register')
-
     }
-  },[navigate])
+  },[navigate]) 
   return (
     <>
         <Header/>
@@ -25,7 +25,8 @@ function App() {
               <Route path="/home" element={<Home/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
               <Route path="/u/:username" element={<AccountPage/>}/>
-              <Route path="/issue" element={<IssuePage/>}/>
+              <Route path="/newissue" element={<NewIssuePage/>}/>
+              <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
         </main> 
         <Footer/>

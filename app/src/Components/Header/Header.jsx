@@ -6,11 +6,11 @@ import './Header.css';
 function Header() {
     const userModal = useRef();
     const navigate = useNavigate();
-    const userId = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).id : '';
     const user = useUsers();
     
     function logout() {
-        localStorage.removeItem('user')
+        // localStorage.removeItem('user');
+        document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
         navigate('/register');
     }
 
@@ -47,7 +47,7 @@ function Header() {
                     {/* <img src="" alt="" /> */}
                     <a href="issue.com" className='logo'>ISSUE</a>
                 </div>
-                {user && userId ? 
+                {user ? 
                 <>
                     <nav>
                         <Link to="/home" className='navigation-link'>
@@ -56,13 +56,13 @@ function Header() {
                         <Link className='navigation-link' to={`/u/${user.username}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="person"><rect width="24" height="24" opacity="0"/><path d="M12 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0-6a2 2 0 1 1-2 2 2 2 0 0 1 2-2z"/><path d="M12 13a7 7 0 0 0-7 7 1 1 0 0 0 2 0 5 5 0 0 1 10 0 1 1 0 0 0 2 0 7 7 0 0 0-7-7z"/></g></g></svg>
                         </Link>
-                        <Link to='/issue' className='navigation-link'>
+                        <Link to='/newissue' className='navigation-link'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
                         </Link>
                     </nav>
                     <div className="user" onClick={showUserModal}>
                         <div className="profile-picture-div">
-                            <img className='profile-picture' src={`${getProfilePictureRoute}/${userId}`} alt="" />
+                            <img className='profile-picture' src={`${getProfilePictureRoute}/${user._id}`} alt="" />
                         </div>
                         <p className="username gradient-text">{user ? user.username : 'user'}</p>
                         <div ref={userModal} className="user-modal">

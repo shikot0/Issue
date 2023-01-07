@@ -29,7 +29,7 @@ main {
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #home-page, #issue-page, #account-page {
+#register-page, #home-page, #new-issue-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   margin: 3% 0 0;
@@ -47,6 +47,17 @@ input:focus, .text-box:focus {
   /* border: 3px solid var(--secondary-color); */
   border: 3px solid var(--primary-cta-color);
 }
+input button {
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  transition: .2s;
+}
 .text-box {
   width: 100%;
   max-width: 50rem;
@@ -63,9 +74,10 @@ input:focus, .text-box:focus {
   font-weight: 700;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: transparent;
   transition: .2s;
+  background-color: var(--tertiary-color);
 }
 .cta:hover {
   transition-delay: .225s;
@@ -77,13 +89,22 @@ input:focus, .text-box:focus {
   height: 100%;
   transition-delay: 0s;
 }
+.cta:hover::before {
+  top: 0;
+  left: 0;
+}
+.cta:hover::after {
+  bottom: 0;
+  right: 0;
+}
 .cta::before {
   content: '';
   position: absolute;
   width: 25%;
-  height: 40%;
-  top: 0;
-  left: 0;
+  height: 50%;
+  top: -4%;
+  left: -4%;
+  border-radius: .125rem;
   border-top: .15rem solid var(--primary-cta-color);
   border-left: .15rem solid var(--primary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
@@ -93,9 +114,10 @@ input:focus, .text-box:focus {
   content: '';
   position: absolute;
   width: 25%;
-  height: 40%;
-  bottom: 0;
-  right: 0;
+  height: 50%;
+  bottom: -4%;
+  right: -4%;
+  border-radius: .125rem;
   border-right: .15rem solid var(--secondary-cta-color);
   border-bottom: .15rem solid var(--secondary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);

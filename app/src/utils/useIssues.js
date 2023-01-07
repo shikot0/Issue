@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
-import { getAllIssuesRoute } from "./APIRoutes";
+import { allIssuesRoute } from "./APIRoutes";
+import { issueRoute } from "./APIRoutes";
 
-function useIssues(username) {
+function useIssues(username,id) {
     const [issues, setIssues] = useState([]);
     useEffect(() => {
         if(username) {
-            fetch(`${getAllIssuesRoute}/${username}`)
+            fetch(`${allIssuesRoute}/${username}`)
+            .then(res => res.json())
+            .then(data => {
+                setIssues(data);
+            })
+        }else if(!username && id) {
+            fetch(`${issueRoute}/${id}`)
             .then(res => res.json())
             .then(data => {
                 setIssues(data);
             })
         }else {
-            fetch(`${getAllIssuesRoute}/all`)
+            fetch(`${allIssuesRoute}/all`)
             .then(res => res.json())
             .then(data => {setIssues(data)})
         }

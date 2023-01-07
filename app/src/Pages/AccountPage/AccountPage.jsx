@@ -40,9 +40,8 @@ function AccountPage() {
         e.target.classList.add('selected');
     }
     return(
-        <>
         <section id="account-page">
-            <div className="user">
+            <div className="user"> 
                 {user ? 
                     <>
                         <div className="profile-picture-wrapper">
@@ -88,7 +87,6 @@ function AccountPage() {
                 <h3 className='no-issues-hint'>This user has no issues.</h3> 
             : null}
         </section>
-        </>
     )
 }
 

@@ -1,9 +1,10 @@
 import {useState, useRef} from 'react';
+import {Link} from 'react-router-dom';
 import IssueItem from "../IssueItem/IssueItem";
 import {IssueSkeleton} from '../../Skeletons/Skeletons';
 import './LatestIssues.css';
 import { useEffect } from 'react';
-import { getLatestIssuesRoute } from '../../utils/APIRoutes';
+import { latestIssuesRoute } from '../../utils/APIRoutes';
 function LatestIssues() {
     const [issues, setIssues] = useState([]);
     const slider = useRef();
@@ -13,7 +14,7 @@ function LatestIssues() {
     const [noIssues, setNoIssues] = useState(false);
 
     useEffect(() => {
-        fetch(getLatestIssuesRoute).then(res => res.json())
+        fetch(latestIssuesRoute).then(res => res.json())
         .then(data => {
             if(data.length !== 0) {
                 setIssues(data);
@@ -61,7 +62,7 @@ function LatestIssues() {
          onMouseMove={handleMouseMove}
          >
             {issues.length !== 0 ? issues.map((issue,index) => {
-                return <IssueItem key={index} issue={issue}/>
+                return <Link to={`/issue/${issue._id}`}><IssueItem key={index} issue={issue}/></Link>
             }): null}
             {issues.length && !noIssues === 0 ? 
                 <>
