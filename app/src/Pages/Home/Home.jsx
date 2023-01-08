@@ -8,15 +8,15 @@ import './Home.css';
 function Home() {
     const navigate = useNavigate();
     useEffect(() => {
-        if(!document.cookie) {
+        if(!document.cookie.split('=')[1]) {
             navigate('/register')
         }
     },[navigate])
     
     return (
         <section id="home-page">
-            <SearchBar/>
             <LatestIssues/>
+            <SearchBar/>
             <h2>Click on a company to open an issue!</h2>
             <div className="companies-grid">
                 <CompanyItem/>

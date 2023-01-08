@@ -32,9 +32,10 @@ function RegisterPage() {
      
 
     useEffect(() => {
-        if(document.cookie) {
+        if(document.cookie.split('=')[1]) {
             navigate('/home')
         }
+        // console.log()
     }, [navigate])
 
 
@@ -138,7 +139,7 @@ function RegisterPage() {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === 200) {
                 document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-                document.cookie = `token=test; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
+                document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
                 navigate('/home')
             }
         }

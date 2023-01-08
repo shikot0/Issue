@@ -1,7 +1,7 @@
 import {useState, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import IssueItem from "../IssueItem/IssueItem";
-import {IssueSkeleton} from '../../Skeletons/Skeletons';
+import {IssueItemSkeleton} from '../../Skeletons/Skeletons';
 import './LatestIssues.css';
 import { useEffect } from 'react';
 import { latestIssuesRoute } from '../../utils/APIRoutes';
@@ -62,14 +62,15 @@ function LatestIssues() {
          onMouseMove={handleMouseMove}
          >
             {issues.length !== 0 ? issues.map((issue,index) => {
-                return <Link to={`/issue/${issue._id}`}><IssueItem key={index} issue={issue}/></Link>
+                return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
             }): null}
             {issues.length && !noIssues === 0 ? 
                 <>
-                <IssueSkeleton/>
-                <IssueSkeleton/>
-                <IssueSkeleton/>
-                <IssueSkeleton/>
+                <IssueItemSkeleton/>
+                <IssueItemSkeleton/>
+                <IssueItemSkeleton/>
+                <IssueItemSkeleton/>
+                <IssueItemSkeleton/>
                 </>
             : null}
         </div> : null}

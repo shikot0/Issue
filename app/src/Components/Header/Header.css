@@ -93,7 +93,7 @@ header .user {
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
 }
-header .profile-picture-div {
+header .profile-picture-wrapper {
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 10rem;

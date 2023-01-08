@@ -1,27 +1,34 @@
 import {Link, useParams} from 'react-router-dom';
 import useIssues from '../../utils/useIssues';
-import { IssueScreenshotRoute } from '../../utils/APIRoutes';
+import { IssueScreenshotRoute, getProfilePictureRoute } from '../../utils/APIRoutes';
 import './IssuePage.css';
+import useUsers from '../../utils/useUsers';
 
 function IssuePage() {
     const {id} = useParams();
     const issue = useIssues(null,id);
-    // const test: string = 'test'
+    const user = useUsers(issue.openedBy)
     console.log(`${IssueScreenshotRoute}/${id}`)
     
     return(
         <>
-        {issue ?
+        {issue && user ?
             <section id="issue-page">
                 <div className="issue">
-                    <Link to={`/u/${issue.openedBy}`} className="issue-creator">{issue.openedBy}</Link>
+                    <header>
+                        <h2 className="issue-name">{issue.name}</h2>
+                        <div className="user">
+                            <div className="profile-picture-wrapper">
+                                <img src={`${getProfilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
+                            </div>
+                            <Link to={`/u/${issue.openedBy}`} className="issue-creator gradient-text">{issue.openedBy}</Link>
+                        </div>
+                    </header>
                     <div className="issue-screenshot-wrapper">
                         <img src={`${IssueScreenshotRoute}/${id}`} className="issue-screenshot" alt='issue'/>
                     </div>
-                    <div className="issue-details">
-                        <div className="issue-name"></div>
-                        <div className="issue-description"></div>
-                    </div>
+                    <p className="issue-description">{issue.description}</p>
+                    <p className="link-hint">A link to the issue can be found <a className='gradient-text' href={issue.link}>here</a></p>
                 </div>
             </section> 
         : ''}

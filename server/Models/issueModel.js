@@ -22,6 +22,10 @@ const issueSchema = new mongoose.Schema({
             min: 10,
             max: 300
         },
+        link: {
+            type: String,
+            required: true,
+        },
         screenshot: {
             Data: Buffer,
             ContentType: String

@@ -17,7 +17,7 @@ function useUsers(username) {
                 console.error(err.message)
             })
         }else{
-            let savedUser = document.cookie ? document.cookie.split('=')[1] : '';
+            let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
             if(savedUser) {
                 fetch(`${getCurrentUserRoute}/${savedUser}`)
                 .then(res => res.json())

@@ -129,7 +129,7 @@ function NewIssuePage() {
             </div>
             <form>
                 <div className="name-and-link">
-                    <input onInput={handleIssueData} type="text" name="name" placeholder='Name of bug'/>
+                    <input onInput={handleIssueData} type="text" name="name" placeholder='Name of issue'/>
                     <input onInput={handleIssueData} type="url" name="link" placeholder="Link to the site" />
                 </div>
                 <textarea onInput={handleIssueData} name="description" className='text-box' placeholder='A short description of the issue'></textarea>

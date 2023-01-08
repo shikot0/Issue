@@ -52,6 +52,7 @@ module.exports.getIssue = async (req, res, next) => {
             "name",
             "description",
             "resolved",
+            "link",
             "dateOfCreation"
         ]);
         console.log(issue)
@@ -71,6 +72,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "link",
                 "resolved"
             ])
         }else if(username === 'all') {
@@ -78,6 +80,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "link",
                 "resolved"
             ])
         }
@@ -94,6 +97,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'name',
             'description',
             'resolved',
+            "link",
             'openedBy'
         ]);
         // console.log(issues) 

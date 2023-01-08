@@ -17,7 +17,7 @@ function AccountPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!localStorage.getItem('user')) {
+        if(!document.cookie.split('=')[1]) {
             navigate('/register')
         }
     },[navigate])

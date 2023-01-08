@@ -12,10 +12,32 @@ function ProfilePictureSkeleton() {
     )
 }
 
-function IssueSkeleton() {
+function IssueItemSkeleton() {
     return (
-        <div className="issue-skeleton"></div>
+        <div className="issue-item-skeleton"></div>
+    )
+}
+function HeaderSkeleton() {
+    return (
+        <div className="header-skeleton"></div>
+    )
+}
+function ParagraphSkeleton() {
+    <p className="paragraph-skeleton"></p>
+}
+
+function ImageSkeleton() {
+    return (
+        <div className="item-skeleton"></div>
     )
 }
 
-export {UsernameSkeleton, ProfilePictureSkeleton, IssueSkeleton}
+function IssueSkeleton() {
+    return (
+        <div className="issue-skeleton">
+
+        </div>
+    )
+}
+
+export {UsernameSkeleton, ProfilePictureSkeleton, IssueItemSkeleton}
