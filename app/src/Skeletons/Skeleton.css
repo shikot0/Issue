@@ -16,6 +16,52 @@
         background-position: 100%;
     } */
 }
+.header-skeleton {
+    width: 25%;
+    height: 2.5rem;
+    min-width: 5rem;
+    max-width: 10rem;
+    background-color: var(--tertiary-color);
+    border-radius: .25rem;
+}
+.short-text-skeleton {
+    width: 25%;
+    height: 1.5rem;
+    min-width: 5rem;
+    max-width: 10rem;
+    background-color: var(--tertiary-color);
+    border-radius: .25rem;
+}
+.mid-length-text-skeleton {
+    width: 50%;
+    height: 1.5rem;
+    min-width: 10rem;
+    max-width: 20rem;
+    background-color: var(--tertiary-color);
+    border-radius: .25rem;
+}
+.long-text-skeleton {
+    width: 80%;
+    height: 1.5rem;
+    min-width: 15rem;
+    max-width: 25rem;
+    background-color: var(--tertiary-color);
+    border-radius: .25rem;
+}
+.paragraph-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.image-skeleton {
+    width: 100%;
+    aspect-ratio: 1/1.2;
+    animation: animated-background 10s linear infinite forwards;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    background-size: 200%;
+    border-radius: .5rem;
+}
 .profile-picture-skeleton {
     width: 11vw;
     height: 11vw;
@@ -41,7 +87,7 @@
     border-radius: .25rem;
     animation: animated-background 10s linear infinite forwards;
 }
-.issue-skeleton {
+.issue-item-skeleton {
     width: 50vw;
     min-width: 17rem;
     max-width: 18rem;
@@ -53,7 +99,18 @@
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
     border-radius: .5rem;
-    height: 10rem;
-    height: 168.6px;
+    /* height: 10rem; */
+    height: 110px;
     animation: animated-background 3s linear infinite forwards;
+}
+.issue-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 90%; 
+    max-width: 42rem;
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    background-size: 200%;
 }

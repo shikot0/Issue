@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import { getProfilePictureRoute } from '../../utils/APIRoutes';
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
 import {motion} from 'framer-motion';
@@ -77,7 +77,8 @@ function AccountPage() {
                                     return issue;
                                 }
                             }).map((issue,index) => {
-                                return <IssueItem key={index} issue={issue}/>
+                                // return <IssueItem key={index} issue={issue}/>
+                                return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
                             })}
                         {/* </AnimatePresence> */}
                     </motion.div>

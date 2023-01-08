@@ -61,10 +61,20 @@ input button {
 .text-box {
   width: 100%;
   max-width: 50rem;
-  resize: none;
+  resize: vertical;
   background-color: rgba(0, 0, 0, 0.3);
   min-height: 10rem;
-  padding: 1rem;
+  padding: .8rem 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-cta-color) transparent;
+  overscroll-behavior-y: contain;
+}
+.text-box::-webkit-scrollbar {
+  width: .25rem;
+}
+.text-box::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-image: linear-gradient(to bottom, var(--primary-cta-color), var(--secondary-cta-color))
 }
 
 .cta {

@@ -55,7 +55,7 @@ module.exports.getIssue = async (req, res, next) => {
             "link",
             "dateOfCreation"
         ]);
-        console.log(issue)
+        // console.log(issue)
         return res.json(...issue);
     } catch(err) {
         next(err);

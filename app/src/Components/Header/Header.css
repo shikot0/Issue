@@ -5,7 +5,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
 }
 .header-content {
@@ -115,20 +115,20 @@ header .username {
 header .user-modal {
     position: absolute;
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: .75rem;
     background-color: var(--secondary-color);
-    min-width: 100%;
-    top: 120%;
-    left: 0;
+    min-width: 7.5rem;
+    top: 125%;
+    left: 50%;
     padding: .75rem;
     border-radius: .25rem;
-    translate: 10% 0;
     opacity: 0;
     pointer-events: none;
 }
 header .user-modal.visible {
-    translate: none;
+    translate: -50% 0;
     opacity: 1;
     pointer-events: all;
 }
@@ -152,5 +152,14 @@ header .logout-button:hover {
 @media screen and (max-width: 800px) {
     header nav {
         display: none;
+    }
+    header .user {
+        background: transparent;
+    }
+    header .username {
+        display: none;
+    }
+    header .user-modal.visible {
+        translate: -65% 0;
     }
 }

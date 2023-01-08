@@ -2,7 +2,9 @@
     display: grid;
     justify-content: start;
     grid-auto-flow: column;
-    grid-auto-columns: auto;
+    /* grid-auto-columns: auto; */
+    grid-auto-columns: 17.5rem;
+    /* grid-auto-rows: 8rem; */
     gap: 2rem;
     overflow-x: scroll;
     scrollbar-width: none;
@@ -10,8 +12,9 @@
     scroll-behavior: smooth;
     margin: 0 0 3%; 
     border-radius: .25rem;
-    padding: .1rem 0;
+    padding: .1rem .25rem;
     position: relative;
+    overscroll-behavior-inline: contain;
     cursor: grab;
 }
 .latest-issues-wrapper:active {
@@ -32,7 +35,7 @@
 .latest-issues-wrapper a {
     text-decoration: none;
 }
-.latest-issues-wrapper .issue:hover {
+.latest-issues-wrapper .issue-item:hover {
     translate: none;
     scale: none;
 }

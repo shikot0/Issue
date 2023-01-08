@@ -5,6 +5,7 @@ import {IssueItemSkeleton} from '../../Skeletons/Skeletons';
 import './LatestIssues.css';
 import { useEffect } from 'react';
 import { latestIssuesRoute } from '../../utils/APIRoutes';
+
 function LatestIssues() {
     const [issues, setIssues] = useState([]);
     const slider = useRef();
@@ -52,28 +53,40 @@ function LatestIssues() {
             setNoIssues(false);
         }
     },[issues])
-    
+
+
     return (
         <>
-        {!noIssues ? <div ref={slider} className="latest-issues-wrapper"
-         onMouseDown={handleMouseDown}
-         onMouseLeave={handleMouseUp}
-         onMouseUp={handleMouseUp}
-         onMouseMove={handleMouseMove}
-         >
-            {issues.length !== 0 ? issues.map((issue,index) => {
-                return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
-            }): null}
-            {issues.length && !noIssues === 0 ? 
+        {!noIssues ? 
+            <div ref={slider} className="latest-issues-wrapper"
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseUp}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+            >
+                {issues.length !== 0 ? issues.map((issue,index) => {
+                    // return <IssueItem key={index} issue={issue} onClick={handleNavigate(issue)}/>
+                    return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
+                }):
                 <>
-                <IssueItemSkeleton/>
-                <IssueItemSkeleton/>
-                <IssueItemSkeleton/>
-                <IssueItemSkeleton/>
-                <IssueItemSkeleton/>
-                </>
-            : null}
-        </div> : null}
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                </>}
+
+                {/* {issues.length && !noIssues === 0 ? 
+                    <>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    </>
+                : null} */}
+                
+            </div> : null}
         {noIssues ? 
             <h2>There have been no issues reported today.</h2>
         : null}

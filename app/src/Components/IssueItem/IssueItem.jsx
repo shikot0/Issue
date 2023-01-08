@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import './IssueItem.css';
 function IssueItem({issue}) {
@@ -11,7 +11,7 @@ function IssueItem({issue}) {
         }
         return newText;
     }
-    
+
     function handleMouseMove(e) {
         const target = e.target;
         const rect = target.getBoundingClientRect(),
@@ -25,14 +25,14 @@ function IssueItem({issue}) {
 
     return (
         <motion.article
-        animate={{opacity: 1}} 
-        initial={{opacity: 0}} 
-        exit={{opacity: 0}} 
-        layout className="issue" onMouseMove={handleMouseMove}>
+        animate={{opacity: 1}}
+        initial={{opacity: 0}}
+        exit={{opacity: 0}}
+        layout className="issue-item" onMouseMove={handleMouseMove}>
             <small className="issue-company-name">Google</small>
             <div className="issue-main">
                 <h3 className="issue-name">{issue.name}</h3>
-                <p className="issue-description">{truncate(issue.description, 80)}</p>
+                <p className="issue-description">{truncate(issue.description, 50)}</p>
                 <p className='issue-creator gradient-text'>{issue.openedBy}</p>
                 {/* <Link to={`/u/${issue.openedBy}`} className='issue-creator gradient-text'>{issue.openedBy}</Link> */}
             </div>

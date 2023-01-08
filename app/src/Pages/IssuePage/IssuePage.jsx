@@ -1,19 +1,19 @@
 import {Link, useParams} from 'react-router-dom';
 import useIssues from '../../utils/useIssues';
 import { IssueScreenshotRoute, getProfilePictureRoute } from '../../utils/APIRoutes';
-import './IssuePage.css';
 import useUsers from '../../utils/useUsers';
+import {IssueSkeleton} from '../../Skeletons/Skeletons';
+import './IssuePage.css';
 
 function IssuePage() {
     const {id} = useParams();
     const issue = useIssues(null,id);
     const user = useUsers(issue.openedBy)
-    console.log(`${IssueScreenshotRoute}/${id}`)
+    // console.log(issue.link.slice(0,6))
     
     return(
-        <>
+        <section id="issue-page">
         {issue && user ?
-            <section id="issue-page">
                 <div className="issue">
                     <header>
                         <h2 className="issue-name">{issue.name}</h2>
@@ -27,12 +27,13 @@ function IssuePage() {
                     <div className="issue-screenshot-wrapper">
                         <img src={`${IssueScreenshotRoute}/${id}`} className="issue-screenshot" alt='issue'/>
                     </div>
+                    <p className='issue-status'>Status: <span className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
+                    <p className="link-hint">Link: <a className='issue-link gradient-text' href={issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}`}>{issue.link}</a></p>
                     <p className="issue-description">{issue.description}</p>
-                    <p className="link-hint">A link to the issue can be found <a className='gradient-text' href={issue.link}>here</a></p>
                 </div>
-            </section> 
-        : ''}
-        </>
+        : <IssueSkeleton/>}
+        {/* <IssueSkeleton/> */}
+        </section> 
     )
 }
 

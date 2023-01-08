@@ -6,14 +6,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 0 1rem;
 }
 #issue-page .issue{
     display: flex;
     flex-direction: column;
-    width: 90%; 
-    max-width: 45rem;
-    border-radius: 1rem;
-    padding: 2rem 1.5rem;
+    gap: 1rem;
+    width: 100%; 
+    max-width: 42rem;
+    border-radius: .75rem;
+    padding: 1.5rem;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
 }
@@ -35,6 +37,9 @@
     display: flex;
     align-items: center;
     gap: .75rem;
+}
+#issue-page .issue-creator:hover {
+    scale: 1.05;
 }
 #issue-page .profile-picture-wrapper {
     display: flex;
@@ -66,6 +71,15 @@
     justify-content: center;
     border-radius: .5rem;
     overflow: hidden;
+}
+#issue-page .issue-link {
+    font-weight: 500;
+}
+#issue-page .issue-status span.resolved {
+    color: rgb(0, 128, 28);
+}
+#issue-page .issue-status span.pending {
+    color: rgb(0, 107, 128);
 }
 #issue-page .issue-description {
     font-weight: 500;
