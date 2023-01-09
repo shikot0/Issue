@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const Users = require('../Models/userModel');
 const generateToken = require('../utils/generateToken'); 
-require('dotenv').config();
+// require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 module.exports.register = async (req, res, next) => {
@@ -17,7 +17,7 @@ module.exports.register = async (req, res, next) => {
         }
         
         
-        const token = jwt.sign({password}, process.env.SECRET);
+        const token = jwt.sign({password}, 'sarangeulhaetda');
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await Users.create({
