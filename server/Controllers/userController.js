@@ -17,7 +17,7 @@ module.exports.register = async (req, res, next) => {
         }
         
         
-        const token = jwt.sign({password}, 'sarangeulhaetda');
+        const token = jwt.sign({password}, process.env.JWT_SECRET);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await Users.create({
