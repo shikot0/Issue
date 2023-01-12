@@ -1,3 +1,6 @@
+header.hide-nav {
+    display: none;
+}
 header {
     display: flex;
     align-items: center;
@@ -59,7 +62,7 @@ header nav {
     height: 3px;
     width: 50%;
     border-radius: .25rem;
-    background-color: var(--primary-cta-color);
+    background-color: var(--secondary-cta-color);
     opacity: 0;
     transition: .2s;
 }
@@ -70,14 +73,13 @@ header nav {
 .navigation-link.active-page {
     translate: 0 -10%;
     scale: 1.05;
-    color: var(--primary-cta-color);
 }
 .navigation-link.active-page::after {
     opacity: 1;
     translate: -45% 0;
 }
 .navigation-link.active-page svg {
-    fill: var(--primary-cta-color);
+    fill: var(--secondary-cta-color);
 }
 header .user {
     /* background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); */

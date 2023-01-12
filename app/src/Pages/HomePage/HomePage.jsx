@@ -3,9 +3,9 @@ import {useNavigate} from 'react-router-dom';
 import LatestIssues from '../../Components/LatestIssues/LatestIssues';
 import CompanyItem from '../../Components/CompanyItem/CompanyItem';
 import SearchBar from '../../Components/SearchBar/SearchBar'
-import './Home.css';
+import './HomePage.css';
 
-function Home() {
+function HomePage() {
     const navigate = useNavigate();
     useEffect(() => {
         if(!document.cookie.split('=')[1]) {
@@ -29,4 +29,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default HomePage;

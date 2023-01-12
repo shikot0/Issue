@@ -2,9 +2,7 @@
   --primary-color: #1d1d1d;
   --secondary-color: #232728;
   --tertiary-color: #3b3e3e;
-  /* --primary-cta-color: #58adc5; */
-  --primary-cta-color: #00F6FF;
-  /* --secondary-cta-color: #735094; */
+  --primary-cta-color: #0026ff;
   --secondary-cta-color: #FF00DD;
   --primary-text-color: #8e94af;
   --secondary-text-color: #717589;
@@ -13,11 +11,12 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Red Hat Text';
+  font-family: 'Inter';
   color: var(--primary-text-color);
 }
 body {
-  background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
+  /* background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b); */
+  background-image: radial-gradient(circle at 0 0, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
   overflow-x: hidden;
 }
 main {
@@ -32,6 +31,9 @@ main {
 #register-page, #home-page, #new-issue-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
+  /* margin: 3% 0 0; */
+}
+#new-issue-page, #issue-page, #account-page {
   margin: 3% 0 0;
 }
 input, .text-box {
@@ -114,9 +116,11 @@ input button {
   height: 50%;
   top: -4%;
   left: -4%;
-  border-radius: .125rem;
-  border-top: .15rem solid var(--primary-cta-color);
-  border-left: .15rem solid var(--primary-cta-color);
+  border-radius: .125rem 0 0 0;
+  /* border-top: .15rem solid var(--primary-cta-color);
+  border-left: .15rem solid var(--primary-cta-color); */
+  border-top: .15rem solid var(--secondary-cta-color);
+  border-left: .15rem solid var(--secondary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
   transition-delay: .25s;
 }
@@ -127,15 +131,19 @@ input button {
   height: 50%;
   bottom: -4%;
   right: -4%;
-  border-radius: .125rem;
-  border-right: .15rem solid var(--secondary-cta-color);
-  border-bottom: .15rem solid var(--secondary-cta-color);
+  border-radius: 0 0 .125rem 0;
+  /* border-right: .15rem solid var(--secondary-cta-color);
+  border-bottom: .15rem solid var(--secondary-cta-color); */
+  border-right: .15rem solid var(--primary-cta-color);
+  border-bottom: .15rem solid var(--primary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
   transition-delay: .25s;
 }
 .gradient-text {
   background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
-  background-size: 150%;
+  background-image: url('../public/gradient-bg.png');
+  /* background-size: 150%; */
+  background-size: 100%;
   background-clip: text;
   color: transparent;
 }

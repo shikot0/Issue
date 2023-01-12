@@ -1,3 +1,6 @@
+footer.hide-nav {
+    display: none;
+}
 footer {
     position: fixed;
     bottom: 0;
@@ -16,41 +19,6 @@ footer.hidden {
 footer .navigation-link svg {
     width: 2rem;
 }
-/* .footer-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--primary-text-color);
-    position: relative;
-}
-.footer-link::after {
-    content: '';
-    position: absolute;
-    top: 110%;
-    left: 50%;
-    translate: -50% -50%;
-    height: 3px;
-    width: 50%;
-    border-radius: .25rem;
-    background-color: var(--primary-cta-color);
-    opacity: 0;
-    transition: .2s;
-}
-.footer-link svg {
-    width: 1.75rem;
-    fill: rgba(255, 255, 255, 0.75);
-}
-.footer-link.active-page {
-    color: var(--primary-cta-color);
-}
-.footer-link.active-page::after {
-    opacity: 1;
-    translate: -50% 0;
-}
-.footer-link.active-page svg {
-    fill: var(--primary-cta-color);
-} */
 
 @media screen and (max-width: 800px) {
     main {

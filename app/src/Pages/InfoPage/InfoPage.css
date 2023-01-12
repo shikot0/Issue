@@ -1,0 +1,45 @@
+#info-page {
+    align-items: center;
+    /* background-image: url('../../../public/gradient-bg.png'); */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+#info-page header {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end;
+    padding: .75rem 1.5rem;
+}
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    min-height: 90vh;
+}
+#info-page h1 {
+    max-width: 55rem;
+    text-align: center;
+    font-size: clamp(1.75rem, 6.5vw, 5rem);
+}
+
+.features-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;    
+}
+.feature {
+    width: 90%;
+    max-width: 40rem;
+    display: flex;
+    justify-content: space-between;
+}
+.feature-text {
+    width: 50%;
+}
+.feature-image {
+    width: 50%;
+}
