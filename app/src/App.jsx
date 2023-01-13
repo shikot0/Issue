@@ -8,6 +8,7 @@ import NewIssuePage from './Pages/NewIssuePage/NewIssuePage';
 import RegisterWebsitePage from './Pages/RegisterWebsitePage/RegisterWebsitePage.jsx';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
+import WebsitePage from './Pages/WebsitePage/WebsitePage';
 import Footer from './Components/Footer/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import './App.css';
@@ -35,13 +36,14 @@ function App() {
               <Route path="/home" element={<HomePage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
               <Route path="/user/:username" element={<AccountPage/>}/>
-              <Route path="/newissue" element={<NewIssuePage/>}/>
+              <Route path="/website/:name" element={<WebsitePage/>}/>
+              <Route path="/newissue/:websiteName" element={<NewIssuePage/>}/>
               <Route path="/registerwebsite" element={<RegisterWebsitePage/>}/>
               <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
         </main> 
         <Footer/>
-      <Analytics/>
+      {/* <Analytics/> */}
     </> 
   );
 }

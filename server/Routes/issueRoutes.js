@@ -9,5 +9,6 @@ router.get('/allissues/:username', getAllIssues);
 router.get('/issue/:id', getIssue);
 router.get('/issuescreenshot/:id', getIssueScreenshot);
 router.put('/editissue', editIssue);
+// router.patch('/editissue', editIssue);
 
 module.exports = router; 

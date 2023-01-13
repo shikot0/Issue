@@ -1,14 +1,17 @@
-.companies-grid {
+#home-page h2 {
+    text-align: center;
+    margin: 5% 0;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+}
+.websites-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-auto-rows: 12rem;
     gap: 1.6rem;
     min-height: 15rem;
 }
-#home-page h2 {
-    text-align: center;
-    margin: 5% 0;
-    font-size: clamp(1rem, 3vw, 1.4rem);
+.websites-grid a{
+    text-decoration: none;
 }
 
 @media screen and (max-width: 800px) {

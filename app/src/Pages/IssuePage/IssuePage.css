@@ -32,6 +32,10 @@
     align-items: center;
     justify-content: space-between;
 }
+#issue-page .issue-name {
+    width: 35%;
+    word-wrap: break-word;
+}
 #issue-page .user {
     all: unset;
     display: flex;
@@ -92,5 +96,6 @@
     gap: 2rem;
 }
 #issue-page *:focus {
-    outline: none;
+    border-radius: .15rem;
+    outline: 1px solid var(--primary-cta-color);
 }

@@ -17,12 +17,15 @@
     justify-content: center;
     border: 3px solid var(--primary-cta-color);
     border-radius: 1rem; 
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
+    overflow: hidden;
     width: 19%;
     aspect-ratio: 1/.9;  
 }
 .company .company-image-wrapper img {
-    width: 70%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .company .company-about {
     display: flex;
@@ -39,12 +42,15 @@
 }
 .domain {
     font-size: .8rem;
-    padding: .25rem .75rem;
-    border-radius: .3rem;
-    /* background-color: rgb(183, 183, 183); */
-    color: var(--secondary-color);
+    padding: .5rem .75rem;
+    border-radius: .15rem;
+    text-align: center;
+    word-wrap: break-word;
     font-weight: 600;
-    background-color: var(--secondary-cta-color);
+    color: var(--cta-text-color);
+    background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
+    background-size: 200%;
+    animation: animated-background 120s linear infinite forwards;
 }
 #new-issue-page form {
     display: flex;

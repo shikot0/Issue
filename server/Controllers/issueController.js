@@ -35,13 +35,14 @@ module.exports.setIssueScreenshot = async (req, res,next) => {
 module.exports.editIssue = async (req, res, next) => {
     try {
         const {id, name, link, description} = req.body;
+        console.log(id, name, link, description)
         const issue = await Issues.findOne({_id: id});
         console.log('test')
         issue.name = name;
         issue.link = link;
         issue.description = description;
         await issue.save();
-        return res.json({msg: 'successfully edited issue'})
+        return res.json({status: 200, msg: 'Successfully edited issue'})
     } catch(err) {
         next(err);
     }
@@ -61,7 +62,7 @@ module.exports.getIssueScreenshot = async (req, res, next) => {
 module.exports.getIssue = async (req, res, next) => {
     try {   
         const id = req.params.id;
-        const issue = await Issues.find({_id:id}).select([
+        const issue = await Issues.findOne({_id:id}).select([
             "_id",
             "openedBy",
             "name",
@@ -71,7 +72,7 @@ module.exports.getIssue = async (req, res, next) => {
             "dateOfCreation"
         ]);
         // console.log(issue)
-        return res.json(...issue);
+        return res.json(issue);
     } catch(err) {
         next(err);
     }

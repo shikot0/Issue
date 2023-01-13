@@ -45,7 +45,7 @@ function Header() {
             <div className="header-content">
                 <div className="logo">
                     {/* <img src="" alt="" /> */}
-                    <a href="issue.com" className='logo'>ISSUE</a>
+                    <Link to='/home' className='logo'>ISSUE</Link>
                 </div>
                 {user ? 
                 <>

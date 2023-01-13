@@ -22,7 +22,7 @@ function useIssues(username,id) {
             .then(res => res.json())
             .then(data => {setIssues(data)})
         }
-    },[username])
+    },[id, username])
     return issues; 
 }
 

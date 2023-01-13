@@ -10,10 +10,13 @@ function RegisterWebsitePage() {
     const [uploadedImage, setUploadedImage] = useState('');
     const navigate = useNavigate();
     const user = useUsers();
+    const domainInput = useRef();
+    const newDomainButton = useRef();
+    const domainsWrapper = useRef();
     const [website, setWebsite] = useState({
         registeredBy: '',
         websiteName: '',
-        domain: '',
+        domains: [],
         primaryContact: '',
         secondaryContact: ''
     });
@@ -65,16 +68,39 @@ function RegisterWebsitePage() {
     }
 
     function handleWebsiteData(e) {
-        setWebsite({...website, [e.target.name]: e.target.value})
+        setWebsite({...website, [e.target.name]: e.target.value});
     }
+    
+    function handleDeleteDomain(index) { 
+        let newDomains = website.domains;
+        newDomains.splice(index,1);
+        setWebsite({...website, domains: [...newDomains]}) 
+        console.log(website)  
+    }
+
+    function handleAddDomain() {
+        console.log(domainInput.current.value)
+        if(domainInput.current.value !== '') {
+            setWebsite({...website, domains: [...website.domains, domainInput.current.value]});
+            domainInput.current.value = '';
+        }
+        console.log(website)
+    }
+
+    function handleEnterButton(e) {
+        if(e.key === 'Enter') {
+            newDomainButton.current.click();
+        }
+    }
+
     function registerWebsite() {
         // console.log(website)
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);
         if(!website.websiteName) {
             toast.error('Please name your website', toastOptions);
-        }else if(!website.domain) {
-            toast.error('Please provide a valid domain', toastOptions);
+        }else if(website.domains.length === 0) {
+            toast.error('Please provide at least one valid domain', toastOptions);
         }else if(!website.primaryContact) {
             toast.error('Please add your primary contact for this website', toastOptions)
         }else if(!website.secondaryContact) {
@@ -99,7 +125,7 @@ function RegisterWebsitePage() {
                     .then(data => {
                         if(data.status) {
                             toast.success(message, {...toastOptions, autoClose: 1000});
-                            // setTimeout(() => {navigate('/home')}, 2000)
+                            setTimeout(() => {navigate('/home')}, 2000)
                         }
                     }).catch(err => {
                         console.error(err.message)
@@ -128,16 +154,28 @@ function RegisterWebsitePage() {
                         <input onInput={handleWebsiteData} type="text" name='websiteName' placeholder='e.g Issue'/>
                     </div>
                     <div className="input-wrapper">
-                        <label htmlFor="domain">Example Domain</label>
-                        <input onInput={handleWebsiteData} type="text" name='domain' placeholder='e.g issue.com'/>
-                    </div>
-                    <div className="input-wrapper">
                         <label htmlFor="primaryContact">Primary Contact</label>
                         <input onInput={handleWebsiteData} type="text" name='primaryContact' placeholder='e.g issue@gmail.com'/>
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="secondaryContact">Secondary Contact</label>
                         <input onInput={handleWebsiteData} type="text" name='secondaryContact' placeholder='e.g issuehelp@gmail.com'/>
+                    </div>
+                    {/* <div className="input-wrapper">
+                        <label htmlFor="domain">Example Domain</label>
+                        <input onInput={handleWebsiteData} type="text" name='domain' placeholder='e.g issue.com'/>
+                    </div> */}
+                    <div className="input-wrapper">
+                        <label htmlFor="domain">Domains:</label>
+                        <input ref={domainInput} className='domain-input' onKeyDown={handleEnterButton} type="text" name='domain' placeholder='e.g issue.com'/>
+                        <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
+                        </button>
+                    </div>
+                    <div ref={domainsWrapper} className="domains-wrapper">
+                        {website.domains.length !== 0 ? website.domains.map((domain,index) => {
+                            return <p key={index} onClick={() => {handleDeleteDomain(index)}} className="domain deletable">{domain}</p>
+                        }): null}
                     </div>
                 </section>
             </form>

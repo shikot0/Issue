@@ -1,19 +1,23 @@
 import {useState, useEffect, useRef} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import { createIssueRoute, getWebsiteRoute, websiteImageRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
 import {ToastContainer, toast} from 'react-toastify';
-import { createIssueRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
-import {useNavigate} from 'react-router-dom';
 import useUsers from '../../utils/useUsers';
 import 'react-toastify/dist/ReactToastify.css';
 import './NewIssuePage.css';
+import useWebsites from '../../utils/useWebsites';
 
 function NewIssuePage() {
+    const {websiteName} = useParams();
     const user = useUsers();
     const [issue, setIssue] = useState({
         name: '',
         link: '',
         description: '',
         openedBy: '',
-    })
+    });
+    const {websites: website} = useWebsites(websiteName);
+    // console.log(websiteName) 
     const [uploadedImage, setUploadedImage] = useState('');
     const imageInput = useRef();
     const navigate = useNavigate();
@@ -35,6 +39,15 @@ function NewIssuePage() {
             navigate('/register')
         }
     },[navigate])
+
+    // useEffect(() => {
+    //     fetch(`${getWebsiteRoute}/${websiteName}`)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data);
+    //         setWebsite(data);
+    //     })
+    // },[websiteName])
 
     useEffect(() => {
         setIssue(prev => {
@@ -118,20 +131,22 @@ function NewIssuePage() {
         <section id="new-issue-page">
             <div className="company">
                 <div className="company-image-wrapper">
-                    <img src={`${process.env.PUBLIC_URL}/logo-google.svg`} alt="" />
+                    {/* <img src={`${process.env.PUBLIC_URL}/logo-google.svg`} alt="" /> */}
+                    {website ? <img src={`${websiteImageRoute}/${website._id}`} alt="website" /> : null}
                 </div>
                 <div className="company-about">
-                    <h2 className="name">Google</h2>
+                    <h2 className="name">{website ? website.name: 'website'}</h2> 
                     <div className="domain-wrapper">
-                        <p className='domain'>google.com</p>
-                        <p className='domain'>google.uk</p>
+                        {website && website.domains && website.domains.map((domain, index) => {
+                            return <p className='domain' key={index}>{domain}</p>
+                        })}
                     </div>
                 </div>
             </div>
             <form>
                 <div className="name-and-link">
                     <input onInput={handleIssueData} type="text" name="name" placeholder='Name of issue'/>
-                    <input onInput={handleIssueData} type="url" name="link" placeholder="Link to the site" />
+                    <input onInput={handleIssueData} type="url" name="link" /*placeholder="Link to the site"*/ placeholder={website ? website.domains[0] : 'issue.com'}/>
                 </div>
                 <textarea onInput={handleIssueData} name="description" className='text-box' placeholder='A short description of the issue'></textarea>
                 <div className="image-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>

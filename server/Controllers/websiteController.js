@@ -2,11 +2,11 @@ const Websites = require('../Models/websiteModel');
 
 module.exports.registerWebsite = async (req, res, next) => {
     try {
-        const {registeredBy, websiteName, domain, primaryContact, secondaryContact} = req.body;
+        const {registeredBy, websiteName, domains, primaryContact, secondaryContact} = req.body;
         const website = await Websites.create({
             registeredBy,
-            name: websiteName,
-            domain,
+            name: websiteName.toLowerCase(),
+            domains,
             primaryContact,
             secondaryContact,
             dateOfCreation: new Date().toDateString()
@@ -35,6 +35,7 @@ module.exports.setWebsiteImage = async (req, res, next) => {
 module.exports.websiteImage = async (req, res, next) => {
     try {
         const id = req.params.id;
+        console.log(id)
         const website = await Websites.findOne({_id: id}); 
         res.type('Content-Type', website.websiteImage.ContentType)
         return res.status(200).send(website.websiteImage.Data)
@@ -43,13 +44,28 @@ module.exports.websiteImage = async (req, res, next) => {
     }
 }
 
+module.exports.getWebsite = async (req, res, next) => {
+    try {
+        const name = req.params.name;
+        const website = await Websites.findOne({name: name.toLowerCase()}).select([
+            "_id",
+            "name",
+            "domains",
+            "registeredBy"
+        ])
+        console.log(website)
+        return res.json(website);
+    } catch(err) {
+        next(err);
+    }
+}
+
 module.exports.getAllWebsites = async (req, res, next) => {
     try {
-        const id = req.params.id;
         const websites = await Websites.find().select([
             "_id",
-            "domain",
-            "name"
+            "name",
+            "domains"
         ]); 
         return res.json(websites)
     } catch(err) {

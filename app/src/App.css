@@ -6,6 +6,7 @@
   --secondary-cta-color: #FF00DD;
   --primary-text-color: #8e94af;
   --secondary-text-color: #717589;
+  --cta-text-color: #121516;
 }
 *, *::before, *::after {
   box-sizing: border-box;
@@ -24,11 +25,10 @@ main {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  /* background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b); */
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #home-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
+#register-page, #home-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   /* margin: 3% 0 0; */
@@ -39,7 +39,6 @@ main {
 input, .text-box {
   padding: .5rem 0 .5rem 1rem;
   font-weight: 600;
-  background-color: #ecfbff;
   color: var(--primary-text-color);
   background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
               linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
@@ -145,6 +144,41 @@ input button {
 .cta.danger::before, .cta.danger::after {
   display: none;
 }
+.helper-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
+              linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
+  border: 3px solid transparent;
+  border-radius: .3rem;
+  padding: .25rem .5rem;
+}
+.helper-button svg {
+  width: 1.5rem;
+  fill: var(--secondary-cta-color);
+}
+.deletable {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.deletable::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.75);
+  opacity: 0;
+  transition: .2s;
+}
+.deletable:hover::after {
+  opacity: 1;
+}
+
 .gradient-text {
   background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
   background-image: url('../public/gradient-bg.png');

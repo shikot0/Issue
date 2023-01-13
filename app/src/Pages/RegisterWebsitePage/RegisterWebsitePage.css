@@ -47,6 +47,19 @@
     align-items: center;
     justify-content: space-between;
 }
+.domains-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+    /* grid-auto-rows: 12rem; */
+    align-items: center;
+    gap: 1rem;
+}
+.domain-input {
+    /* all: unset; */
+    text-align: center;
+    width: 9rem;
+    padding: .5rem;
+}
 
 @media screen and (max-width: 600px) {
     #register-website-page {

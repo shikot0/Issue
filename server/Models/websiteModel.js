@@ -23,8 +23,8 @@ const websiteSchema = new mongoose.Schema(
         //     min: 10,
         //     max: 300
         // },
-        domain: {
-            type: String,
+        domains: {
+            type: Array,
             required: true,
         },
         issues: {

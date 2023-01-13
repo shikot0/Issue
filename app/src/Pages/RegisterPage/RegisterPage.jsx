@@ -80,7 +80,6 @@ function RegisterPage() {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
 
-            
             fetch(registerRoute, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -101,11 +100,14 @@ function RegisterPage() {
                     }).then(res => res.json())
                       .then(data => {
                         if(data.status === 200) {
+                            console.log(data)
                             navigate('/home');
                         }
                     }).catch(err => {
                         console.error(err.message)
                     })
+                }else {
+                    toast.error(data.msg, toastOptions)
                 }
                }).catch(err => {
                     console.error(err.message)
