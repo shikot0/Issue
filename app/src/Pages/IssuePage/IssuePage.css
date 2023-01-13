@@ -84,3 +84,13 @@
 #issue-page .issue-description {
     font-weight: 500;
 }
+#issue-page .edit-buttons-wrapper {
+    margin: 1rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+#issue-page *:focus {
+    outline: none;
+}

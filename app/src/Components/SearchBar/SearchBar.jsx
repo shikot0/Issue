@@ -1,8 +1,8 @@
 import './SearchBar.css';
 
-function SearchBar() {
+function SearchBar({query, setQuery}) {
     return (
-        <input type="search" placeholder="Search for a website..." className='searchbar'/>
+        <input value={query} onInput={e => {setQuery(e.target.value)}} type="search" placeholder="Search for a website..." className='searchbar'/>
     )
 }
 

@@ -14,9 +14,20 @@ function InfoPage() {
                 <div className="feature">
                     <div className="feature-text">
                         <h3>Use it on any device!</h3>
-                        <p className="feature-description"></p>
+                        <p className="feature-description">
+                            Issue can be used on any device with an internet connection which allows you to report issues from wherever you are in the World!
+                        </p>
                     </div>
-                    <img src={`${process.env.PUBLIC_URL}/devices.png`} alt="devices" className='feature-image'/>
+                    <img src={`${process.env.PUBLIC_URL}/devices.svg`} alt="devices" className='feature-image' />
+                </div>
+                <div className="feature">
+                    <div className="feature-text">
+                        <h3>Use it on any device!</h3>
+                        <p className="feature-description">
+                            Issue can be used on any device with an internet connection which allows you to report issues from wherever you are in the World!
+                        </p>
+                    </div>
+                    <img src={`${process.env.PUBLIC_URL}/devices.svg`} alt="devices" className='feature-image' />
                 </div>
             </section>
         </section>

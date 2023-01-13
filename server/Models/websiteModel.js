@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const issueSchema = new mongoose.Schema(
+const websiteSchema = new mongoose.Schema(
     {
-        openedBy: {
+        registeredBy: {
             type: String,
             required: true
         },
@@ -17,23 +17,31 @@ const issueSchema = new mongoose.Schema(
             min: 5,
             max: 50
         },
-        description: {
+        // description: {
+        //     type: String,
+        //     required: true,
+        //     min: 10,
+        //     max: 300
+        // },
+        domain: {
             type: String,
             required: true,
-            min: 10,
-            max: 300
         },
-        link: {
-            type: String,
-            required: true,
+        issues: {
+            type: Number,
+            min: 0
         },
-        screenshot: {
+        websiteImage: {
             Data: Buffer,
             ContentType: String
         },
-        resolved: {
-            type: Boolean,
-            default: false,
+        primaryContact: {
+            type: String,
+            required: true,
+        },
+        secondaryContact: {
+            type: String,
+            required: true,
         },
         dateOfCreation: {
             type: Date,
@@ -45,4 +53,4 @@ const issueSchema = new mongoose.Schema(
 );
 
 
-module.exports = mongoose.model('Issues', issueSchema)
+module.exports = mongoose.model('Websites', websiteSchema)

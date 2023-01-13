@@ -8,8 +8,7 @@
     margin: 0 auto 3%;
     color: var(--primary-color);
     color: #121516;
-    background-image: linear-gradient(to right, #0ca8ad, #9f0e8c);
-    /* background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color)); */
+    background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
     background-size: 200%;
     animation: animated-background 120s linear infinite forwards;
 }

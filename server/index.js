@@ -5,15 +5,17 @@ const cookieParser = require('cookie-parser');
 const fileuploader = require('express-fileupload');
 const userRoutes = require('./Routes/userRoutes');
 const issueRoutes = require('./Routes/issueRoutes');
+const websiteRoutes = require('./Routes/websiteRoutes');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(fileuploader());
-app.use(cookieParser('test-12243i4-3i7432-8'));
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use('/api/user', userRoutes);
 app.use('/api/issue', issueRoutes); 
+app.use('/api/website', websiteRoutes); 
 
 mongoose.set('strictQuery', false);
 

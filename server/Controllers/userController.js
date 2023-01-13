@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
 const Users = require('../Models/userModel');
+const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken'); 
 // require('dotenv').config();
 const jwt = require('jsonwebtoken');
@@ -26,7 +26,6 @@ module.exports.register = async (req, res, next) => {
             token,
             password: hashedPassword
         });
-        console.log(user) 
         return res.json({id: user._id, token, status: 200})
     } catch(err) {
         next(err);
@@ -71,7 +70,6 @@ module.exports.setProfilePicture = async (req, res, next) => {
 module.exports.user = async (req, res, next) => {
     try {
         const username = req.params.username;
-        // console.log(username)
         const user = await Users.findOne({username: username}).select([
             "_id",
             "email",
@@ -83,10 +81,6 @@ module.exports.user = async (req, res, next) => {
     }
 }
 
-// module.exports.currentUser = async (req, res, next) => {    
-//     console.log('test')
-// }
-
 module.exports.currentUser = async (req, res, next) => {
     try {
         const userToken = req.params.token;
@@ -95,7 +89,6 @@ module.exports.currentUser = async (req, res, next) => {
                 "email",
                 "username", 
             ]);
-        // console.log(user)
         res.json(user)          
     } catch(err) {
         next(err);

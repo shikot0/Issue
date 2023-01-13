@@ -5,25 +5,27 @@ import InfoPage from './Pages/InfoPage/InfoPage.jsx';
 import HomePage from './Pages/HomePage/HomePage.jsx';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import NewIssuePage from './Pages/NewIssuePage/NewIssuePage';
+import RegisterWebsitePage from './Pages/RegisterWebsitePage/RegisterWebsitePage.jsx';
 import IssuePage from './Pages/IssuePage/IssuePage';
 import AccountPage from './Pages/AccountPage/AccountPage';
 import Footer from './Components/Footer/Footer';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
-// require('dotenv').config();
 
 function App() {
   // const navigate = useNavigate();
+  const header = document.querySelector('header');
+  const footer = document.querySelector('footer');
+
   useEffect(() => {
     // if(window.location.pathname === '/') {
     //   navigate('/register')
     // }
-    if(window.location.pathname === '/') {
-      document.querySelector('header').classList.add('hide-nav')
-      document.querySelector('footer').classList.add('hide-nav')
+    if(window.location.pathname === '/') {;
+      document.querySelector('header').classList.add('hide-nav');
+      document.querySelector('footer').classList.add('hide-nav');
     }
-  },[]) 
-  // console.log(process.env.REACT_APP_API_KEY)
+  },[header, footer]) 
   return (
     <>
         <Header/>
@@ -34,11 +36,12 @@ function App() {
               <Route path="/register" element={<RegisterPage/>}/>
               <Route path="/user/:username" element={<AccountPage/>}/>
               <Route path="/newissue" element={<NewIssuePage/>}/>
+              <Route path="/registerwebsite" element={<RegisterWebsitePage/>}/>
               <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
         </main> 
         <Footer/>
-      {/* <Analytics/> */}
+      <Analytics/>
     </> 
   );
 }

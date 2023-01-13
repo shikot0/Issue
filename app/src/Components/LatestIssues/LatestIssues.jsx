@@ -1,18 +1,17 @@
-import {useState, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import IssueItem from "../IssueItem/IssueItem";
 import {IssueItemSkeleton} from '../../Skeletons/Skeletons';
-import './LatestIssues.css';
-import { useEffect } from 'react';
 import { latestIssuesRoute } from '../../utils/APIRoutes';
+import './LatestIssues.css';
 
 function LatestIssues() {
     const [issues, setIssues] = useState([]);
-    const slider = useRef();
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [noIssues, setNoIssues] = useState(false);
+    const slider = useRef();
 
     useEffect(() => {
         fetch(latestIssuesRoute).then(res => res.json())
@@ -75,17 +74,6 @@ function LatestIssues() {
                     <IssueItemSkeleton/>
                     <IssueItemSkeleton/>
                 </>}
-
-                {/* {issues.length && !noIssues === 0 ? 
-                    <>
-                    <IssueItemSkeleton/>
-                    <IssueItemSkeleton/>
-                    <IssueItemSkeleton/>
-                    <IssueItemSkeleton/>
-                    <IssueItemSkeleton/>
-                    </>
-                : null} */}
-                
             </div> : null}
         {noIssues ? 
             <h2>There have been no issues reported today.</h2>

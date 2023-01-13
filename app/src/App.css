@@ -28,7 +28,7 @@ main {
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #home-page, #new-issue-page, #issue-page, #account-page {
+#register-page, #home-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   /* margin: 3% 0 0; */
@@ -38,16 +38,19 @@ main {
 }
 input, .text-box {
   padding: .5rem 0 .5rem 1rem;
-  border-radius: .4rem;
   font-weight: 600;
   background-color: #ecfbff;
   color: var(--primary-text-color);
-  border: 3px solid var(--primary-cta-color);
+  background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
+              linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
+  border: 3px solid transparent;
+  background-size: 150% 100%;
+  border-radius: .4rem;
+  animation: gradient-bg 30s linear infinite forwards;
 }
 input:focus, .text-box:focus {
   outline: none;
-  /* border: 3px solid var(--secondary-color); */
-  border: 3px solid var(--primary-cta-color);
+  background-size: 300% 100%;
 }
 input button {
   padding: .5rem 1rem;
@@ -81,15 +84,15 @@ input button {
 
 .cta {
   padding: .5rem 1rem;
-  border-radius: .25rem;
+  border-radius: .125rem;
   border: none;
   font-weight: 700;
   cursor: pointer;
   position: relative;
-  /* overflow: hidden; */
   background: transparent;
   transition: .2s;
-  background-color: var(--tertiary-color);
+  /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
+  background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
 }
 .cta:hover {
   transition-delay: .225s;
@@ -115,10 +118,8 @@ input button {
   width: 25%;
   height: 50%;
   top: -4%;
-  left: -4%;
-  border-radius: .125rem 0 0 0;
-  /* border-top: .15rem solid var(--primary-cta-color);
-  border-left: .15rem solid var(--primary-cta-color); */
+  left: -2%;
+  border-radius: .125rem 0 0;
   border-top: .15rem solid var(--secondary-cta-color);
   border-left: .15rem solid var(--secondary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
@@ -130,19 +131,23 @@ input button {
   width: 25%;
   height: 50%;
   bottom: -4%;
-  right: -4%;
-  border-radius: 0 0 .125rem 0;
-  /* border-right: .15rem solid var(--secondary-cta-color);
-  border-bottom: .15rem solid var(--secondary-cta-color); */
+  right: -2%;
+  border-radius: 0 0 .125rem;
   border-right: .15rem solid var(--primary-cta-color);
   border-bottom: .15rem solid var(--primary-cta-color);
   transition: .3s cubic-bezier(.68,-0.55,.27,1.55);
   transition-delay: .25s;
 }
+.cta.danger {
+  background: red;
+  color: var(--primary-color);
+}
+.cta.danger::before, .cta.danger::after {
+  display: none;
+}
 .gradient-text {
   background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
   background-image: url('../public/gradient-bg.png');
-  /* background-size: 150%; */
   background-size: 100%;
   background-clip: text;
   color: transparent;

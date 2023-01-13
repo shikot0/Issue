@@ -32,6 +32,21 @@ module.exports.setIssueScreenshot = async (req, res,next) => {
     }
 }
 
+module.exports.editIssue = async (req, res, next) => {
+    try {
+        const {id, name, link, description} = req.body;
+        const issue = await Issues.findOne({_id: id});
+        console.log('test')
+        issue.name = name;
+        issue.link = link;
+        issue.description = description;
+        await issue.save();
+        return res.json({msg: 'successfully edited issue'})
+    } catch(err) {
+        next(err);
+    }
+}
+
 module.exports.getIssueScreenshot = async (req, res, next) => {
     try {   
         const id = req.params.id;

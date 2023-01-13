@@ -60,5 +60,10 @@ function IssueSkeleton() {
         </div>
     )
 }
+function WebsiteItemSkeleton() {
+    return (
+        <div className="website-item-skeleton"></div>
+    )
+}
 
-export {UsernameSkeleton, HeaderSkeleton, ShortTextSkeleton, MidLengthTextSkeleton, LongTextSkeleton, ParagraphSkeleton, ImageSkeleton, IssueSkeleton, ProfilePictureSkeleton, IssueItemSkeleton}
+export {UsernameSkeleton, HeaderSkeleton, ShortTextSkeleton, MidLengthTextSkeleton, LongTextSkeleton, ParagraphSkeleton, ImageSkeleton, IssueSkeleton, ProfilePictureSkeleton, IssueItemSkeleton, WebsiteItemSkeleton}
