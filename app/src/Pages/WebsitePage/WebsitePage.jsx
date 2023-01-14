@@ -12,6 +12,7 @@ function WebsitePage() {
             <div className="website-image-wrapper">
                 {website ? <img src={`${websiteImageRoute}/${website._id}`} alt="website" className='website-image' /> : null}
             </div>
+            <div className="website-details"></div>
         </section>
     )
 }
