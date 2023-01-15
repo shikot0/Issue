@@ -1,5 +1,6 @@
-// export const host = 'http://localhost:5000'; 
+// export const host = 'http://localhost:5000';  
 export const host  = 'https://issue-j83z.onrender.com';
+
 //          USER ROUTES
 export const loginRoute = `${host}/api/user/login`;
 export const registerRoute = `${host}/api/user/register`;
@@ -14,6 +15,7 @@ export const setIssueScreenshotRoute = `${host}/api/issue/setissuescreenshot`;
 export const editIssueRoute = `${host}/api/issue/editissue`;
 export const IssueScreenshotRoute = `${host}/api/issue/issuescreenshot`;
 export const allIssuesRoute = `${host}/api/issue/allissues`;
+export const getIssuesFromWebsiteRoute = `${host}/api/issue/issuesfromwebsite`;
 export const issueRoute = `${host}/api/issue/issue`;
 export const latestIssuesRoute = `${host}/api/issue/latestissues`;
 

@@ -1,0 +1,38 @@
+.issues-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
+    background-color: var(--secondary-color); 
+    border-radius: .75rem;
+    padding: 1.5rem;
+    grid-auto-rows: 11rem;
+    gap: 1.6rem;
+}
+.issues-wrapper:hover .issue:not(:hover) {
+    opacity: .5;
+}
+.issues-wrapper a {
+    text-decoration: none;
+}
+.filter-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    margin: 0 0 1rem;
+}
+.filter-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.filter-button.selected {
+    color: var(--primary-cta-color);
+    font-weight: 600;
+    text-decoration: underline;
+}
+.no-issues-hint {
+    text-align: center;
+    padding: 2rem 0 0;
+    width: 100%;
+}

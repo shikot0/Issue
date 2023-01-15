@@ -12,7 +12,6 @@
     text-overflow: ellipsis;
     overflow-y: hidden;
     position: relative;
-    /* cursor: pointer; */
     transition: .2s cubic-bezier(0.5,-0.21, 0.55, 1.44);
     animation: fade-in .3s linear 1 forwards;
 }
@@ -38,7 +37,7 @@
     opacity: 0;
     transition: .5s;
 }
-.issue-company-name {
+.issue-website-name {
     font-weight: 600;
 }
 .issue-main {

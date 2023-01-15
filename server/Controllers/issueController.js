@@ -1,16 +1,22 @@
 const Users = require('../Models/userModel');
 const Issues = require('../Models/issueModel');
+const Websites = require('../Models/websiteModel');
 
 module.exports.createIssue = async (req, res, next) => {
     try {
-        const {openedBy, name, link, description} = req.body;
+        const {openedBy, name, link, description, website} = req.body;
         const issue = await Issues.create({
             openedBy, 
             name,
             description, 
+            website,
             link,
             dateOfCreation: new Date().toDateString()
         });
+        const targetWebsite = await Websites.findOne({_id: website.id});
+        console.log(targetWebsite.issues)
+        targetWebsite.issues = targetWebsite.issues+1;
+        await targetWebsite.save();
         return res.json({status: true, id: issue._id});
     } catch(err) {
         next(err);
@@ -62,9 +68,10 @@ module.exports.getIssueScreenshot = async (req, res, next) => {
 module.exports.getIssue = async (req, res, next) => {
     try {   
         const id = req.params.id;
-        const issue = await Issues.findOne({_id:id}).select([
+        const issue = await Issues.findOne({_id: id}).select([
             "_id",
             "openedBy",
+            "website",
             "name",
             "description",
             "resolved",
@@ -73,6 +80,25 @@ module.exports.getIssue = async (req, res, next) => {
         ]);
         // console.log(issue)
         return res.json(issue);
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.getIssuesFromWebsite = async (req, res, next) => {
+    try {
+        const name = req.params.name;
+        const issues = await Issues.find({"website.name": name}).select([
+            "_id",
+            "openedBy",
+            "website",
+            "name",
+            "description",
+            "resolved",
+            "link",
+            "dateOfCreation"
+        ]);
+        return res.json(issues);
     } catch(err) {
         next(err);
     }
@@ -88,6 +114,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "website",
                 "link",
                 "resolved"
             ])
@@ -96,6 +123,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "website",
                 "link",
                 "resolved"
             ])
@@ -112,6 +140,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
         let issues = await Issues.find({dateOfCreation: currentDate}).select([
             'name',
             'description',
+            'website',
             'resolved',
             "link",
             'openedBy'

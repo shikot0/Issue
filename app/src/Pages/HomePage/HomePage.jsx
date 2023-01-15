@@ -39,10 +39,8 @@ function HomePage() {
                             return false;
                         }
                     }
-                    // return website;
                 }).map((websiteDetails,index) => {
                     return <Link key={index} to={`/newissue/${websiteDetails.name.toLowerCase()}`}><WebsiteItem websiteDetails={websiteDetails}/></Link>
-                    // return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
                 }):
                 <>
                     <WebsiteItemSkeleton/>

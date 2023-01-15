@@ -37,6 +37,9 @@ main {
 #new-issue-page, #issue-page, #account-page {
   margin: 3% 0 0;
 }
+#website-page {
+  margin: 10% 0 0;
+}
 input, .text-box {
   padding: .5rem 0 .5rem 1rem;
   font-weight: 600;
@@ -180,10 +183,24 @@ input button {
   opacity: 1;
 }
 
+.gradient-bg {
+  background-image: url('../public/gradient-bg.png');
+  background-size: cover;
+}
 .gradient-text {
   background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
   background-image: url('../public/gradient-bg.png');
   background-size: 100%;
   background-clip: text;
   color: transparent;
+}
+.gradient-border {
+  background: linear-gradient(transparent, transparent) padding-box,
+  linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
+}
+
+@media screen and (max-width: 800px) {
+  #website-page {
+      margin: 15% 0 0;
+  }
 }

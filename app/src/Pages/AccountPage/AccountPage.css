@@ -28,11 +28,6 @@
     align-items: center;
     justify-content: center;
     overflow: hidden; 
-    background: linear-gradient(transparent, transparent) padding-box,
-                linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;
-    
-    background: linear-gradient(transparent, transparent) padding-box,
-                linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
     border: .3rem solid transparent;
     translate: -5% 0;
 }
@@ -46,46 +41,8 @@
     font-size: clamp(1rem, 2vw, 1.5rem);
     font-weight: 600;
 }
-.issues-grid-wrapper {
+#account-page .issues-grid-wrapper {
     width: 65%;
-}
-.issues-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-    /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
-    background-color: var(--secondary-color); 
-    border-radius: .75rem;
-    padding: 1.5rem;
-    grid-auto-rows: 11rem;
-    gap: 1.6rem;
-}
-.issues-grid:hover .issue:not(:hover) {
-    opacity: .5;
-}
-.filter-buttons-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .75rem;
-    margin: 0 0 1rem;
-}
-.filter-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-}
-.filter-button.selected {
-    color: var(--primary-cta-color);
-    font-weight: 600;
-    text-decoration: underline;
-}
-.no-issues-hint {
-    text-align: center;
-    padding: 2rem 0 0;
-    width: 100%;
-}
-#account-page a {
-    text-decoration: none;
 }
 @media screen and (max-width: 800px) {
     #account-page {
@@ -94,7 +51,7 @@
     #account-page .user {
         width: 100%;
     }
-    .issues-grid-wrapper {
+    #account-page .issues-grid-wrapper {
         width: 100%;
     }
     .profile-picture-wrapper {

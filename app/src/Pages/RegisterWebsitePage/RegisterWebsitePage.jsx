@@ -43,6 +43,7 @@ function RegisterWebsitePage() {
         e.preventDefault();
         if(e.target.files[0].size < 400000) {
             setUploadedImage(e.target.files[0]);
+            e.target.classList.remove('drag-over');
         }else {
             toast.error('Please choose a smaller image', toastOptions)
         }

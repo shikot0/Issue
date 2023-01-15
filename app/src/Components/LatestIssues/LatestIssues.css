@@ -10,7 +10,7 @@
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    margin: 0 0 3%; 
+    margin: 3% 0; 
     border-radius: .25rem;
     padding: .1rem .25rem;
     position: relative;

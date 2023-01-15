@@ -1,0 +1,65 @@
+#website-page header {
+    all: unset;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    align-content: flex-end;
+    grid-template-rows: 100%;
+    max-height: 6rem; 
+    gap: 3rem;
+    background-image: linear-gradient(to bottom right, black, black);
+    border-radius: 1rem 1rem 0 1rem;
+}
+#website-page .website-image-wrapper {
+    position: relative;
+    align-self: flex-end;
+    width: 11rem;
+    height: 11rem;
+    border: 3px solid transparent;
+}
+#website-page header .website-name {
+    align-self: flex-end;
+    padding: 0 0 1.5rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+#website-page .website-details-wrapper {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    padding: 0 0 1rem;
+}
+.detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.detail-value {
+    font-size: 1.8rem;
+}
+#website-page .issues-grid-wrapper {
+    margin: 4% 0 0;
+}
+.add-issue-button {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    /* border: 1px solid rgba(255, 255, 255, 0.1); */
+    word-wrap: break-word;
+    padding: .5rem;
+    border-radius: .5rem;
+    width: 100%;
+    height: 100%;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    position: relative;
+    animation: fade-in .3s linear 1 forwards;
+    transition: .2s cubic-bezier(0.5,-0.21, 0.55, 1.44);
+}
+.add-issue-button:hover {
+    scale: 1.025;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
+}
+.add-issue-button svg {
+    fill: rgba(0, 0, 0, 0.75);
+}

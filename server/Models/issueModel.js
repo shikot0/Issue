@@ -6,11 +6,10 @@ const issueSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        // website: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'website',
-        //     required: true
-        // },
+        website: {
+            type: Object,
+            required: true
+        },
         name: {
             type: String,
             required: true,

@@ -61,7 +61,7 @@ function Header() {
                         </Link>
                     </nav>
                     <div className="user" onClick={showUserModal}>
-                        <div className="profile-picture-wrapper">
+                        <div className="profile-picture-wrapper gradient-border">
                             <img className='profile-picture' src={`${getProfilePictureRoute}/${user._id}`} alt="" />
                         </div>
                         <p className="username gradient-text">{user ? user.username : 'user'}</p>

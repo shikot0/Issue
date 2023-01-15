@@ -11,7 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 function IssuePage() {
     const [inEditMode, setInEditMode] = useState(false);
     const {id} = useParams();
-    const issue = useIssues(null,id);
+    const {issues: issue} = useIssues(null,null,id);
     const user = useUsers(issue.openedBy);
     const [editedValues, setEditedValues] = useState({
         id: id,

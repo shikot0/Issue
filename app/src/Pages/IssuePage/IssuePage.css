@@ -32,8 +32,14 @@
     align-items: center;
     justify-content: space-between;
 }
+/* #issue-page header * {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
 #issue-page .issue-name {
-    width: 35%;
+    max-width: 35%;
     word-wrap: break-word;
 }
 #issue-page .user {

@@ -10,16 +10,16 @@ import useWebsites from '../../utils/useWebsites';
 function NewIssuePage() {
     const {websiteName} = useParams();
     const user = useUsers();
+    const {websites: website} = useWebsites(websiteName);
+    const [uploadedImage, setUploadedImage] = useState('');
+    const imageInput = useRef();
     const [issue, setIssue] = useState({
         name: '',
+        website: '',
         link: '',
         description: '',
         openedBy: '',
     });
-    const {websites: website} = useWebsites(websiteName);
-    // console.log(websiteName) 
-    const [uploadedImage, setUploadedImage] = useState('');
-    const imageInput = useRef();
     const navigate = useNavigate();
 
     function handleFocus() {
@@ -40,20 +40,17 @@ function NewIssuePage() {
         }
     },[navigate])
 
-    // useEffect(() => {
-    //     fetch(`${getWebsiteRoute}/${websiteName}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log(data);
-    //         setWebsite(data);
-    //     })
-    // },[websiteName])
-
     useEffect(() => {
         setIssue(prev => {
             return {...prev, openedBy: user.username}
         })
     },[user])
+
+    useEffect(() => {
+        setIssue(prev => {
+           return  {...prev, website: {id: website?._id, name: website?.name}}
+        })
+    },[website])
 
     function handleShowUserImage(e) {
         e.preventDefault();
@@ -68,6 +65,7 @@ function NewIssuePage() {
         e.preventDefault();
         if(e.dataTransfer.files[0].size < 1000000) {
             setUploadedImage(e.dataTransfer.files[0]);
+            e.target.classList.remove('drag-over');
         }else {
             toast.error('Please choose a smaller image', toastOptions)
         }
@@ -90,6 +88,7 @@ function NewIssuePage() {
     function createIssue() {
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);
+        
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);
         }else if(!issue.link) {
@@ -98,7 +97,8 @@ function NewIssuePage() {
             toast.error('Please add a short description of the issue', toastOptions)
         }else if(!uploadedImage) {
             toast.error('Please add an image of the issue', toastOptions);
-        }else if(issue.openedBy){
+        }else if(issue.openedBy && issue.website) {
+            // console.log(issue)
             fetch(`${createIssueRoute}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},

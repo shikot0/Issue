@@ -29,6 +29,7 @@ const websiteSchema = new mongoose.Schema(
         },
         issues: {
             type: Number,
+            default: 0,
             min: 0
         },
         websiteImage: {
