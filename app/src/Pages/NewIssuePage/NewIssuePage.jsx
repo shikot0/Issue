@@ -1,18 +1,20 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { createIssueRoute, getWebsiteRoute, websiteImageRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
+import { createIssueRoute, websiteImageRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
 import {ToastContainer, toast} from 'react-toastify';
 import useUsers from '../../utils/useUsers';
 import 'react-toastify/dist/ReactToastify.css';
 import './NewIssuePage.css';
 import useWebsites from '../../utils/useWebsites';
+import { ImageSkeleton } from '../../Skeletons/Skeletons';
 
 function NewIssuePage() {
     const {websiteName} = useParams();
-    const user = useUsers();
+    const {user} = useUsers();
     const {websites: website} = useWebsites(websiteName);
     const [uploadedImage, setUploadedImage] = useState('');
     const imageInput = useRef();
+    const linkInput = useRef();
     const [issue, setIssue] = useState({
         name: '',
         website: '',
@@ -48,9 +50,15 @@ function NewIssuePage() {
 
     useEffect(() => {
         setIssue(prev => {
-           return  {...prev, website: {id: website?._id, name: website?.name}}
+           return  {...prev, website: {id: website?._id, name: website?.queryName}}
         })
     },[website])
+    console.log(website)
+
+    function handleAutofill(e) {
+        console.log(e.target.innerText)
+        linkInput.current.value = e.target.innerText;
+    }
 
     function handleShowUserImage(e) {
         e.preventDefault();
@@ -131,14 +139,15 @@ function NewIssuePage() {
         <section id="new-issue-page">
             <div className="company">
                 <div className="company-image-wrapper">
-                    {/* <img src={`${process.env.PUBLIC_URL}/logo-google.svg`} alt="" /> */}
-                    {website ? <img src={`${websiteImageRoute}/${website._id}`} alt="website" /> : null}
+                    {website ? 
+                    <img src={`${websiteImageRoute}/${website._id}`} alt="website" /> : 
+                    <ImageSkeleton/>}
                 </div>
                 <div className="company-about">
                     <h2 className="name">{website ? website.name: 'website'}</h2> 
                     <div className="domain-wrapper">
                         {website && website.domains && website.domains.map((domain, index) => {
-                            return <p className='domain' key={index}>{domain}</p>
+                            return <p className='domain' onClick={handleAutofill} key={index}>{domain}</p>
                         })}
                     </div>
                 </div>
@@ -146,7 +155,7 @@ function NewIssuePage() {
             <form>
                 <div className="name-and-link">
                     <input onInput={handleIssueData} type="text" name="name" placeholder='Name of issue'/>
-                    <input onInput={handleIssueData} type="url" name="link" /*placeholder="Link to the site"*/ placeholder={website ? website.domains[0] : 'issue.com'}/>
+                    <input onInput={handleIssueData} ref={linkInput} type="url" name="link" /*placeholder="Link to the site"*/ placeholder={website ? website.domains[0] : 'issue.com'}/>
                 </div>
                 <textarea onInput={handleIssueData} name="description" className='text-box' placeholder='A short description of the issue'></textarea>
                 <div className="image-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>

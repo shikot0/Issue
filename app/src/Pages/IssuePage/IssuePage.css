@@ -6,12 +6,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 80vh;
     padding: 0 0 1rem;
 }
 #issue-page .issue{
     display: flex;
     flex-direction: column;
-    position: relative;
     gap: 1rem;
     width: 100%; 
     max-width: 42rem;
@@ -42,15 +42,6 @@
 #issue-page .issue-name {
     max-width: 40%;
     word-wrap: break-word;
-}
-.edit-button {
-    border: none;
-    font-size: 1rem;
-    position: absolute;
-    bottom: 1%;
-    left: 50%;
-    translate: -50%;
-    cursor: pointer;
 }
 #issue-page .user {
     all: unset;
@@ -111,7 +102,67 @@
     justify-content: center;
     gap: 2rem;
 }
+.edit-button {
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
 #issue-page *:focus:not(button){
     border-radius: .15rem;
     outline: 1px solid var(--primary-cta-color);
+}
+#issue-page .tooltip-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+#issue-page .issue-tooltip {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem;
+    border-radius: .5rem;
+    bottom: 125%;
+    left: 50%;
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    translate: -50% 25%;
+}
+#issue-page .issue-tooltip.visible {
+    opacity: 1;
+    pointer-events: all;
+    translate: -50% 0%;
+}
+#issue-page .delete-issue-modal {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    text-align: center;
+    box-shadow: 0 0 10rem black;
+    padding: 1rem;
+    gap: 2rem;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 35rem;
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+    border-radius: .5rem;
+    opacity: 0;
+    pointer-events: none;
+    translate: -50% 25%;
+    z-index: 10;
+}
+#issue-page .delete-issue-modal.visible {
+    opacity: 1;
+    pointer-events: all;
+    translate: -50% -50%;
+}
+#issue-page .delete-issue-modal .modal-buttons-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
 }

@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import useUsers from '../../utils/useUsers';
 import './Footer.css'
 function Footer() {
-    const user = useUsers();
+    const {user} = useUsers();
     return(
         <footer className={!user ? 'hidden' : null}>
             <Link to='/home' className='navigation-link'>

@@ -49,6 +49,8 @@ function IssuesWrapper({issues, website}) {
                     </AnimatePresence>
                 </motion.div>
             </div>
+        : website ? 
+            <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> 
         : <h3 className='no-issues-hint'>There are no issues</h3>}
         </> 
     )

@@ -1,6 +1,12 @@
+import {useNavigate} from 'react-router-dom';
 import './InfoPage.css';
 
 function InfoPage() {
+    const navigate = useNavigate();
+
+    function handleNavigate() {
+        navigate('/register')
+    }
     return(
         <section id="info-page">
             {/* <header>
@@ -8,9 +14,9 @@ function InfoPage() {
             </header> */}
             <section className="hero-section">
                 <h1 className='gradient-text'>The new way to report bugs</h1>
-                <button type='button' className='cta gradient-text'>Sign In</button>
+                <button type='button' className='cta gradient-text' onClick={handleNavigate}>Sign In</button>
             </section>
-            <section className="features-section">
+            <section className="features-section"> 
                 <div className="feature">
                     <div className="feature-text">
                         <h3>Use it on any device!</h3>

@@ -3,9 +3,8 @@ import {getUserRoute} from './APIRoutes';
 import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
-    // username = username.toLowerCase();
-    // let name = username.toLowerCase();
     const [user, setUser] = useState('');
+    const [noUsers, setNoUser] = useState(false);
     
     useEffect(() => {
         if(username) {
@@ -13,6 +12,9 @@ function useUsers(username) {
             .then(res => res.json())
             .then(data => {
                 setUser(data);
+                if(!data) {
+                    setNoUser(true)
+                }
             }).catch(err => {
                 console.error(err.message)
             })
@@ -23,7 +25,9 @@ function useUsers(username) {
                 .then(res => res.json())
                 .then(data => {
                     setUser(data);
-                    // console.log(data)
+                    if(!data) {
+                        setNoUser(true)
+                    }
                 }).catch(err => {
                     console.error(err.message)
                 })
@@ -31,7 +35,7 @@ function useUsers(username) {
         }
     },[username]); 
 
-    return user
+    return {user, noUsers}
 }
 
 export default useUsers;

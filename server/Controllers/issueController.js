@@ -13,8 +13,9 @@ module.exports.createIssue = async (req, res, next) => {
             link,
             dateOfCreation: new Date().toDateString()
         });
+
         const targetWebsite = await Websites.findOne({_id: website.id});
-        targetWebsite.numberOfIssues = targetWebsite.numberOfIssues+1;
+        targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
 
         await targetWebsite.save();
         return res.json({status: true, id: issue._id});
@@ -32,9 +33,27 @@ module.exports.setIssueScreenshot = async (req, res, next) => {
         issue.screenshot.ContentType = mimetype; 
 
         await issue.save();
-        return res.json({msg:'Your issue was successfully created!',status: true});
+        return res.json({msg:'Your issue was successfully created!', status: true});
     } catch(err) {
         next(err)
+    }
+}
+
+module.exports.deleteIssue = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const issue = await Issues.findOne({_id:id});
+        if(issue) {
+            const targetWebsite = await Websites.findOne({_id: issue.website.id});
+            await Issues.deleteOne({_id:id});
+            targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
+            await targetWebsite.save();
+            res.json({status: 200, msg: 'Issue has been deleted'});
+        }else {
+            res.json({status: 400, msg: 'There has been an error please try again'});
+        }
+    } catch(err) {
+        next(err);
     }
 }
 
@@ -99,12 +118,18 @@ module.exports.getIssue = async (req, res, next) => {
             "link",
             "dateOfCreation"
         ]);
+        if(issue) {
+            // console.log(issue)
+            return res.json(issue);
+        }else {
+            return res.json({status: 404})
+        }
         // console.log(issue)
-        return res.json(issue);
     } catch(err) {
         next(err);
     }
 }
+
 
 module.exports.getIssuesFromWebsite = async (req, res, next) => {
     try {
@@ -120,6 +145,7 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
             "link",
             "dateOfCreation"
         ]);
+        console.log(issues)
         return res.json(issues);
     } catch(err) {
         next(err);

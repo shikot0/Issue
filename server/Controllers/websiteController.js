@@ -3,15 +3,22 @@ const Websites = require('../Models/websiteModel');
 module.exports.registerWebsite = async (req, res, next) => {
     try {
         const {registeredBy, websiteName, domains, primaryContact, secondaryContact} = req.body;
-        const website = await Websites.create({
-            registeredBy,
-            name: websiteName,
-            domains,
-            primaryContact,
-            secondaryContact,
-            dateOfCreation: new Date().toDateString()
-        })
-        res.json({status: 200, msg: 'Your Website was successfully registered!', id: website._id})
+        const websiteCheck = await Websites.findOne({queryName: websiteName.toLowerCase()});
+
+        if(websiteCheck) {
+            return res.json({status: 400, msg: 'A website has already been registered with that name, please choose another.'})
+        }else {
+            const website = await Websites.create({
+                registeredBy,
+                name: websiteName,
+                queryName: websiteName.toLowerCase(),
+                domains,
+                primaryContact,
+                secondaryContact,
+                dateOfCreation: new Date().toDateString()
+            })
+            return res.json({status: 200, msg: 'Your Website was successfully registered!', id: website._id})
+        }
     } catch(err) {
         next(err);
     }
@@ -47,10 +54,11 @@ module.exports.websiteImage = async (req, res, next) => {
 module.exports.getWebsite = async (req, res, next) => {
     try {
         const name = req.params.name;
-        const website = await Websites.findOne({name: name.toLowerCase()}).select([
+        const website = await Websites.findOne({queryName: name.toLowerCase()}).select([
             "_id",
             "name",
             "domains",
+            "queryName",
             "numberOfIssues",
             "registeredBy"
         ])
@@ -66,9 +74,10 @@ module.exports.getAllWebsites = async (req, res, next) => {
         const websites = await Websites.find().select([
             "_id",
             "name",
+            "queryName",
             "numberOfIssues",
             "domains"
-        ]); 
+        ]).sort({name: 1}); 
         return res.json(websites)
     } catch(err) {
         next(err)

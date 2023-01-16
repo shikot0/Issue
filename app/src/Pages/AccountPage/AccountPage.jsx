@@ -9,8 +9,8 @@ import './AccountPage.css';
 
 function AccountPage() {
     const {username} = useParams();
-    const user = useUsers(username);
-    const {issues, noIssues} = useIssues(username);
+    const {user} = useUsers(username);
+    const {issues} = useIssues(username);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,6 +22,8 @@ function AccountPage() {
 
     return(
         <section id="account-page">
+            {user ?
+            <>
             <div className="user"> 
                 {user ? 
                     <>
@@ -40,6 +42,8 @@ function AccountPage() {
                 : null}
             </div>
             <IssuesWrapper issues={issues}/>
+            </>
+            : <h3 className='not-found-hint'>Sorry this user could not be found.</h3>}
         </section>
     )
 }

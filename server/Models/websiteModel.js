@@ -17,6 +17,12 @@ const websiteSchema = new mongoose.Schema(
             min: 5,
             max: 50
         },
+        queryName: {
+            type: String,
+            required: true,
+            min: 5,
+            max: 50
+        },
         // description: {
         //     type: String,
         //     required: true,

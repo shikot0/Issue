@@ -35,7 +35,6 @@ function RegisterPage() {
         if(document.cookie.split('=')[1]) {
             navigate('/home')
         }
-        // console.log()
     }, [navigate])
 
 

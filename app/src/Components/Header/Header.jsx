@@ -6,7 +6,7 @@ import './Header.css';
 function Header() {
     const userModal = useRef();
     const navigate = useNavigate();
-    const user = useUsers();
+    const {user} = useUsers();
     
     function logout() {
         // localStorage.removeItem('user');

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { allIssuesRoute, issueRoute,  getIssuesFromWebsiteRoute } from "./APIRoutes";
 
-function useIssues(username,website,id) {
+function useIssues(username, website, id) {
     const [issues, setIssues] = useState([]);
     const [noIssues, setNoIssues] = useState(false);
     useEffect(() => {
@@ -13,34 +13,54 @@ function useIssues(username,website,id) {
                 if(data.length === 0) {
                     setNoIssues(true);
                 }
+            }).catch(err => {
+                console.log(err)
             })
         }else if(!username && website) {
             fetch(`${getIssuesFromWebsiteRoute}/${website}`)
             .then(res => res.json())
             .then(data => {
                 setIssues(data);
+                console.log(data)
                 if(data.length === 0) {
                     setNoIssues(true);
                 }
-            console.log(data)
+            // console.log(data)
+        }).catch(err => {
+            console.log(err)
         })
         }else if(!username && id) {
             fetch(`${issueRoute}/${id}`)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 500) {
+                    setNoIssues(true);
+                }else {
+                    return res.json()
+                }
+            })
             .then(data => {
                 setIssues(data);
-                if(data.length === 0) {
+                // console.log(data);
+                if(data.status === 404 ) {
                     setNoIssues(true);
                 }
+            }).catch(err => {
+                console.log(err)
             })
         }else {
             fetch(`${allIssuesRoute}/all`)
             .then(res => res.json())
             .then(data => {
                 setIssues(data)
+                if(data.length === 0) {
+                    setNoIssues(true);
+                }
+            }).catch(err => {
+                console.log(err)
             })
         }
-    },[username, website, id])
+    },[username, website, id]);
+
     return {issues, noIssues}; 
 }
 

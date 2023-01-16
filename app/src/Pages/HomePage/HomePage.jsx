@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import { getAllRegisteredWebsitesRoute } from '../../utils/APIRoutes';
 import LatestIssues from '../../Components/LatestIssues/LatestIssues';
 import WebsiteItem from '../../Components/WebsiteItem/WebsiteItem';
 import SearchBar from '../../Components/SearchBar/SearchBar';
@@ -9,7 +8,6 @@ import useWebsites from '../../utils/useWebsites';
 import './HomePage.css';
 
 function HomePage() {
-    // const [websites, setWebsites] = useState([]);
     const [query, setQuery] = useState([]);
     const {websites, noWebsites} = useWebsites();
 
@@ -40,7 +38,7 @@ function HomePage() {
                         }
                     }
                 }).map((websiteDetails,index) => {
-                    return <Link key={index} to={`/newissue/${websiteDetails.name.toLowerCase()}`}><WebsiteItem websiteDetails={websiteDetails}/></Link>
+                    return <Link key={index} to={`/website/${websiteDetails.name.toLowerCase()}`}><WebsiteItem websiteDetails={websiteDetails}/></Link>
                 }):
                 <>
                     <WebsiteItemSkeleton/>

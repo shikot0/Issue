@@ -11,6 +11,9 @@ function useWebsites(name) {
             .then(res => res.json())
             .then(data => {
                 setWebsites(data);
+                if(!data) {
+                    setNoWebsites(true);
+                }
             })
         }else if(!name) {
             fetch(`${getAllRegisteredWebsitesRoute}`)

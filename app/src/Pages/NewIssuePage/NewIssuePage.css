@@ -40,23 +40,14 @@
     align-items: center;
     gap: 1rem;
 }
-.domain {
-    font-size: .8rem;
-    padding: .5rem .75rem;
-    border-radius: .15rem;
-    text-align: center;
-    word-wrap: break-word;
-    font-weight: 600;
-    color: var(--cta-text-color);
-    background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
-    background-size: 200%;
-    animation: animated-background 120s linear infinite forwards;
-}
 #new-issue-page form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 3.5rem;
+}
+#new-issue-page .domain {
+    cursor: pointer;
 }
 .name-and-link {
     display: flex;

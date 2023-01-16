@@ -9,7 +9,7 @@ function RegisterWebsitePage() {
     const imageInput = useRef();
     const [uploadedImage, setUploadedImage] = useState('');
     const navigate = useNavigate();
-    const user = useUsers();
+    const {user} = useUsers();
     const domainInput = useRef();
     const newDomainButton = useRef();
     const domainsWrapper = useRef();
@@ -117,7 +117,7 @@ function RegisterWebsitePage() {
             .then(res => res.json())
             .then(data => {
                 const message = data.msg;
-                if(data.status) {
+                if(data.status === 200) {
                     fetch(`${setWebsiteImageRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
@@ -131,6 +131,8 @@ function RegisterWebsitePage() {
                     }).catch(err => {
                         console.error(err.message)
                     })
+                }else if(data.status === 400) {
+                    toast.error(data.msg, toastOptions)
                 }
             }).catch(err => {
                 console.error(err.message);
