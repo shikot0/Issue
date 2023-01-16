@@ -13,6 +13,7 @@ export const getProfilePictureRoute = `${host}/api/user/profilepicture`;
 export const createIssueRoute = `${host}/api/issue/createissue`;
 export const setIssueScreenshotRoute = `${host}/api/issue/setissuescreenshot`;
 export const editIssueRoute = `${host}/api/issue/editissue`;
+export const attestIssueRoute = `${host}/api/issue/attestissue`;
 export const IssueScreenshotRoute = `${host}/api/issue/issuescreenshot`;
 export const allIssuesRoute = `${host}/api/issue/allissues`;
 export const getIssuesFromWebsiteRoute = `${host}/api/issue/issuesfromwebsite`;

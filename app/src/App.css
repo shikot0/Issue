@@ -4,7 +4,7 @@
   --secondary-color: #232728;
   --tertiary-color: #3b3e3e;
   --primary-cta-color: #0026ff;
-  --secondary-cta-color: #FF00DD;
+  --secondary-cta-color: #ff00dd;
   --primary-text-color: #8e94af;
   --secondary-text-color: #717589;
   --cta-text-color: #121516;
@@ -198,6 +198,8 @@ input button {
   background: linear-gradient(transparent, transparent) padding-box,
   linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
 }
+
+
 
 @media screen and (max-width: 800px) {
   #website-page {

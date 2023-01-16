@@ -27,7 +27,7 @@ const websiteSchema = new mongoose.Schema(
             type: Array,
             required: true,
         },
-        issues: {
+        numberOfIssues: {
             type: Number,
             default: 0,
             min: 0

@@ -51,7 +51,7 @@ function RegisterWebsitePage() {
     
     function handleDragImage(e) {
         e.preventDefault();
-        if(e.dataTransfer.files[0].size < 1000000) {
+        if(e.dataTransfer.files[0].size < 1500000) {
             setUploadedImage(e.dataTransfer.files[0]);
         }else {
             toast.error('Please choose a smaller image', toastOptions)

@@ -34,6 +34,7 @@ function IssueItem({issue}) {
                 <h3 className="issue-name">{issue.name}</h3>
                 <p className="issue-description">{truncate(issue.description, 50)}</p>
                 <p className='issue-creator gradient-text'>{issue.openedBy}</p>
+                <small className='issue-attests'>{issue.attests} attests</small>
                 {/* <Link to={`/u/${issue.openedBy}`} className='issue-creator gradient-text'>{issue.openedBy}</Link> */}
             </div>
         </motion.div>

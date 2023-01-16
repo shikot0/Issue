@@ -11,6 +11,7 @@
 #issue-page .issue{
     display: flex;
     flex-direction: column;
+    position: relative;
     gap: 1rem;
     width: 100%; 
     max-width: 42rem;
@@ -39,8 +40,17 @@
     justify-content: center;
 } */
 #issue-page .issue-name {
-    max-width: 35%;
+    max-width: 40%;
     word-wrap: break-word;
+}
+.edit-button {
+    border: none;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 1%;
+    left: 50%;
+    translate: -50%;
+    cursor: pointer;
 }
 #issue-page .user {
     all: unset;
@@ -101,7 +111,7 @@
     justify-content: center;
     gap: 2rem;
 }
-#issue-page *:focus {
+#issue-page *:focus:not(button){
     border-radius: .15rem;
     outline: 1px solid var(--primary-cta-color);
 }

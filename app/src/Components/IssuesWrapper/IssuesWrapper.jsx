@@ -18,7 +18,7 @@ function IssuesWrapper({issues, website}) {
 
     return (
         <>
-        {issues && !issues.length !== 0 ? 
+        {issues && issues.length !== 0 ? 
             <div className="issues-grid-wrapper">
                 <div className="filter-buttons-wrapper">
                     <button type='button' className="filter-button selected" value={''} onClick={handleFilter}>All</button>
@@ -49,7 +49,7 @@ function IssuesWrapper({issues, website}) {
                     </AnimatePresence>
                 </motion.div>
             </div>
-        : <h3>There are no issues</h3>}
+        : <h3 className='no-issues-hint'>There are no issues</h3>}
         </> 
     )
 }

@@ -3,10 +3,11 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import { IssueScreenshotRoute, getProfilePictureRoute } from '../../utils/APIRoutes';
 import {editIssueRoute} from '../../utils/APIRoutes';
 import {IssueSkeleton} from '../../Skeletons/Skeletons';
+import AttestButton from '../../Components/AttestButton/AttestButton';
 import useIssues from '../../utils/useIssues';
 import useUsers from '../../utils/useUsers';
-import './IssuePage.css';
 import { toast, ToastContainer } from 'react-toastify';
+import './IssuePage.css';
 
 function IssuePage() {
     const [inEditMode, setInEditMode] = useState(false);
@@ -19,12 +20,17 @@ function IssuePage() {
         link: '',
         description: '',
     })
+    const [attests, setAttests] = useState(0);
     const currentUser = useUsers(); 
     const name = useRef();
     const status = useRef();
     const link = useRef(); 
     const description = useRef();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setAttests(issue.attests);
+    },[issue])
 
     const toastOptions = {
         position: "top-right",
@@ -93,7 +99,7 @@ function IssuePage() {
                 <div className="issue">
                     <header>
                         <h2 ref={name} name='name' onKeyUp={handleInput} className="issue-name">{issue.name}</h2>
-                        {issue.openedBy === currentUser.username && !inEditMode ? <button type='button' className='cta gradient-text' onClick={() => {setInEditMode(true)}}>Edit</button> : null}
+                        {issue.openedBy === currentUser.username && !inEditMode ? <button type='button' className='edit-button gradient-text' onClick={() => {setInEditMode(true)}}>Edit</button> : null}
                         <div className="user">
                             <div className="profile-picture-wrapper">
                                 <img src={`${getProfilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
@@ -107,6 +113,7 @@ function IssuePage() {
                     <p ref={status} className='issue-status'>Status: <span className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
                     <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>
                     <p ref={description} name='description' onKeyUp={handleInput} className="issue-description">{issue.description}</p>
+                    <AttestButton issueId={issue._id} attests={attests} setAttests={setAttests}/>
                     {issue.openedBy === currentUser.username && inEditMode ? 
                         <div className="edit-buttons-wrapper">
                             <button type='button' className='cta danger' onClick={handleEditIssue}>Submit</button>

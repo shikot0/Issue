@@ -23,6 +23,10 @@
     font-weight: 700;
     font-size: 1.6rem;
 }
+#website-page header .header-skeleton {
+    align-self: flex-end;
+    margin: 0 0 1.5rem;
+}
 #website-page .website-details-wrapper {
     display: flex;
     align-items: center;
@@ -39,27 +43,4 @@
 }
 #website-page .issues-grid-wrapper {
     margin: 4% 0 0;
-}
-.add-issue-button {
-    display: flex;
-    flex-direction: column;
-    gap: .9rem;
-    /* border: 1px solid rgba(255, 255, 255, 0.1); */
-    word-wrap: break-word;
-    padding: .5rem;
-    border-radius: .5rem;
-    width: 100%;
-    height: 100%;
-    text-overflow: ellipsis;
-    overflow-y: hidden;
-    position: relative;
-    animation: fade-in .3s linear 1 forwards;
-    transition: .2s cubic-bezier(0.5,-0.21, 0.55, 1.44);
-}
-.add-issue-button:hover {
-    scale: 1.025;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
-}
-.add-issue-button svg {
-    fill: rgba(0, 0, 0, 0.75);
 }

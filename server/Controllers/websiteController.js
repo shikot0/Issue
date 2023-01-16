@@ -51,7 +51,7 @@ module.exports.getWebsite = async (req, res, next) => {
             "_id",
             "name",
             "domains",
-            "issues",
+            "numberOfIssues",
             "registeredBy"
         ])
         // console.log(website)
@@ -66,7 +66,7 @@ module.exports.getAllWebsites = async (req, res, next) => {
         const websites = await Websites.find().select([
             "_id",
             "name",
-            "issue",
+            "numberOfIssues",
             "domains"
         ]); 
         return res.json(websites)

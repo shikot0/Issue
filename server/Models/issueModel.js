@@ -16,11 +16,15 @@ const issueSchema = new mongoose.Schema(
             min: 5,
             max: 50
         },
+        attests: {
+            type: Number,
+            default: 0,
+        },
         description: {
             type: String,
             required: true,
             min: 10,
-            max: 300
+            max: 500
         },
         link: {
             type: String,

@@ -3,6 +3,7 @@ import useWebsites from '../../utils/useWebsites';
 import useIssues from '../../utils/useIssues';
 import { websiteImageRoute } from '../../utils/APIRoutes';
 import IssuesWrapper from '../../Components/IssuesWrapper/IssuesWrapper';
+import { HeaderSkeleton, ImageSkeleton } from '../../Skeletons/Skeletons';
 import './WebsitePage.css';
 
 function WebsitePage() {
@@ -13,13 +14,17 @@ function WebsitePage() {
         <section id="website-page">
             <header>
                 <div className="website-image-wrapper gradient-border">
-                    {website ? <img src={`${websiteImageRoute}/${website._id}`} alt="website" className='website-image' /> : null}
+                    {website ? 
+                    <img src={`${websiteImageRoute}/${website._id}`} alt="website" className='website-image' /> : 
+                    <ImageSkeleton/>}
                 </div>
-                <p className="website-name gradient-text">{website ? website.name : 'website name'}</p>
+                {website ? 
+                <p className="website-name gradient-text">{website.name}</p>
+                : <HeaderSkeleton/>}
                 <div className="website-details-wrapper">
                     <div className="detail">
-                        <h3 className='detail-value'>{website ? website.issues: 0}</h3>
-                        <p className='detail-name'>{website && website.issues === 1 ? 'Issue' : 'Issues'}</p>
+                        <h3 className='detail-value'>{website ? website.numberOfIssues: 0}</h3>
+                        <p className='detail-name'>{website && website.numberOfIssues === 1 ? 'Issue' : 'Issues'}</p>
                     </div>
                 </div>
             </header>

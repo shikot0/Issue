@@ -14,8 +14,8 @@ module.exports.createIssue = async (req, res, next) => {
             dateOfCreation: new Date().toDateString()
         });
         const targetWebsite = await Websites.findOne({_id: website.id});
-        console.log(targetWebsite.issues)
-        targetWebsite.issues = targetWebsite.issues+1;
+        targetWebsite.numberOfIssues = targetWebsite.numberOfIssues+1;
+
         await targetWebsite.save();
         return res.json({status: true, id: issue._id});
     } catch(err) {
@@ -23,7 +23,7 @@ module.exports.createIssue = async (req, res, next) => {
     }
 }
 
-module.exports.setIssueScreenshot = async (req, res,next) => {
+module.exports.setIssueScreenshot = async (req, res, next) => {
     try {
         const id = req.params.id;
         const {data, mimetype} = req.files.fileupload;
@@ -38,12 +38,32 @@ module.exports.setIssueScreenshot = async (req, res,next) => {
     }
 }
 
+module.exports.attestIssue = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const action = req.params.action;
+        const issue = await Issues.findOne({_id: id});
+        if(issue && action === 'attest') {
+            issue.attests = issue.attests+1;
+            issue.save();
+        } else if(issue && action === 'removeattest') {
+            issue.attests = issue.attests-1;
+            issue.save();
+        }else {
+            return res.json('error');
+        }
+        return res.json('successful')
+    } catch(err) {
+        next(err);
+    }
+}
+
 module.exports.editIssue = async (req, res, next) => {
     try {
         const {id, name, link, description} = req.body;
         console.log(id, name, link, description)
         const issue = await Issues.findOne({_id: id});
-        console.log('test')
+
         issue.name = name;
         issue.link = link;
         issue.description = description;
@@ -72,6 +92,7 @@ module.exports.getIssue = async (req, res, next) => {
             "_id",
             "openedBy",
             "website",
+            "attests",
             "name",
             "description",
             "resolved",
@@ -92,6 +113,7 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
             "_id",
             "openedBy",
             "website",
+            "attests",
             "name",
             "description",
             "resolved",
@@ -114,6 +136,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "attests",
                 "website",
                 "link",
                 "resolved"
@@ -123,6 +146,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "openedBy",
                 "name",
                 "description",
+                "attests",
                 "website",
                 "link",
                 "resolved"
@@ -141,6 +165,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'name',
             'description',
             'website',
+            'attests',
             'resolved',
             "link",
             'openedBy'
