@@ -29,7 +29,7 @@ function IssueItem({issue}) {
         exit={{opacity: 0}}
         layout 
         className="issue-item" onMouseMove={handleMouseMove}>
-            <small className="issue-website-name">{issue.website.name ? issue.website.name: 'unknown name'}</small>
+            <small className="issue-website-name">{issue.website && issue.website.name ? issue.website.name: 'unknown name'}</small>
             <div className="issue-main">
                 <h3 className="issue-name">{issue.name}</h3>
                 <p className="issue-description">{truncate(issue.description, 50)}</p>
