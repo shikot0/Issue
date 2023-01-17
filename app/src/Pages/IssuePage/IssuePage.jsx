@@ -84,7 +84,7 @@ function IssuePage() {
     },[inEditMode])
 
     function handleEditIssue() {
-        console.log(editedValues)
+        // console.log(editedValues)
         if(editedValues.id && editedValues.name && editedValues.link && editedValues.description) {
             fetch(editIssueRoute, {
                 headers: {"Content-Type": "application/json"},

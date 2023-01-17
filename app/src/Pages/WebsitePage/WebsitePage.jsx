@@ -11,7 +11,7 @@ function WebsitePage() {
     const {websites: website, noWebsites} = useWebsites(name);
     // console.log(website)
     const {issues} = useIssues(null, name, null);
-    console.log(issues)
+    // console.log(issues)
 
     const formatter = Intl.NumberFormat('en', {notation: 'compact'});
 

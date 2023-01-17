@@ -9,7 +9,7 @@ import './AccountPage.css';
 
 function AccountPage() {
     const {username} = useParams();
-    const {user} = useUsers(username);
+    const {user, noUsers} = useUsers(username);
     const {issues} = useIssues(username);
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function AccountPage() {
 
     return(
         <section id="account-page">
-            {user ?
+            {user && !noUsers ?
             <>
             <div className="user"> 
                 {user ? 

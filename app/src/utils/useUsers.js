@@ -4,7 +4,7 @@ import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
     const [user, setUser] = useState('');
-    const [noUsers, setNoUser] = useState(false);
+    const [noUsers, setNoUsers] = useState(false);
     
     useEffect(() => {
         if(username) {
@@ -13,7 +13,7 @@ function useUsers(username) {
             .then(data => {
                 setUser(data);
                 if(!data) {
-                    setNoUser(true)
+                    setNoUsers(true)
                 }
             }).catch(err => {
                 console.error(err.message)
@@ -26,7 +26,7 @@ function useUsers(username) {
                 .then(data => {
                     setUser(data);
                     if(!data) {
-                        setNoUser(true)
+                        setNoUsers(true)
                     }
                 }).catch(err => {
                     console.error(err.message)
