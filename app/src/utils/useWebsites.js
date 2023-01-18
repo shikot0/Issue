@@ -11,7 +11,7 @@ function useWebsites(name) {
             .then(res => res.json())
             .then(data => {
                 setWebsites(data);
-                if(!data) {
+                if(data.noWebsite) {
                     setNoWebsites(true);
                 }
             })
@@ -20,7 +20,7 @@ function useWebsites(name) {
             .then(res => res.json())
             .then(data => {
                 setWebsites(data);
-                if(data.length === 0) {
+                if(data.noWebsites) {
                     setNoWebsites(true);
                 }
             })

@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { createIssueRoute, websiteImageRoute, setIssueScreenshotRoute } from '../../utils/APIRoutes';
+import { createIssueRoute, websiteImageRoute, issueScreenshotRoute } from '../../utils/APIRoutes';
 import {ToastContainer, toast} from 'react-toastify';
 import useUsers from '../../utils/useUsers';
 import 'react-toastify/dist/ReactToastify.css';
@@ -115,7 +115,7 @@ function NewIssuePage() {
             .then(res => res.json())
             .then(data => {
                 if(data.status) {
-                    fetch(`${setIssueScreenshotRoute}/${data.id}`, {
+                    fetch(`${issueScreenshotRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
                     })

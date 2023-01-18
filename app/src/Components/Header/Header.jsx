@@ -1,28 +1,21 @@
 import {useEffect, useRef} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useUsers from '../../utils/useUsers';
-import { getProfilePictureRoute } from '../../utils/APIRoutes';
+import { profilePictureRoute } from '../../utils/APIRoutes';
+import NotificationItem from '../NotificationItem/NotificationItem';
 import './Header.css';
+
 function Header() {
-    const userModal = useRef();
-    const navigate = useNavigate();
+    const notificationsWrapper = useRef();
     const {user} = useUsers();
     
-    function logout() {
-        // localStorage.removeItem('user');
-        document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-        navigate('/register');
-    }
-
-    function showUserModal() {
-        userModal.current.classList.toggle('visible');
-    }
     
     const location = window.location.pathname;
     useEffect(() => {
         activeLink(location)
     }, [location])
 
+    
     let navigationLinks = document.querySelectorAll('.header-link');
     useEffect(() => {
         const location = window.location.pathname;
@@ -40,11 +33,14 @@ function Header() {
         })
     }
     
+    function handleNotificationsWrapper() {
+        notificationsWrapper.current.classList.toggle('visible');
+    }
+
     return (
         <header>
             <div className="header-content">
                 <div className="logo">
-                    {/* <img src="" alt="" /> */}
                     <Link to='/home' className='logo'>ISSUE</Link>
                 </div>
                 {user ? 
@@ -60,13 +56,21 @@ function Header() {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
                         </Link>
                     </nav>
-                    <div className="user" onClick={showUserModal}>
+                    <div className="user">
                         <div className="profile-picture-wrapper gradient-border">
-                            <img className='profile-picture' src={`${getProfilePictureRoute}/${user._id}`} alt="" />
+                            <img className='profile-picture' src={`${profilePictureRoute}/${user._id}`} alt="" />
                         </div>
-                        <p className="username gradient-text">{user ? user.username : 'user'}</p>
-                        <div ref={userModal} className="user-modal">
+                        {/* <p className="username gradient-text">{user ? user.username : 'user'}</p> */}
+                        {/* <div ref={userModal} className="user-modal">
                             <button className='logout-button' onClick={logout}>Log Out</button>
+                        </div> */}
+                        <div className="notification-section">
+                            <button type='button' className='notification-button' onClick={handleNotificationsWrapper}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="bell"><rect width="24" height="24" opacity="0"/><path d="M20.52 15.21l-1.8-1.81V8.94a6.86 6.86 0 0 0-5.82-6.88 6.74 6.74 0 0 0-7.62 6.67v4.67l-1.8 1.81A1.64 1.64 0 0 0 4.64 18H8v.34A3.84 3.84 0 0 0 12 22a3.84 3.84 0 0 0 4-3.66V18h3.36a1.64 1.64 0 0 0 1.16-2.79zM14 18.34A1.88 1.88 0 0 1 12 20a1.88 1.88 0 0 1-2-1.66V18h4zM5.51 16l1.18-1.18a2 2 0 0 0 .59-1.42V8.73A4.73 4.73 0 0 1 8.9 5.17 4.67 4.67 0 0 1 12.64 4a4.86 4.86 0 0 1 4.08 4.9v4.5a2 2 0 0 0 .58 1.42L18.49 16z"/></g></g></svg>
+                            </button>
+                            <div ref={notificationsWrapper} className="notifications-wrapper">
+                                <NotificationItem/>
+                            </div>
                         </div>
                     </div>
                 </>

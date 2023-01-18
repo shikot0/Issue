@@ -1,4 +1,4 @@
-import { attestIssueRoute } from '../../utils/APIRoutes';
+import { issueRoute } from '../../utils/APIRoutes';
 import {useState, useRef} from 'react';
 import './AttestButton.css';
 
@@ -10,14 +10,14 @@ function AttestButton({issueId, attests, setAttests}) {
             setAttested(true);
             setAttests(prev => prev+1);
             attestsWrapper.current.classList.add('gradient-text');
-            fetch(`${attestIssueRoute}/${issueId}/attest`, {
+            fetch(`${issueRoute}/${issueId}/attest`, {
                 method: 'PUT'
             })
         }else {
             setAttested(false);
             setAttests(prev => prev-1);
             attestsWrapper.current.classList.remove('gradient-text');
-            fetch(`${attestIssueRoute}/${issueId}/removeattest`, {
+            fetch(`${issueRoute}/${issueId}/removeattest`, {
                 method: 'PUT'
             })
         }

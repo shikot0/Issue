@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { getProfilePictureRoute } from '../../utils/APIRoutes';
+import { profilePictureRoute } from '../../utils/APIRoutes';
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
 import useUsers from '../../utils/useUsers';
 import useIssues from '../../utils/useIssues';
@@ -10,6 +10,7 @@ import './AccountPage.css';
 function AccountPage() {
     const {username} = useParams();
     const {user, noUsers} = useUsers(username);
+    const {user: currentUser} = useUsers();
     const {issues} = useIssues(username);
     const navigate = useNavigate();
 
@@ -18,19 +19,25 @@ function AccountPage() {
             navigate('/register')
         }
     },[navigate])
+
+    function logout() {
+        document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+        navigate('/register');
+    }
     
 
     return(
         <section id="account-page">
-            {user && !noUsers ?
+            {!noUsers ?
             <>
             <div className="user"> 
                 {user ? 
                     <>
                         <div className="profile-picture-wrapper gradient-border">
-                            <img src={`${getProfilePictureRoute}/${user._id}`} alt="" className="profile-picture" />
+                            <img src={`${profilePictureRoute}/${user._id}`} alt="" className="profile-picture" />
                         </div>
                         <p className="username gradient-text">{user.username}</p>
+                        {user.username === currentUser.username ? <button className='logout-button' onClick={logout}>logout</button> : null}
                     </>
                     : null
                 }

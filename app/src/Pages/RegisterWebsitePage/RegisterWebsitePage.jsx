@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useUsers from '../../utils/useUsers';
 import {toast, ToastContainer} from 'react-toastify';
-import { registerWebsiteRoute, setWebsiteImageRoute } from '../../utils/APIRoutes';
+import { registerWebsiteRoute, websiteImageRoute } from '../../utils/APIRoutes';
 import './RegisterWebsitePage.css';
 
 function RegisterWebsitePage() {
@@ -118,7 +118,7 @@ function RegisterWebsitePage() {
             .then(data => {
                 const message = data.msg;
                 if(data.status === 200) {
-                    fetch(`${setWebsiteImageRoute}/${data.id}`, {
+                    fetch(`${websiteImageRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
                     })

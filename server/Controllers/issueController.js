@@ -57,6 +57,26 @@ module.exports.deleteIssue = async (req, res, next) => {
     }
 }
 
+module.exports.resolveIssue = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const issue = await Issues.findOne({_id: id});
+
+        if(!issue.resolved) {
+            issue.resolved = true;
+            await issue.save();
+            return res.json({msg: 'successfully reopened issue!'})
+        }else {
+            issue.resolved = false;
+            await issue.save();
+            return res.json({msg: 'successfully closed issue!'})
+        }
+
+    } catch(err) {
+        next(err);
+    }
+}
+
 module.exports.attestIssue = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -80,7 +100,6 @@ module.exports.attestIssue = async (req, res, next) => {
 module.exports.editIssue = async (req, res, next) => {
     try {
         const {id, name, link, description} = req.body;
-        console.log(id, name, link, description)
         const issue = await Issues.findOne({_id: id});
 
         issue.name = name;
@@ -118,13 +137,12 @@ module.exports.getIssue = async (req, res, next) => {
             "link",
             "dateOfCreation"
         ]);
+
         if(issue) {
-            // console.log(issue)
             return res.json(issue);
         }else {
-            return res.json({status: 404})
+            return res.json({noIssue: true})
         }
-        // console.log(issue)
     } catch(err) {
         next(err);
     }
@@ -145,8 +163,12 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
             "link",
             "dateOfCreation"
         ]);
-        console.log(issues)
-        return res.json(issues);
+        
+        if(issues) {
+            return res.json(issues);
+        }else {
+            return res.json({noIssues: true})
+        }
     } catch(err) {
         next(err);
     }
@@ -178,7 +200,12 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "resolved"
             ])
         }
-        return res.json(issues)
+        
+        if(issues) {
+            return res.json(issues)
+        }else {
+            return res.json({noIssues: true})
+        }
     } catch(err) {
         next(err)
     }
@@ -195,14 +222,13 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'resolved',
             "link",
             'openedBy'
-        ]);
+        ]).sort({createdAt: -1});
         // console.log(issues) 
-        // if(issues.length !== 0) {
-        //     res.json(issues)
-        // }else {
-        //     res.json({msg:'No issues'})
-        // }
-        res.json(issues)
+        if(issues) {
+            return res.json(issues)
+        }else {
+            return res.json({noIssues: true})
+        }
     }catch(err) {
         next(err)
     }

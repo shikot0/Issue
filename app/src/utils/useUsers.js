@@ -12,7 +12,7 @@ function useUsers(username) {
             .then(res => res.json())
             .then(data => {
                 setUser(data);
-                if(!data) {
+                if(data.noUser) {
                     setNoUsers(true)
                 }
             }).catch(err => {
@@ -25,7 +25,7 @@ function useUsers(username) {
                 .then(res => res.json())
                 .then(data => {
                     setUser(data);
-                    if(!data) {
+                    if(data.noUser) {
                         setNoUsers(true)
                     }
                 }).catch(err => {

@@ -61,9 +61,13 @@ module.exports.getWebsite = async (req, res, next) => {
             "queryName",
             "numberOfIssues",
             "registeredBy"
-        ])
-        // console.log(website)
-        return res.json(website);
+        ]);
+
+        if(website) {
+            return res.json(website);
+        }else {
+            return res.json({noWebsite: true})
+        }
     } catch(err) {
         next(err);
     }
@@ -78,7 +82,12 @@ module.exports.getAllWebsites = async (req, res, next) => {
             "numberOfIssues",
             "domains"
         ]).sort({name: 1}); 
-        return res.json(websites)
+
+        if(websites) {
+            return res.json(websites)
+        }else {
+            return res.json({noWebsites: true})
+        }
     } catch(err) {
         next(err)
     }

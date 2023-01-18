@@ -1,0 +1,5 @@
+.notification-item {
+    border-top: 1px solid var(--primary-cta-color);
+    border-bottom: 1px solid var(--primary-cta-color);
+    padding: .5rem 1rem;
+}

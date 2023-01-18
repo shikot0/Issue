@@ -25,7 +25,7 @@ function HomePage() {
             <h2>Click on a website to open an issue!</h2>
             {!noWebsites ?
                 <div className="websites-grid">
-                {websites && websites.length !== 0 ? websites.filter(website => {
+                {!noWebsites && websites ? websites.filter(website => {
                     if(!query) {
                         return website;
                     }else {

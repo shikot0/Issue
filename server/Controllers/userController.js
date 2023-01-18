@@ -76,7 +76,11 @@ module.exports.user = async (req, res, next) => {
             "email",
             "username", 
         ]);
-        return await res.json(user);
+        if(user) {
+            return res.json(user);
+        }else {
+            return res.json({noUser: true})
+        }
     } catch(err) {
         next(err);
     }
@@ -90,7 +94,12 @@ module.exports.currentUser = async (req, res, next) => {
                 "email",
                 "username", 
             ]);
-        res.json(user)          
+
+        if(user) {
+            return res.json(user);
+        }else {
+            return res.json({noUser: true})
+        }
     } catch(err) {
         next(err);
     }
@@ -118,7 +127,7 @@ module.exports.allUsers = async (req, res, next) => {
         if(users) {
             return res.json(users);
         }else {
-            return res.json('There are no others online')
+            return res.json({noUsers: true})
         }
     }
     catch(err) {

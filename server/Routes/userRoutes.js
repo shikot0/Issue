@@ -4,8 +4,10 @@ const router = require('express').Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/setprofilepicture/:id', setProfilePicture);
+
+router.post('/profilepicture/:id', setProfilePicture);
 router.get('/profilepicture/:id', profilePicture);
+
 router.get('/user/:username', user);  
 router.get('/currentuser/:token', currentUser);
 // router.get('/allusers/:id', getAllUsers);

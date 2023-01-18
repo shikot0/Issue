@@ -10,7 +10,7 @@ function useIssues(username, website, id) {
             .then(res => res.json())
             .then(data => {
                 setIssues(data);
-                if(data.length === 0) {
+                if(data.noIssues) {
                     setNoIssues(true);
                 }
             }).catch(err => {
@@ -22,7 +22,7 @@ function useIssues(username, website, id) {
             .then(data => {
                 setIssues(data);
                 console.log(data)
-                if(data.length === 0) {
+                if(data.noIssues) {
                     setNoIssues(true);
                 }
             // console.log(data)
@@ -41,7 +41,7 @@ function useIssues(username, website, id) {
             .then(data => {
                 setIssues(data);
                 // console.log(data);
-                if(data.status === 404 ) {
+                if(data.noIssue) {
                     setNoIssues(true);
                 }
             }).catch(err => {
@@ -52,7 +52,7 @@ function useIssues(username, website, id) {
             .then(res => res.json())
             .then(data => {
                 setIssues(data)
-                if(data.length === 0) {
+                if(data.noIssues) {
                     setNoIssues(true);
                 }
             }).catch(err => {

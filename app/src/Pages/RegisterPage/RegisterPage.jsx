@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
-import { registerRoute, loginRoute, setProfilePictureRoute } from '../../utils/APIRoutes';
+import { registerRoute, loginRoute, profilePictureRoute } from '../../utils/APIRoutes';
 import 'react-toastify/dist/ReactToastify.css';
 import './RegisterPage.css';
 
@@ -93,7 +93,7 @@ function RegisterPage() {
                 if(data.status === 200) {
                     document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
                     document.cookie = `token=${data.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
-                    fetch(`${setProfilePictureRoute}/${data.id}`, {
+                    fetch(`${profilePictureRoute}/${data.id}`, {
                         method: "POST",
                         body: formData
                     }).then(res => res.json())
@@ -139,8 +139,8 @@ function RegisterPage() {
             if(response.status === 400) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === 200) {
-                document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-                document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
+                document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`;
+                document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`;
                 navigate('/home')
             }
         }

@@ -135,18 +135,23 @@ header .user-modal.visible {
 header .user-link:hover {
     color: var(--primary-cta-color);
 }
-header .logout-button {
-    font-weight: 700;
-    background-color: var(--secondary-cta-color);
-    border: none;
-    width: 100%;
-    color: var(--primary-color);
+header .notifications-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 125%;
+    left: 0;
+    min-width: 150%;
+    translate: -25% 0;
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     border-radius: .25rem;
-    padding: .25rem 0;
+    padding: .75rem 0;
+    opacity: 0;
+    pointer-events: none;
 }
-header .logout-button:hover {
-    background-color: red;
-    cursor: pointer;
+header .notifications-wrapper.visible {
+    opacity: 1;
+    pointer-events: all;
 }
 
 @media screen and (max-width: 800px) {
@@ -156,10 +161,10 @@ header .logout-button:hover {
     header .user {
         background: transparent;
     }
-    header .username {
+    /* header .username {
         display: none;
-    }
-    header .user-modal.visible {
-        translate: -65% 0;
+    } */
+    header .notifications-wrapper {
+        translate: -30% 0;
     }
 }

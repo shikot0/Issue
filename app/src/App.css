@@ -196,7 +196,7 @@ input button {
   color: transparent;
 }
 .gradient-border {
-  background: linear-gradient(transparent, transparent) padding-box,
+  background: linear-gradient(var(--primary-color), var(--primary-color)) padding-box,
   linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
 }
 .domain {
@@ -221,6 +221,7 @@ input button {
 }
 .open-tooltip-button svg {
   width: 1.5rem;
+  fill: var(--secondary-cta-color);
 }
 .not-found-hint {
   position: absolute;
@@ -229,7 +230,31 @@ input button {
   text-align: center;
   translate: -50% -50%;
 }
-
+.notification-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.notification-button svg {
+  width: 1.25rem;
+  fill: var(--secondary-cta-color)
+}
+.logout-button {
+  font-weight: 700;
+  background-color: var(--secondary-cta-color);
+  border: none;
+  width: 100%;
+  color: var(--primary-color);
+  border-radius: .25rem;
+  padding: .25rem .75rem;
+}
+.logout-button:hover {
+  background-color: red;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 800px) {
   #website-page {

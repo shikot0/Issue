@@ -6,25 +6,19 @@ export const loginRoute = `${host}/api/user/login`;
 export const registerRoute = `${host}/api/user/register`;
 export const getUserRoute = `${host}/api/user/user`;
 export const getCurrentUserRoute = `${host}/api/user/currentuser`;
-export const setProfilePictureRoute = `${host}/api/user/setprofilepicture`;
-export const getProfilePictureRoute = `${host}/api/user/profilepicture`;
+export const profilePictureRoute = `${host}/api/user/profilepicture`;
 
 //          ISSUE ROUTES
 export const createIssueRoute = `${host}/api/issue/createissue`;
-export const setIssueScreenshotRoute = `${host}/api/issue/setissuescreenshot`;
-export const editIssueRoute = `${host}/api/issue/editissue`;
-export const deleteIssueRoute = `${host}/api/issue/deleteissue`;
-export const attestIssueRoute = `${host}/api/issue/attestissue`;
+export const issueRoute = `${host}/api/issue/issue`;
 export const issueScreenshotRoute = `${host}/api/issue/issuescreenshot`;
 export const allIssuesRoute = `${host}/api/issue/allissues`;
 export const getIssuesFromWebsiteRoute = `${host}/api/issue/issuesfromwebsite`;
-export const issueRoute = `${host}/api/issue/issue`;
 export const latestIssuesRoute = `${host}/api/issue/latestissues`;
 
 
 //          WEBSITE ROUTES
 export const registerWebsiteRoute = `${host}/api/website/register`;
 export const websiteImageRoute = `${host}/api/website/websiteimage`;
-export const setWebsiteImageRoute = `${host}/api/website/setwebsiteimage`;
 export const getWebsiteRoute = `${host}/api/website/website`;
 export const getAllRegisteredWebsitesRoute = `${host}/api/website/allwebsites`;
