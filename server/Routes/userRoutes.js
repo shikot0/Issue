@@ -10,6 +10,6 @@ router.get('/profilepicture/:id', profilePicture);
 
 router.get('/user/:username', user);  
 router.get('/currentuser/:token', currentUser);
-// router.get('/allusers/:id', getAllUsers);
+router.get('/allusers', allUsers);
 
 module.exports = router;

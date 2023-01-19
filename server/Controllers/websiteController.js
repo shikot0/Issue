@@ -2,7 +2,7 @@ const Websites = require('../Models/websiteModel');
 
 module.exports.registerWebsite = async (req, res, next) => {
     try {
-        const {registeredBy, websiteName, domains, primaryContact, secondaryContact} = req.body;
+        const {registeredBy, websiteName, domains, admins, primaryContact, secondaryContact} = req.body;
         const websiteCheck = await Websites.findOne({queryName: websiteName.toLowerCase()});
 
         if(websiteCheck) {
@@ -13,6 +13,7 @@ module.exports.registerWebsite = async (req, res, next) => {
                 name: websiteName,
                 queryName: websiteName.toLowerCase(),
                 domains,
+                admins,
                 primaryContact,
                 secondaryContact,
                 dateOfCreation: new Date().toDateString()

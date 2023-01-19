@@ -122,7 +122,6 @@ module.exports.allUsers = async (req, res, next) => {
             "email",
             "username", 
             "_id",
-            "profilePicture"
         ])
         if(users) {
             return res.json(users);

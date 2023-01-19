@@ -31,7 +31,11 @@ const websiteSchema = new mongoose.Schema(
         // },
         domains: {
             type: Array,
-            required: true,
+            required: true
+        },
+        admins: {
+            type: Array,
+            required: true
         },
         numberOfIssues: {
             type: Number,
@@ -44,18 +48,18 @@ const websiteSchema = new mongoose.Schema(
         },
         primaryContact: {
             type: String,
-            required: true,
+            required: true
         },
         secondaryContact: {
             type: String,
-            required: true,
+            required: true
         },
         dateOfCreation: {
             type: Date,
-            required: true, 
+            required: true
         }
     }, {
-        timestamps: true,
+        timestamps: true
     }
 );
 

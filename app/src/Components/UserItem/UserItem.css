@@ -1,0 +1,17 @@
+.user-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem;
+    cursor: pointer;
+}
+.user-item:hover {
+    background-color: var(--primary-color);
+}
+.user-item .profile-picture-wrapper {
+    width: 3rem;
+    height: 3rem;
+}
+.user-item .username {
+    font-size: clamp(.9rem, 2vw, 1.25rem)
+}

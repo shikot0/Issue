@@ -1,22 +1,27 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
-import useUsers from '../../utils/useUsers';
 import {toast, ToastContainer} from 'react-toastify';
 import { registerWebsiteRoute, websiteImageRoute } from '../../utils/APIRoutes';
+import UserItem from '../../Components/UserItem/UserItem';
+import useUsers from '../../utils/useUsers';
 import './RegisterWebsitePage.css';
 
 function RegisterWebsitePage() {
-    const imageInput = useRef();
     const [uploadedImage, setUploadedImage] = useState('');
+    const [query, setQuery] = useState('');
     const navigate = useNavigate();
-    const {user} = useUsers();
+    const {user: currentUser} = useUsers();
+    const {user: users} = useUsers('all')
+    const imageInput = useRef();
     const domainInput = useRef();
+    const adminInput = useRef();
+    const usersWrapper = useRef();
     const newDomainButton = useRef();
-    const domainsWrapper = useRef();
     const [website, setWebsite] = useState({
         registeredBy: '',
         websiteName: '',
         domains: [],
+        admins: [],
         primaryContact: '',
         secondaryContact: ''
     });
@@ -31,9 +36,9 @@ function RegisterWebsitePage() {
 
     useEffect(() => {
         setWebsite(prev => {
-            return {...prev, registeredBy: user.username}
+            return {...prev, registeredBy: currentUser?.username}
         })
-    },[user])
+    },[currentUser])
 
     function handleFocus() {
         imageInput.current.click();
@@ -72,28 +77,48 @@ function RegisterWebsitePage() {
         setWebsite({...website, [e.target.name]: e.target.value});
     }
     
+    function handleAddDomain() { 
+        setWebsite({...website, domains: [...website.domains, domainInput.current.value]});
+        domainInput.current.value = '';
+    }
+
     function handleDeleteDomain(index) { 
         let newDomains = website.domains;
         newDomains.splice(index,1);
         setWebsite({...website, domains: [...newDomains]}) 
-        console.log(website)  
     }
-
-    function handleAddDomain() {
-        console.log(domainInput.current.value)
-        if(domainInput.current.value !== '') {
-            setWebsite({...website, domains: [...website.domains, domainInput.current.value]});
-            domainInput.current.value = '';
+    
+    
+    function handleAddAdmin(user) {
+        if(user) {
+            setWebsite({...website, admins: [...website.admins, user]});
+            // adminInput.current.value = '';
         }
+    }
+    
+    function handleDeleteAdmin(user) { 
+        let newAdmins = website.admins;
+        let index = website.admins.indexOf(user);
+        newAdmins.splice(index,1);
+        setWebsite({...website, admins: [...newAdmins]}) 
         console.log(website)
     }
 
-    function handleEnterButton(e) {
+    function handleEnterButton(e, button) {
         if(e.key === 'Enter') {
-            newDomainButton.current.click();
+            button.click();
         }
     }
 
+    function handleShowUsers() {
+        usersWrapper.current.classList.add('visible');
+    }
+
+    window.addEventListener('click', e => {
+        if(e.target !== adminInput.current) {
+            usersWrapper.current.classList.remove('visible')
+        }
+    })
     function registerWebsite() {
         // console.log(website)
         const formData = new FormData();
@@ -164,20 +189,37 @@ function RegisterWebsitePage() {
                         <label htmlFor="secondaryContact">Secondary Contact</label>
                         <input onInput={handleWebsiteData} type="text" name='secondaryContact' placeholder='e.g issuehelp@gmail.com'/>
                     </div>
-                    {/* <div className="input-wrapper">
-                        <label htmlFor="domain">Example Domain</label>
-                        <input onInput={handleWebsiteData} type="text" name='domain' placeholder='e.g issue.com'/>
-                    </div> */}
                     <div className="input-wrapper">
                         <label htmlFor="domain">Domains:</label>
-                        <input ref={domainInput} className='domain-input' onKeyDown={handleEnterButton} type="text" name='domain' placeholder='e.g issue.com'/>
+                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domain' placeholder='e.g issue.com'/>
                         <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
                         </button>
                     </div>
-                    <div ref={domainsWrapper} className="domains-wrapper">
+                    <div className="domains-wrapper">
                         {website.domains.length !== 0 ? website.domains.map((domain,index) => {
                             return <p key={index} onClick={() => {handleDeleteDomain(index)}} className="domain deletable">{domain}</p>
+                        }): null}
+                    </div>
+                    <div className="input-wrapper">
+                        <label htmlFor="admins">Admins:</label>
+                        <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} on type="text" name='domain' placeholder='e.g issue.com'/>
+                        <div ref={usersWrapper} className="users-wrapper">
+                            {users ? users.filter(user => {
+                                if(user._id !== currentUser._id && !website.admins.includes(user) && user.username.includes(query)) {
+                                    return user;
+                                }else {
+                                    return false
+                                }
+                            }).map((user, index) => {
+                                return <UserItem key={index} user={user} handleClick={handleAddAdmin}/>
+                            }) : null}
+                        </div>
+                    </div>
+                    <div className="admins-wrapper">
+                        {website.admins.length !== 0 ? website.admins.map((admin, index) => {
+                            // return <p key={index} onClick={() => {handleDeleteAdmin(index)}} className="admin deletable">{admin}</p>
+                            return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
                         }): null}
                     </div>
                 </section>

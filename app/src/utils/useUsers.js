@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {getUserRoute} from './APIRoutes';
+import {allUsersRoute, getUserRoute} from './APIRoutes';
 import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
@@ -7,7 +7,7 @@ function useUsers(username) {
     const [noUsers, setNoUsers] = useState(false);
     
     useEffect(() => {
-        if(username) {
+        if(username && username !== 'all') {
             fetch(`${getUserRoute}/${username}`)
             .then(res => res.json())
             .then(data => {
@@ -17,6 +17,16 @@ function useUsers(username) {
                 }
             }).catch(err => {
                 console.error(err.message)
+            })
+        }else if(username === 'all') {
+            fetch(`${allUsersRoute}`)
+            .then(res => res.json())
+            .then(data => {
+                setUser(data);
+                // console.log(data)
+                if(data.noUser) {
+                    setNoUsers(true);
+                }
             })
         }else{
             let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
