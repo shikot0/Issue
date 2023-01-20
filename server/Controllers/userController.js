@@ -93,6 +93,7 @@ module.exports.currentUser = async (req, res, next) => {
                 "_id",
                 "email",
                 "username", 
+                "notifications",
             ]);
 
         if(user) {

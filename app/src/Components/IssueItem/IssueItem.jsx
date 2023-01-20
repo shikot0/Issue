@@ -33,10 +33,11 @@ function IssueItem({issue}) {
             <div className="issue-main">
                 <h3 className="issue-name">{issue.name}</h3>
                 <p className="issue-description">{truncate(issue.description, 50)}</p>
-                <p className='issue-creator gradient-text'>{issue.openedBy}</p>
-                <small className='issue-attests'>{issue.attests} attests</small>
+                <p className='issue-creator gradient-text'>{issue.openedBy.username}</p>
+                <small className='issue-attests'>{issue.attests} {issue.attests === 1 ? 'attest' : 'attests'}</small>
                 {/* <Link to={`/u/${issue.openedBy}`} className='issue-creator gradient-text'>{issue.openedBy}</Link> */}
             </div>
+            <div className={issue.resolved ? 'status resolved' : 'status pending'}></div>
         </motion.div>
     )
 }

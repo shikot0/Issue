@@ -59,6 +59,7 @@ module.exports.getWebsite = async (req, res, next) => {
             "_id",
             "name",
             "domains",
+            "admins",
             "queryName",
             "numberOfIssues",
             "registeredBy"
@@ -80,6 +81,7 @@ module.exports.getAllWebsites = async (req, res, next) => {
             "_id",
             "name",
             "queryName",
+            "admins",
             "numberOfIssues",
             "domains"
         ]).sort({name: 1}); 

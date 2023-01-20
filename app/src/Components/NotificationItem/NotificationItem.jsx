@@ -1,8 +1,8 @@
 import './NotificationItem.css';
 
-function NotificationItem() {
+function NotificationItem({notification}) {
     return (
-        <article className="notification-item">Notification test</article>
+        <article className="notification-item">{notification.msg}</article>
     )
 }
 

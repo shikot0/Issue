@@ -64,12 +64,15 @@ module.exports.resolveIssue = async (req, res, next) => {
 
         if(!issue.resolved) {
             issue.resolved = true;
+            const user = await Users.findOne({_id: issue.openedBy.id});
+            user.notifications.push({msg: `One of the admins of ${issue.website.name} has marked an issue your reported as resolved.`, seen: false})
+            await user.save();
             await issue.save();
-            return res.json({msg: 'successfully reopened issue!'})
+            return res.json({msg: 'successfully closed issue!', resolved: true})
         }else {
             issue.resolved = false;
             await issue.save();
-            return res.json({msg: 'successfully closed issue!'})
+            return res.json({msg: 'successfully reopened issue!', resolved: false})
         }
 
     } catch(err) {
@@ -180,7 +183,7 @@ module.exports.getAllIssues = async (req, res, next) => {
         const user = await Users.findOne({username: username}); 
         let issues;
         if(user) {
-            issues = await Issues.find({openedBy: user.username}).select([
+            issues = await Issues.find({"openedBy.username": user.username}).select([
                 "openedBy",
                 "name",
                 "description",

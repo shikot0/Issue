@@ -44,7 +44,7 @@ function NewIssuePage() {
 
     useEffect(() => {
         setIssue(prev => {
-            return {...prev, openedBy: user.username}
+            return {...prev, openedBy: {id: user?._id, username: user?.username}}
         })
     },[user])
 
@@ -53,10 +53,8 @@ function NewIssuePage() {
            return  {...prev, website: {id: website?._id, name: website?.queryName}}
         })
     },[website])
-    console.log(website)
 
     function handleAutofill(e) {
-        console.log(e.target.innerText)
         linkInput.current.value = e.target.innerText;
     }
 

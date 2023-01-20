@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const issueSchema = new mongoose.Schema(
     {
         openedBy: {
-            type: String,
+            type: Object,
             required: true
         },
         website: {

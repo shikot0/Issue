@@ -1,5 +1,8 @@
 .notification-item {
-    border-top: 1px solid var(--primary-cta-color);
+    /* border-top: 1px solid var(--primary-cta-color); */
     border-bottom: 1px solid var(--primary-cta-color);
-    padding: .5rem 1rem;
+    padding: .75rem 1rem;
+}
+.notification-item:last-child {
+    border-bottom: none;
 }

@@ -60,3 +60,17 @@
 #account-page .issue-creator {
     display: none;
 }
+.status {
+    width: .5rem;
+    height: .5rem;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    border-radius: 10rem;
+}
+.status.resolved {
+    background-color: rgb(0, 128, 28);
+}
+.status.pending {
+    background-color: rgb(0, 107, 128);
+}
