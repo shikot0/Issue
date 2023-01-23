@@ -32,10 +32,10 @@ function RegisterPage() {
      
 
     useEffect(() => {
-        if(document.cookie.split('=')[1]) {
-            navigate('/home')
+        if(!localStorage.getItem('token')) {
+            navigate('/register')
         }
-    }, [navigate])
+    },[navigate])
 
 
         
@@ -78,7 +78,7 @@ function RegisterPage() {
         if(currentUserImage) {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
-
+            
             fetch(registerRoute, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -89,24 +89,25 @@ function RegisterPage() {
                 })
             })
             .then(res => res.json()) 
-              .then(data => {
-                if(data.status === 200) {
-                    document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-                    document.cookie = `token=${data.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
-                    fetch(`${profilePictureRoute}/${data.id}`, {
+            .then(response => {
+                if(response.status === 200) {
+                    // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+                    // document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
+                    localStorage.setItem('token', JSON.stringify(response.token));
+                    fetch(`${profilePictureRoute}/${response.id}`, {
+                        headers: { "x-access-token": response.token },
                         method: "POST",
                         body: formData
                     }).then(res => res.json())
-                      .then(data => {
-                        if(data.status === 200) {
-                            console.log(data)
+                      .then(response => {
+                        if(response.status === 200) {
                             navigate('/home');
                         }
                     }).catch(err => {
                         console.error(err.message)
                     })
                 }else {
-                    toast.error(data.msg, toastOptions)
+                    toast.error(response.msg, toastOptions)
                 }
                }).catch(err => {
                     console.error(err.message)
@@ -139,8 +140,9 @@ function RegisterPage() {
             if(response.status === 400) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === 200) {
-                document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`;
-                document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`;
+                // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`;
+                // document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`;
+                localStorage.setItem('token', JSON.stringify(response.token));
                 navigate('/home')
             }
         }

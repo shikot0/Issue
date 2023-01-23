@@ -8,10 +8,6 @@ const userSchema = new mongoose.Schema({
         max: 25,
         unique: true
     },
-    token: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,

@@ -1,0 +1,20 @@
+#issue-list-page a {
+    text-decoration: none;
+}
+.issue-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+    /* grid-template-rows:  */
+}
+.issue-grid .issue {
+    width: 100%;
+}
+#issue-list-page .issue .tooltip-section {
+    display: none;
+}
+#issue-list-page .issue .delete-modal {
+    display: none;
+}

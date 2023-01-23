@@ -33,6 +33,12 @@ function RegisterWebsitePage() {
         draggable: true,
         theme: "dark",
     };
+    
+    useEffect(() => {
+        if(!localStorage.getItem('token')) {
+            navigate('/register')
+        }
+    },[navigate])
 
     useEffect(() => {
         setWebsite(prev => {
@@ -101,7 +107,6 @@ function RegisterWebsitePage() {
         let index = website.admins.indexOf(user);
         newAdmins.splice(index,1);
         setWebsite({...website, admins: [...newAdmins]}) 
-        console.log(website)
     }
 
     function handleEnterButton(e, button) {
@@ -192,20 +197,8 @@ function RegisterWebsitePage() {
                         <input onInput={handleWebsiteData} type="text" name='secondaryContact' placeholder='e.g issuehelp@gmail.com'/>
                     </div> 
                     <div className="input-wrapper">
-                        <label htmlFor="domain">Domains:</label>
-                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domain' placeholder='e.g issue.com'/>
-                        <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
-                        </button>
-                    </div>
-                    <div className="domains-wrapper">
-                        {website.domains.length !== 0 ? website.domains.map((domain,index) => {
-                            return <p key={index} onClick={() => {handleDeleteDomain(index)}} className="domain deletable">{domain}</p>
-                        }): null}
-                    </div>
-                    <div className="input-wrapper">
                         <label htmlFor="admins">Admins:</label>
-                        <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='domain' placeholder='e.g issue.com'/>
+                        <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='domain' placeholder='e.g shikoto'/>
                         <div ref={usersWrapper} className="users-wrapper">
                             {users ? users.filter(user => {
                                 if(user._id !== currentUser._id && !website.admins.includes(user) && user.username.includes(query)) {
@@ -218,10 +211,22 @@ function RegisterWebsitePage() {
                             }) : null}
                         </div>
                     </div>
-                    <div className="admins-wrapper">
+                    { website.admins.length !== 0 ? <div className="admins-wrapper">
                         {website.admins.length !== 0 ? website.admins.map((admin, index) => {
                             // return <p key={index} onClick={() => {handleDeleteAdmin(index)}} className="admin deletable">{admin}</p>
                             return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
+                        }): null}
+                    </div> : null }
+                    <div className="input-wrapper">
+                        <label htmlFor="domain">Domains:</label>
+                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domain' placeholder='e.g issue.com'/>
+                        <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
+                        </button>
+                    </div>
+                    <div className="domains-wrapper">
+                        {website.domains.length !== 0 ? website.domains.map((domain,index) => {
+                            return <p key={index} onClick={() => {handleDeleteDomain(index)}} className="domain deletable">{domain}</p>
                         }): null}
                     </div>
                 </section>

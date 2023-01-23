@@ -29,12 +29,12 @@ main {
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #home-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
+#register-page, #home-page, #issue-list-page #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem;
   width: 95%;
   /* margin: 3% 0 0; */
 }
-#new-issue-page, #issue-page, #account-page {
+#new-issue-page, #issue-list-page, #issue-page, #account-page {
   margin: 3% 0 0;
 }
 #website-page {
@@ -259,5 +259,10 @@ input button {
 @media screen and (max-width: 800px) {
   #website-page {
       margin: 15% 0 0;
+  }
+}
+@media screen and (max-width: 550px) {
+  #website-page {
+      margin: 22% 0 0;
   }
 }

@@ -15,13 +15,14 @@ function AccountPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!document.cookie.split('=')[1]) {
+        if(!localStorage.getItem('token')) {
             navigate('/register')
         }
     },[navigate])
 
     function logout() {
-        document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+        // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
+        localStorage.removeItem('token');
         navigate('/register');
     }
     

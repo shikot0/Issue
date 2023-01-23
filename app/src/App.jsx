@@ -7,6 +7,7 @@ import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import NewIssuePage from './Pages/NewIssuePage/NewIssuePage';
 import RegisterWebsitePage from './Pages/RegisterWebsitePage/RegisterWebsitePage.jsx';
 import IssuePage from './Pages/IssuePage/IssuePage';
+import IssueListPage from './Pages/IssueListPage/IssueListPage';
 import AccountPage from './Pages/AccountPage/AccountPage';
 import WebsitePage from './Pages/WebsitePage/WebsitePage';
 import Footer from './Components/Footer/Footer';
@@ -39,6 +40,7 @@ function App() {
               <Route path="/website/:name" element={<WebsitePage/>}/>
               <Route path="/newissue/:websiteName" element={<NewIssuePage/>}/>
               <Route path="/registerwebsite" element={<RegisterWebsitePage/>}/>
+              <Route path="issuelist" element={<IssueListPage/>}/>
               <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
         </main> 

@@ -18,15 +18,15 @@ module.exports.register = async (req, res, next) => {
         }
         
         
-        const token = jwt.sign({password}, process.env.JWT_SECRET);
         const hashedPassword = await bcrypt.hash(password, 10);
-
+        
         const user = await Users.create({
             email,
             username,
-            token,
             password: hashedPassword
         });
+
+        const token = jwt.sign(email, process.env.JWT_SECRET);
         return res.json({id: user._id, token, status: 200})
     } catch(err) {
         next(err);
@@ -38,6 +38,7 @@ module.exports.login = async (req, res, next) => {
     try {
         const {username, password} = req.body;
         const user = await Users.findOne({username});
+
         if(!user) { 
             return res.json({msg: 'Incorrect username or password', status: 400});
         }
@@ -47,7 +48,8 @@ module.exports.login = async (req, res, next) => {
             return res.json({msg: 'Incorrect username or password', status: 400});
         }
         
-        return res.json({token: user.token, status: 200})
+        const token = jwt.sign(user.email, process.env.JWT_SECRET);
+        return res.json({token, status: 200})
     } catch(err) {
         next(err)
     }
@@ -56,19 +58,25 @@ module.exports.login = async (req, res, next) => {
 module.exports.setProfilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const {data, mimetype} = req.files.fileupload;
+        const accessToken = req.headers["x-access-token"];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const user = await Users.findOne({_id: id})
-        user.profilePicture.Data = data;
-        user.profilePicture.ContentType = mimetype; 
-
-        await user.save();
-        return res.json({status: 200});
+        if(decoded === user.email) {
+            const {data, mimetype} = req.files.fileupload;
+            user.profilePicture.Data = data;
+            user.profilePicture.ContentType = mimetype; 
+    
+            await user.save();
+            return res.json({status: 200});
+        }else {
+            return res.json({status: 400, msg: 'There has been an error'});
+        }
     } catch(err) {
         next(err)
     }
 }
 
-module.exports.user = async (req, res, next) => {
+module.exports.getUser = async (req, res, next) => {
     try {
         const username = req.params.username;
         const user = await Users.findOne({username: username}).select([
@@ -89,7 +97,8 @@ module.exports.user = async (req, res, next) => {
 module.exports.currentUser = async (req, res, next) => {
     try {
         const userToken = req.params.token;
-        const user = await Users.findOne({token: userToken}).select([
+        const decoded = jwt.verify(userToken, process.env.JWT_SECRET);
+        const user = await Users.findOne({email: decoded}).select([
                 "_id",
                 "email",
                 "username", 
@@ -132,5 +141,20 @@ module.exports.allUsers = async (req, res, next) => {
     }
     catch(err) {
         next(err)
+    }
+}
+
+module.exports.markNotificationsAsRead = async (req, res, next) => {
+    try {
+        const token = req.headers['x-access-token'];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await Users.findOne({email: decoded});
+        user.notifications = user.notifications.map(notification => {
+            return {...notification, seen: true};
+        })
+        await user.save();
+        return res.json({msg: 'Read all messages', status: 200})
+    } catch(err) {
+        next(err);
     }
 }

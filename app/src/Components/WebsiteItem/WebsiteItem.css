@@ -34,3 +34,12 @@
 .website-item .website-name {
     font-weight: 600;
 }
+
+@media screen and (max-width: 450px) {
+    .website-item .website-image-wrapper {
+        height: 80%;
+    }
+    .website-item .website-info {
+        height: 20%;
+    }
+}

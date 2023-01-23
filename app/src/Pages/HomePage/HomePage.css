@@ -22,3 +22,9 @@
         margin: 7%;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .websites-grid {
+        grid-auto-rows: 15rem;
+    }
+}

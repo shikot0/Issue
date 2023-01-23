@@ -37,7 +37,7 @@ function NewIssuePage() {
     };
 
     useEffect(() => {
-        if(!document.cookie) {
+        if(!localStorage.getItem('token')) {
             navigate('/register')
         }
     },[navigate])

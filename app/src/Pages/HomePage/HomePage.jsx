@@ -8,12 +8,12 @@ import useWebsites from '../../utils/useWebsites';
 import './HomePage.css';
 
 function HomePage() {
-    const [query, setQuery] = useState([]);
+    const [query, setQuery] = useState('');
     const {websites, noWebsites} = useWebsites();
 
     const navigate = useNavigate();
     useEffect(() => {
-        if(!document.cookie.split('=')[1]) {
+        if(!localStorage.getItem('token')) {
             navigate('/register')
         }
     },[navigate])
@@ -29,9 +29,9 @@ function HomePage() {
                     if(!query) {
                         return website;
                     }else {
-                        if(website.name.toLowerCase().includes(query)) {
+                        if(website.name.toLowerCase().includes(query.toLowerCase())) {
                             return website;
-                        }else if(website.domains.some(domain => domain.toLowerCase().includes(query))) {
+                        }else if(website.domains.some(domain => domain.toLowerCase().includes(query.toLowerCase()))) {
                             return website;
                         }else {
                             return false;

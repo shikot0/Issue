@@ -48,7 +48,7 @@
 .issue-description {
     color: var(--secondary-text-color);
 }
-.issue-creator {
+.issue-item .issue-creator {
     position: absolute;
     top: 5%;
     right: 5%;

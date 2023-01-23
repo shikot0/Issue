@@ -49,7 +49,7 @@
 }
 .add-issue-button:hover {
     scale: 1.025;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 .5rem .5rem var(--primary-color);
 }
 .add-issue-button svg {
     fill: rgba(0, 0, 0, 0.75);

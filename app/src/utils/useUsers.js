@@ -29,7 +29,8 @@ function useUsers(username) {
                 }
             })
         }else{
-            let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
+            // let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
+            let savedUser = JSON.parse(localStorage.getItem('token'));
             if(savedUser) {
                 fetch(`${getCurrentUserRoute}/${savedUser}`)
                 .then(res => res.json())

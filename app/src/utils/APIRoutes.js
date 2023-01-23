@@ -8,6 +8,7 @@ export const getUserRoute = `${host}/api/user/user`;
 export const getCurrentUserRoute = `${host}/api/user/currentuser`;
 export const profilePictureRoute = `${host}/api/user/profilepicture`;
 export const allUsersRoute = `${host}/api/user/allusers`;
+export const markNotificationsAsReadRoute = `${host}/api/user/notifications`;
 
 //          ISSUE ROUTES
 export const createIssueRoute = `${host}/api/issue/createissue`;
