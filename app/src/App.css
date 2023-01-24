@@ -29,8 +29,8 @@ main {
   background-attachment: fixed;
   overflow: hidden;
 }
-#register-page, #home-page, #issue-list-page #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
-  max-width: 75rem;
+#register-page, #home-page, #issue-list-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
+  max-width: 75rem; 
   width: 95%;
   /* margin: 3% 0 0; */
 }
