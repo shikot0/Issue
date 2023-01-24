@@ -45,7 +45,7 @@ function App() {
             </Routes>
         </main> 
         <Footer/>
-        {/* <Analytics/> */}
+        <Analytics/>
     </> 
   );
 }
