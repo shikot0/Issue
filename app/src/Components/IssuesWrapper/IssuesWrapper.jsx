@@ -1,11 +1,12 @@
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {motion, AnimatePresence} from 'framer-motion';
 import IssueItem from '../IssueItem/IssueItem';
 import './IssuesWrapper.css';
 
 function IssuesWrapper({issues, website}) {
     const [filter, setFilter] = useState('');
+    const navigate = useNavigate();
     
     function handleFilter(e) {
         setFilter(e.target.value);
@@ -16,6 +17,11 @@ function IssuesWrapper({issues, website}) {
         e.target.classList.add('selected');
     };
 
+    function handleWrapperItemClick(e) {
+        if(e.target.classList.contains('issue-item')) {
+            navigate(`/issue/${e.target.dataset.id}`);
+        }
+    }
     return (
         <>
         {issues && issues.length !== 0 ? 
@@ -27,6 +33,7 @@ function IssuesWrapper({issues, website}) {
                 </div>
                 <motion.div
                 layout 
+                onClick={handleWrapperItemClick}
                 className="issues-wrapper">
                     <AnimatePresence>
                         {website ? 
@@ -44,7 +51,8 @@ function IssuesWrapper({issues, website}) {
                                 return issue;
                             }
                         }).map((issue,index) => {
-                            return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
+                            // return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
+                            return <IssueItem key={index} issue={issue}/>
                         })}
                     </AnimatePresence>
                 </motion.div>

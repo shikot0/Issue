@@ -177,7 +177,7 @@ function RegisterWebsitePage() {
                 <section className="website-image-section">
                     <label htmlFor="image-input">Website Image</label>
                     <div className="website-image-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
-                        <input ref={imageInput} type="file" name='image-input' accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e)}}/>
+                        <input ref={imageInput} type="file" name='image-input' accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e)}} aria-label='website image input'/>
                         <img src={uploadedImage ? URL.createObjectURL(uploadedImage) : ''} alt="profile" className={uploadedImage ? '' : 'hidden'}/>
                     </div>   
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg> */}
@@ -198,7 +198,7 @@ function RegisterWebsitePage() {
                     </div> 
                     <div className="input-wrapper">
                         <label htmlFor="admins">Admins:</label>
-                        <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='domain' placeholder='e.g shikoto'/>
+                        <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='admins' placeholder='e.g shikoto'/>
                         <div ref={usersWrapper} className="users-wrapper">
                             {users ? users.filter(user => {
                                 if(user._id !== currentUser._id && !website.admins.includes(user) && user.username.includes(query)) {
@@ -218,8 +218,8 @@ function RegisterWebsitePage() {
                         }): null}
                     </div> : null }
                     <div className="input-wrapper">
-                        <label htmlFor="domain">Domains:</label>
-                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domain' placeholder='e.g issue.com'/>
+                        <label htmlFor="domains">Domains:</label>
+                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domains' placeholder='e.g issue.com'/>
                         <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
                         </button>

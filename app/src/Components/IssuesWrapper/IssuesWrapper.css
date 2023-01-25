@@ -1,9 +1,10 @@
 .issues-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-    /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
-    background-color: var(--secondary-color); 
+    /* background-color: var(--secondary-color);  */
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); 
     border-radius: .75rem;
+    border: 1px solid var(--tertiary-color);
     padding: 1.5rem;
     grid-auto-rows: 11rem;
     gap: 1.6rem;
@@ -59,8 +60,7 @@
     padding: 2rem 0 0;
     width: 100%;
 }
-.issues-wrapper .issue-attests {
-    position: absolute;
-    bottom: 5%;
-    left: 5%;
+.issues-wrapper .issue-item {
+    /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
+    background: var(--tertiary-color);
 }

@@ -1,20 +1,34 @@
+#issue-list-page {
+    padding: 0 0 5rem;
+}
 #issue-list-page a {
     text-decoration: none;
 }
 .issue-grid {
     display: grid;
-    grid-auto-flow: column;
+    width: 100%;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 1.5rem;
     padding: 0 1rem;
-    /* grid-template-rows:  */
 }
 .issue-grid .issue {
     width: 100%;
+    cursor: pointer;
+    animation: fade-in .25s linear 1 forwards;
+}
+.issue-grid .issue .issue-name {
+    max-width: 50%;
+    word-wrap: break-word;
+    font-size: clamp(1.1rem, 1.4vw, 1.5rem);
 }
 #issue-list-page .issue .tooltip-section {
     display: none;
 }
 #issue-list-page .issue .delete-modal {
     display: none;
+}
+#issue-list-page .issue-screenshot {
+    max-height: 20rem;
+    object-fit: cover;
 }

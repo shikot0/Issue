@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import IssueItem from "../IssueItem/IssueItem";
 import {IssueItemSkeleton} from '../../Skeletons/Skeletons';
 import { latestIssuesRoute } from '../../utils/APIRoutes';
@@ -11,6 +11,7 @@ function LatestIssues() {
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [noIssues, setNoIssues] = useState(false);
+    const navigate = useNavigate();
     const slider = useRef();
 
     useEffect(() => {
@@ -53,6 +54,11 @@ function LatestIssues() {
         }
     },[issues])
 
+    function handleWrapperItemClick(e) {
+        if(e.target.classList.contains('issue-item')) {
+            navigate(`/issue/${e.target.dataset.id}`);
+        }
+    }
 
     return (
         <>
@@ -62,10 +68,12 @@ function LatestIssues() {
                 onMouseLeave={handleMouseUp}
                 onMouseUp={handleMouseUp}
                 onMouseMove={handleMouseMove}
+                onClick={handleWrapperItemClick}
             >
                 {issues.length !== 0 ? issues.map((issue,index) => {
                     // return <IssueItem key={index} issue={issue} onClick={handleNavigate(issue)}/>
-                    return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
+                    // return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
+                    return <IssueItem key={index} issue={issue}/>
                 }):
                 <>
                     <IssueItemSkeleton/>

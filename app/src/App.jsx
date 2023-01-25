@@ -1,5 +1,5 @@
-import {Routes, Route, useNavigate} from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
+import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
 import Header from './Components/Header/Header.jsx';
 import InfoPage from './Pages/InfoPage/InfoPage.jsx';
 import HomePage from './Pages/HomePage/HomePage.jsx';
@@ -16,21 +16,28 @@ import './App.css';
 
 function App() {
   // const navigate = useNavigate();
-  const header = document.querySelector('header');
-  const footer = document.querySelector('footer');
+  const header = useRef();
+  const footer = useRef();
+  const location = useLocation();
+  
+  useEffect(() => {
+    if(location.pathname === '/' && header.current && footer.current) {
+      header.current.classList.add('hide-nav');
+      footer.current.classList.add('hide-nav');
+    }
+  },[location.pathname]);
 
   useEffect(() => {
-    // if(window.location.pathname === '/') {
-    //   navigate('/register')
-    // }
-    if(window.location.pathname === '/') {;
-      document.querySelector('header').classList.add('hide-nav');
-      document.querySelector('footer').classList.add('hide-nav');
+    if(location.pathname !== '/' && header.current && footer.current) {
+      header.current.classList.remove('hide-nav');
+      footer.current.classList.remove('hide-nav');
     }
-  },[header, footer]) 
+  },[location.pathname]);
+
+
   return (
     <>
-        <Header/> 
+        <Header header={header}/> 
         <main>
             <Routes>
               <Route path="/" element={<InfoPage/>}/>
@@ -44,8 +51,8 @@ function App() {
               <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
         </main> 
-        <Footer/>
-        <Analytics/>
+        <Footer footer={footer}/>
+        {/* <Analytics/> */}
     </> 
   );
 }

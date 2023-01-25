@@ -185,12 +185,14 @@ input button {
 }
 
 .gradient-bg {
-  background-image: url('../public/gradient-bg.png');
+  /* background-image: url('../public/gradient-bg.png'); */
+  background-image: url('../public/gradient-bg.webp');
   background-size: cover;
 }
 .gradient-text {
   background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
-  background-image: url('../public/gradient-bg.png');
+  /* background-image: url('../public/gradient-bg.png'); */
+  background-image: url('../public/gradient-bg.webp');
   background-size: 100%;
   background-clip: text;
   color: transparent;

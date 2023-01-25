@@ -141,8 +141,11 @@
     width: 7.5rem;
     height: 7.5rem;
     overflow: hidden;
-    border: 3px solid #40bde0;
-	box-shadow: 0 0 1.5rem #40bde0;
+    /* border: 3px solid #40bde0;
+	box-shadow: 0 0 1.5rem #40bde0; */
+    border: 3px solid transparent;
+	/* box-shadow: 0 0 1.5rem var(--secondary-cta-color), 0 0 1.5rem var(--primary-cta-color); */
+	box-shadow: 0 0 1.5rem var(--primary-cta-color), 0 0 1.5rem var(--secondary-cta-color);
     border-radius: 20rem;
 }
 .profile-photo {

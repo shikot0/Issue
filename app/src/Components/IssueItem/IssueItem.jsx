@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import './IssueItem.css';
 function IssueItem({issue}) {
@@ -28,15 +29,17 @@ function IssueItem({issue}) {
         initial={{opacity: 0}}
         exit={{opacity: 0}}
         layout 
-        className="issue-item" onMouseMove={handleMouseMove}>
+        onMouseMove={handleMouseMove}
+        data-id={`${issue._id}`}
+        className="issue-item">
             <small className="issue-website-name">{issue.website && issue.website.name ? issue.website.name: 'unknown name'}</small>
             <div className="issue-main">
                 <h3 className="issue-name">{issue.name}</h3>
                 <p className="issue-description">{truncate(issue.description, 50)}</p>
-                <p className='issue-creator gradient-text'>{issue.openedBy.username}</p>
-                <small className='issue-attests'>{issue.attests} {issue.attests === 1 ? 'attest' : 'attests'}</small>
+                <Link to={`/user/${issue.openedBy.username}`} className='issue-creator gradient-text'>{issue.openedBy.username}</Link>
                 {/* <Link to={`/u/${issue.openedBy}`} className='issue-creator gradient-text'>{issue.openedBy}</Link> */}
             </div>
+            <small className='issue-attests'>{issue.attests} {issue.attests === 1 ? 'attest' : 'attests'}</small>
             <div className={issue.resolved ? 'status resolved' : 'status pending'}></div>
         </motion.div>
     )

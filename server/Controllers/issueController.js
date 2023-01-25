@@ -205,7 +205,7 @@ module.exports.getAllIssues = async (req, res, next) => {
                 "website",
                 "link",
                 "resolved"
-            ]).sort({createdAt: -1})
+            ]).sort({attests: -1})
         }
         
         if(issues) {

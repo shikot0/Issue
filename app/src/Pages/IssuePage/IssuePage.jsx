@@ -4,6 +4,7 @@ import useIssues from '../../utils/useIssues';
 import useUsers from '../../utils/useUsers';
 import Issue from '../../Components/Issue/Issue';
 import './IssuePage.css';
+import { ToastContainer } from 'react-toastify';
 
 function IssuePage() {
     const {id} = useParams();
@@ -68,6 +69,7 @@ function IssuePage() {
             <Issue issue={issue}/>
         : <IssueSkeleton/>
         : <h3>Sorry this issue could not be found</h3>}
+        <ToastContainer/>
         </section>
     )
 }

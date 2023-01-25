@@ -5,17 +5,21 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
+    position: sticky; 
     top: 0;
     z-index: 100;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
 }
 .header-content {
-    display: flex;
-    align-items: center; 
-    /* justify-content: center; */
+    /* display: flex;
     justify-content: space-between;
+    align-items: center;  */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    align-items: center;
+
     padding: .5rem 0;
     max-width: 75rem;
     width: 95%;
@@ -37,6 +41,7 @@ header nav {
     border-radius: 5rem;
     background-color: var(--secondary-color);
     padding: .75rem 1.5rem;
+    justify-self: center;
     gap: 1.75rem;
     position: relative;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
@@ -106,6 +111,9 @@ header .username {
 }
 header .notification-section {
     position: relative;
+    justify-self: flex-end;
+    grid-column-start: 3;
+    grid-column-end: 4;
 }
 header .notifications-wrapper {
     position: absolute;
@@ -114,12 +122,12 @@ header .notifications-wrapper {
     top: 180%;
     left: 0;
     min-width: 20rem;
-    translate: -80% 0;
+    translate: -90% 0;
     background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     border-radius: .25rem;
     /* overflow-y: scroll; */
     overflow-x: hidden;
-    scrollbar-color: var(--primary-color) transparent;
+    scrollbar-color: var(--tertiary-color) var(--primary-color);
     scrollbar-width: thin;
     max-height: 20rem;
     /* padding: .75rem 0; */
@@ -127,13 +135,13 @@ header .notifications-wrapper {
     pointer-events: none;
 }
 header .notifications-wrapper::-webkit-scrollbar {
-    width: .75rem;
+    width: .5rem;
 }
 header .notifications-wrapper::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
 }
 header .notifications-wrapper::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: var(--primary-color);
 }
 header .notifications-wrapper.visible {
     opacity: 1;
@@ -156,6 +164,6 @@ header .notifications-wrapper a {
         display: none;
     } */
     header .notifications-wrapper {
-        translate: -100% 0;
+        translate: -92.5% 0;
     }
 }

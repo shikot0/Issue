@@ -1,19 +1,13 @@
-/* {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-    padding: 0 0 1rem;
-} */
-.issue{
+.issue {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
     width: 100%; 
     max-width: 42rem;
-    border-radius: .75rem;
-    padding: 1.5rem;
-    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+    border-radius: .5rem;
+    padding: 1.25rem;
+    /* background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color)); */
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     background-size: 200%;
 }
 .issue:hover {
@@ -27,8 +21,9 @@
     justify-content: space-between;
 }
 .issue .issue-name {
-    max-width: 40%;
+    max-width: 50%;
     word-wrap: break-word;
+    font-size: clamp(1.25rem, 1.8vw, 2rem);
 }
 .user {
     all: unset;
@@ -39,25 +34,22 @@
 .issue-creator:hover {
     scale: 1.05;
 }
-.profile-picture-wrapper {
+.issue .profile-picture-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
     border-radius: 10rem;
     overflow: hidden;
     border: 2px solid transparent;
 }
-.profile-picture {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.issue-creator {
+.issue .issue-creator {
+    font-size: 1rem;
     position: initial;
 }
 .issue-screenshot-wrapper, .issue-screenshot {
+    height: 100%;
     width: 100%;
     object-fit: contain;
 }
@@ -67,6 +59,7 @@
     justify-content: center;
     border-radius: .5rem;
     overflow: hidden;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
 }
 .issue-link {
     font-weight: 500;
@@ -83,6 +76,10 @@
 .issue-description {
     font-weight: 500;
 }
+.issue-name:focus, .issue-link:focus, .issue-description:focus {
+    border-radius: .15rem;
+    outline: 1px solid var(--primary-cta-color);
+}
 .edit-buttons-wrapper {
     margin: 1rem 0 0;
     display: flex;
@@ -95,10 +92,6 @@
     font-size: 1rem;
     cursor: pointer;
 }
-.issue *:focus:not(button) {
-    border-radius: .15rem;
-    outline: 1px solid var(--primary-cta-color);
-}
 .tooltip-section {
     display: flex;
     align-items: center;
@@ -107,13 +100,15 @@
 }
 .issue-tooltip {
     display: flex;
-    gap: 2rem;
+    /* gap: 2rem; */
+    justify-content: space-between;
     align-items: center;
     padding: 1rem;
     border-radius: .5rem;
     bottom: 125%;
     left: 50%;
-    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+    min-width: 12.5rem;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     position: absolute;
     opacity: 0;
     pointer-events: none;

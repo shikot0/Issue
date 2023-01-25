@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { registerRoute, loginRoute, profilePictureRoute } from '../../utils/APIRoutes';
@@ -7,6 +7,7 @@ import './RegisterPage.css';
 
 function RegisterPage() {
     const [currentUserImage, setCurrentUserImage] = useState();
+    const emailInput = useRef();
     const [signUpData, setSignUpData] = useState({
         username: "",
         email: "",
@@ -30,14 +31,11 @@ function RegisterPage() {
         theme: "dark",
     }
      
-
     useEffect(() => {
-        if(!localStorage.getItem('token')) {
-            navigate('/register')
+        if(localStorage.getItem('token')) {
+            navigate('/home')
         }
     },[navigate])
-
-
         
     function handleSignUp(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
@@ -63,8 +61,8 @@ function RegisterPage() {
             toast.error("Your password should be 8 characters or longer", toastOptions);
         }else if(username.length < 3) {
             toast.error("Your username should be 3 characters or longer", toastOptions);
-        }else if(email === "") {
-            toast.error("Please add your email", toastOptions);
+        }else if(email === "" || !emailInput.current.validity.valid) {
+            toast.error("Please add a valid email", toastOptions);
         }else {
             document.querySelectorAll('form').forEach(form => {
                 form.style.translate = `-200%`
@@ -75,7 +73,7 @@ function RegisterPage() {
     async function handleSetUserImage(e) {
         e.preventDefault();
         const {password, email, username} = signUpData;
-        if(currentUserImage) {
+        if(password.length > 8 && email !== "" && !emailInput.current.validity.valid && username.length > 3 && currentUserImage) {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
             
@@ -113,7 +111,7 @@ function RegisterPage() {
                     console.error(err.message)
                })
         }else {
-            toast.error('Please choose an image for your profile',toastOptions)
+            toast.error('Please check that all required fields are filled.',toastOptions)
         }
     }
 
@@ -175,16 +173,16 @@ function RegisterPage() {
         <section id="register-page"> 
                 <div className="form-wrapper">
                     <form>
-                        <input type="text" name="username" placeholder='Username' onChange={e => {handleSignUp(e)}} aria-label='Username Input'/>
-                        <input type="email" name="email" placeholder='Email' onChange={e => {handleSignUp(e)}} aria-label='Email Input'/>
+                        <input type="text" name="username" placeholder='Username' onChange={e => {handleSignUp(e)}} aria-label='Username Input' required/>
+                        <input ref={emailInput} type="email" pattern='[a-zA-Z0-9._+-]+@[a-zA-Z0-9 -]+\.[a-z]{2,}' name="email" placeholder='Email' onChange={e => {handleSignUp(e)}} aria-label='Email Input' required/>
                         <div className="password-input-wrapper">
-                            <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input'/>
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
                         </div>
                         <div className="password-input-wrapper">
-                            <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input'/>
+                            <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
@@ -193,9 +191,9 @@ function RegisterPage() {
                         <p className="hint" onClick={handleSlideLeft}>Already have an account? <span>Login</span></p>
                     </form>
                     <form>
-                        <input type="text" name="username" placeholder='Username' onChange={e => {handleLogin(e)}} aria-label='Username Input'/>
+                        <input type="text" name="username" placeholder='Username' onChange={e => {handleLogin(e)}} aria-label='Username Input' required/>
                         <div className="password-input-wrapper">
-                            <input type="password" name="password" placeholder='Password' onChange={e => {handleLogin(e)}} aria-label='Password Input'/>
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleLogin(e)}} aria-label='Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
@@ -209,10 +207,10 @@ function RegisterPage() {
                             back
                         </button>
                         <h2>Set your profile picture</h2>
-                        <div className="image-container">
+                        <div className="image-container gradient-border">
                             <img className={currentUserImage ? 'profile-photo' : 'hidden'} src={currentUserImage ? URL.createObjectURL(currentUserImage) : `${process.env.PUBLIC_URL}/logos/person-outline.svg`} alt="profile" />
                         </div>
-                        <input type="file" accept="image/*" onInput={handleShowUserImage}/>
+                        <input type="file" accept="image/*" onInput={handleShowUserImage} aria-label='profile-picture input' required/>
                         <button type='button' className='cta' onClick={handleSetUserImage}>Submit</button>
                     </form>
                 </div>

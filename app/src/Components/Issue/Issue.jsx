@@ -4,7 +4,8 @@ import { issueRoute, issueScreenshotRoute, profilePictureRoute } from '../../uti
 import useUsers from '../../utils/useUsers';
 import useWebsites from '../../utils/useWebsites';
 import AttestButton from '../AttestButton/AttestButton';
-import { toast, ToastContainer } from 'react-toastify';
+import {toast} from 'react-toastify';
+import {ImageSkeleton} from '../../Skeletons/Skeletons';
 import './Issue.css';
 
 function Issue({issue}) {
@@ -140,7 +141,6 @@ function Issue({issue}) {
     }
 
     function handleResolveIssue() {
-        console.log(website)
         if(website?.admins.some(admin => admin.username === currentUser.username) || issue.openedBy.username === currentUser.username) {
             fetch(`${issueRoute}/${issue._id}`, {
                 method: 'PUT'
@@ -164,7 +164,7 @@ function Issue({issue}) {
 
     return (
         <>
-        <div className="issue">
+        <div className="issue" data-id={`${issue._id}`}>
         <header>
             <h2 ref={name} name='name' onKeyUp={handleInput} className="issue-name">{issue.name}</h2>
             <div className="user">
@@ -177,7 +177,9 @@ function Issue({issue}) {
             </div>
         </header>
         <div className="issue-screenshot-wrapper">
-            <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='issue'/>
+            {issue._id && user && website? 
+                <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='issue'/>
+            : <ImageSkeleton/>}
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
         <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>
@@ -209,7 +211,6 @@ function Issue({issue}) {
             </div>
         </div>
     </div>
-    <ToastContainer />
     </>
     )
 }
