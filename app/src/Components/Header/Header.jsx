@@ -7,16 +7,24 @@ import './Header.css';
 
 function Header({header}) {
     const notificationsWrapper = useRef();
-    const {user} = useUsers();
+    const {user, noUsers} = useUsers();
     const location = useLocation();
+    
     
     
     // const links = document.querySelectorAll('.navigation-link');
     useEffect(() => {
         document.querySelectorAll('.navigation-link').forEach(link => {
             link.classList.remove('active-page');
-            if(link.href.includes((location.pathname).slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/')))) {
-                link.classList.add('active-page')
+            const moreLinkLeft = (window.location.pathname).slice(1,).indexOf('/') !== -1;
+            if(moreLinkLeft) {
+                if(link.href === location.pathname.slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/'))) {
+                    link.classList.add('active-page')
+                }
+            }else {
+                if(link.href === location.pathname.slice(1,).slice(0,)) {
+                    link.classList.add('active-page')
+                }
             }
         })
     }, [location])
@@ -36,14 +44,13 @@ function Header({header}) {
         });
         notificationsWrapper.current.classList.toggle('visible');
     }
-
     return (
         <header ref={header}>
             <div className="header-content">
                 <div className="logo">
                     <Link to='/home' className='logo'>ISSUE</Link>
                 </div>
-                {user ? 
+                {user && !noUsers ? 
                 <>
                     <nav>
                         <Link to="/home" onClick={e => {activeLink(e)}} className='navigation-link' aria-label='home'>
@@ -63,7 +70,8 @@ function Header({header}) {
                         </Link>
                     </nav>
                     <div className="notification-section">
-                        <button type='button' className='notification-button' onClick={handleNotificationsWrapper} aria-label='notification button'>
+                        <button type='button' className={user && user.notifications && user.notifications.some(notification => !notification.seen) ? "notification-button unread" : "notification-button"} onClick={handleNotificationsWrapper} aria-label='notification button'>
+                        {/* <button type='button' className="notification-button" onClick={handleNotificationsWrapper} aria-label='notification button'> */}
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="bell"><rect width="24" height="24" opacity="0"/><path d="M20.52 15.21l-1.8-1.81V8.94a6.86 6.86 0 0 0-5.82-6.88 6.74 6.74 0 0 0-7.62 6.67v4.67l-1.8 1.81A1.64 1.64 0 0 0 4.64 18H8v.34A3.84 3.84 0 0 0 12 22a3.84 3.84 0 0 0 4-3.66V18h3.36a1.64 1.64 0 0 0 1.16-2.79zM14 18.34A1.88 1.88 0 0 1 12 20a1.88 1.88 0 0 1-2-1.66V18h4zM5.51 16l1.18-1.18a2 2 0 0 0 .59-1.42V8.73A4.73 4.73 0 0 1 8.9 5.17 4.67 4.67 0 0 1 12.64 4a4.86 4.86 0 0 1 4.08 4.9v4.5a2 2 0 0 0 .58 1.42L18.49 16z"/></g></g></svg>
                         </button>
                         <div ref={notificationsWrapper} className="notifications-wrapper">

@@ -12,14 +12,10 @@ header {
     backdrop-filter: blur(8px);
 }
 .header-content {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center;  */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
     align-items: center;
-
     padding: .5rem 0;
     max-width: 75rem;
     width: 95%;
@@ -125,12 +121,10 @@ header .notifications-wrapper {
     translate: -90% 0;
     background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
     border-radius: .25rem;
-    /* overflow-y: scroll; */
     overflow-x: hidden;
     scrollbar-color: var(--tertiary-color) var(--primary-color);
     scrollbar-width: thin;
     max-height: 20rem;
-    /* padding: .75rem 0; */
     opacity: 0;
     pointer-events: none;
 }
@@ -160,9 +154,6 @@ header .notifications-wrapper a {
     header nav {
         display: none;
     }
-    /* header .username {
-        display: none;
-    } */
     header .notifications-wrapper {
         translate: -92.5% 0;
     }

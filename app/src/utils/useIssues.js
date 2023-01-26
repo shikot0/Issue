@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { allIssuesRoute, issueRoute,  getIssuesFromWebsiteRoute } from "./APIRoutes";
+import { allIssuesRoute, allIssuesFromUserRoute, issueRoute, getIssuesFromWebsiteRoute } from "./APIRoutes";
 
-function useIssues(username, website, id) {
+function useIssues(username, website, id, page=1) {
     const [issues, setIssues] = useState([]);
     const [noIssues, setNoIssues] = useState(false);
     useEffect(() => {
         if(username) {
-            fetch(`${allIssuesRoute}/${username}`)
+            fetch(`${allIssuesFromUserRoute}/${username}`)
             .then(res => res.json())
             .then(data => {
                 setIssues(data);
@@ -21,14 +21,13 @@ function useIssues(username, website, id) {
             .then(res => res.json())
             .then(data => {
                 setIssues(data);
-                console.log(data)
                 if(data.noIssues) {
                     setNoIssues(true);
                 }
             // console.log(data)
-        }).catch(err => {
-            console.log(err)
-        })
+            }).catch(err => {
+                console.log(err)
+            })
         }else if(!username && id) {
             fetch(`${issueRoute}/${id}`)
             .then(res => {
@@ -48,18 +47,19 @@ function useIssues(username, website, id) {
                 console.log(err)
             })
         }else {
-            fetch(`${allIssuesRoute}/all`)
-            .then(res => res.json())
+            fetch(`${allIssuesRoute}/${page}`)
+            .then(res => res.json()) 
             .then(data => {
-                setIssues(data)
+                setIssues(data);
                 if(data.noIssues) {
+                    setIssues([]);
                     setNoIssues(true);
                 }
-            }).catch(err => {
+            }).catch(err => {    
                 console.log(err)
             })
         }
-    },[username, website, id]);
+    },[username, website, id, page]);
 
     return {issues, noIssues}; 
 }

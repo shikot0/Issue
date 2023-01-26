@@ -6,7 +6,6 @@
     width: 90%;
     max-width: 25rem;
     margin: 0 auto 3%;
-    color: var(--primary-color);
     color: var(--cta-text-color);
     background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
     background-size: 200%;

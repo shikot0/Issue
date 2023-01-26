@@ -56,6 +56,10 @@ function NewIssuePage() {
 
     function handleAutofill(e) {
         linkInput.current.value = e.target.innerText;
+        setIssue(prev => {
+            return {...prev, link: e.target.innerText}
+        })
+        console.log(issue);
     }
 
     function handleShowUserImage(e) {
@@ -135,13 +139,13 @@ function NewIssuePage() {
 
     return (
         <section id="new-issue-page">
-            <div className="company">
-                <div className="company-image-wrapper">
+            <div className="website">
+                <div className="website-image-wrapper">
                     {website ? 
                     <img src={`${websiteImageRoute}/${website._id}`} alt="website" /> : 
                     <ImageSkeleton/>}
                 </div>
-                <div className="company-about">
+                <div className="website-about">
                     <h2 className="name">{website ? website.name: 'website'}</h2> 
                     <div className="domain-wrapper">
                         {website && website.domains && website.domains.map((domain, index) => {

@@ -25,6 +25,6 @@
 
 @media screen and (max-width: 450px) {
     .websites-grid {
-        grid-auto-rows: 15rem;
+        grid-auto-rows: 16rem;
     }
 }

@@ -1,10 +1,11 @@
-const { createIssue, setIssueScreenshot, deleteIssue, resolveIssue, getIssuesFromWebsite, attestIssue, editIssue, getAllIssues, getIssue, getIssueScreenshot, getLatestIssues } = require('../Controllers/issueController');
+const { createIssue, setIssueScreenshot, deleteIssue, resolveIssue, getIssuesFromWebsite, attestIssue, editIssue, getAllIssuesFromUser, getAllIssues, getIssue, getIssueScreenshot, getLatestIssues } = require('../Controllers/issueController');
 
 const router = require('express').Router();
 
 router.post('/createissue', createIssue);
 router.get('/latestissues', getLatestIssues);
-router.get('/allissues/:username', getAllIssues);
+router.get('/alluserissues/:username', getAllIssuesFromUser);
+router.get('/allissues/:page', getAllIssues);
 router.get('/issuesfromwebsite/:name', getIssuesFromWebsite);
 
 router.post('/issuescreenshot/:id', setIssueScreenshot);

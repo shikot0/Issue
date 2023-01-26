@@ -5,6 +5,7 @@ import {getCurrentUserRoute} from './APIRoutes';
 function useUsers(username) {
     const [user, setUser] = useState('');
     const [noUsers, setNoUsers] = useState(false);
+    const token = localStorage.getItem('token');
     
     useEffect(() => {
         if(username && username !== 'all') {
@@ -42,9 +43,11 @@ function useUsers(username) {
                 }).catch(err => {
                     console.error(err.message)
                 })
+            }else {
+                setUser('');
             }
         }
-    },[username]); 
+    },[username, token]); 
 
     return {user, noUsers}
 }

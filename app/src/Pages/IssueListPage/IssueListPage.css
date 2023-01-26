@@ -7,10 +7,14 @@
 .issue-grid {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    padding: 0 .5rem; 
     align-items: flex-start;
+    justify-content: center;
+    /* grid-template-columns: repeat(auto-fill, 22rem);
+    grid-auto-rows: 10px;
+    justify-content: center; */
     gap: 1.5rem;
-    padding: 0 1rem;
 }
 .issue-grid .issue {
     width: 100%;
@@ -31,4 +35,10 @@
 #issue-list-page .issue-screenshot {
     max-height: 20rem;
     object-fit: cover;
+}
+#issue-list-page .issue-description {
+    word-wrap: break-word;
+}
+#issue-list-page .image-skeleton {
+    height: 15rem;
 }

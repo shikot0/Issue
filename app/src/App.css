@@ -32,10 +32,9 @@ main {
 #register-page, #home-page, #issue-list-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem; 
   width: 95%;
-  /* margin: 3% 0 0; */
 }
 #new-issue-page, #issue-list-page, #issue-page, #account-page {
-  margin: 3% 0 0;
+  margin: 3rem 0 0;
 }
 #website-page {
   margin: 10% 0 0;
@@ -94,7 +93,6 @@ input button {
   position: relative;
   background: transparent;
   transition: .2s;
-  /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
   background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
 }
 .cta:hover {
@@ -185,13 +183,10 @@ input button {
 }
 
 .gradient-bg {
-  /* background-image: url('../public/gradient-bg.png'); */
   background-image: url('../public/gradient-bg.webp');
   background-size: cover;
 }
 .gradient-text {
-  background-image: linear-gradient(to right, var(--primary-cta-color), var(--secondary-cta-color));
-  /* background-image: url('../public/gradient-bg.png'); */
   background-image: url('../public/gradient-bg.webp');
   background-size: 100%;
   background-clip: text;
@@ -239,6 +234,21 @@ input button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+}
+.notification-button.unread::after {
+  opacity: 1;
+}
+.notification-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 10%;
+  width: .4rem;
+  height: .4rem;
+  background-color: var(--primary-cta-color);
+  border-radius: 10rem;
+  opacity: 0;
 }
 .notification-button svg {
   width: 1.25rem;
@@ -260,11 +270,11 @@ input button {
 
 @media screen and (max-width: 800px) {
   #website-page {
-      margin: 15% 0 0;
+      margin: 8rem 0 0;
   }
 }
-@media screen and (max-width: 550px) {
+/* @media screen and (max-width: 550px) {
   #website-page {
-      margin: 22% 0 0;
+      margin: 8rem 0 0;
   }
-}
+} */

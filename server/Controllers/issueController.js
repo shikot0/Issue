@@ -181,35 +181,64 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
     }
 }
 
-module.exports.getAllIssues = async (req, res, next) => {
+module.exports.getAllIssuesFromUser = async (req, res, next) => {
     try {
         const username = req.params.username.toLowerCase();
         const user = await Users.findOne({username: username}); 
+        let issues = await Issues.find({"openedBy.username": user.username}).select([
+            "openedBy",
+            "name",
+            "description",
+            "attests",
+            "website",
+            "link",
+            "resolved"
+        ]);
+        
+        if(issues) {
+            return res.json(issues);
+        }else {
+            return res.json({noIssues: true})
+        }
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.getAllIssues = async (req, res, next) => {
+    try {
+        let page = req.params.page;
         let issues;
-        if(user) {
-            issues = await Issues.find({"openedBy.username": user.username}).select([
-                "openedBy",
-                "name",
-                "description",
-                "attests",
-                "website",
-                "link",
-                "resolved"
-            ])
-        }else if(username === 'all') {
-            issues = await Issues.find().select([
-                "openedBy",
-                "name",
-                "description",
-                "attests",
-                "website",
-                "link",
-                "resolved"
-            ]).sort({attests: -1})
+        let returnedIssues;
+        page = page -1;
+        
+        issues = await Issues.find().select([
+            "openedBy",
+            "name",
+            "description",
+            "attests",
+            "website",
+            "link",
+            "resolved"
+        ]).sort({attests: -1});
+
+        if(!isNaN(page)) {
+            if((page * 10) < issues.length) {
+                if((page * 10) + 10 < issues.length) {
+                    returnedIssues = issues.slice(page * 10, (page * 10) + 10)
+                }else {
+                    returnedIssues = issues.slice(page * 10,)
+                }
+                // console.lokg(page)
+            }else {
+                return res.json({noIssues: true});
+            }
+        }else {
+            returnedIssues = issues.slice(0,)
         }
         
         if(issues) {
-            return res.json(issues)
+            return res.json(returnedIssues)
         }else {
             return res.json({noIssues: true})
         }
@@ -229,7 +258,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'resolved',
             "link",
             'openedBy'
-        ]).sort({createdAt: -1});
+        ]).sort({attests: -1, createdAt: -1});
         // console.log(issues) 
         if(issues) {
             return res.json(issues)
