@@ -67,17 +67,18 @@ function RegisterWebsitePage() {
         }else {
             toast.error('Please choose a smaller image', toastOptions)
         }
-    }
+        e.target.classList.remove('drag-over');
+    };
     
     function handleDragOver(e) {
         e.preventDefault();
         e.target.classList.add('drag-over')
-    }
+    };
 
     function handleDragLeave(e) {
         e.preventDefault();
         e.target.classList.remove('drag-over')
-    }
+    };
 
     function handleWebsiteData(e) {
         setWebsite({...website, [e.target.name]: e.target.value});

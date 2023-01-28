@@ -7,7 +7,8 @@ import './IssueListPage.css';
 
 function IssueListPage() { 
     const [page, setPage] = useState(1);
-    const {issues: returnedIssues} = useIssues(null, null, null, page);
+    // const [noIssues, setNoIssues] = useState(false);
+    const {issues: returnedIssues, noIssues} = useIssues(null, null, null, page);
     const [issues, setIssues] = useState(returnedIssues);
     const navigate = useNavigate();
     const intObserver = useRef();
@@ -41,11 +42,18 @@ function IssueListPage() {
         });
     }, [returnedIssues])
 
+    // useEffect(() => { 
+    //     console.log(returnedIssues)
+    //     if(returnedIssues === []) {
+    //         setNoIssues(true);
+    //     }
+    // },[returnedIssues])
+
     
     return (
         <section id="issue-list-page">
             <div className="issue-grid" onClick={handleWrapperItemClick}>
-                {issues.length !== 0 ? issues.map((issue, index) => {
+                {!noIssues ? issues.length !== 0 ? issues.map((issue, index) => {
                     if(index === issues.length-1) {
                         return <Issue key={index} issue={issue} lastPostRef={lastPostRef}/>
                     }
@@ -62,7 +70,7 @@ function IssueListPage() {
                     <IssueSkeleton/>
                     <IssueSkeleton/>
                     <IssueSkeleton/>
-                </>}
+                </>: <h2 className='not-found-hint'>No issues have been opened, please check back later.</h2>}
             </div>
         </section>
     )

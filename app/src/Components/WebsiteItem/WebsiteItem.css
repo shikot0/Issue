@@ -5,11 +5,11 @@
 }
 .website-item .website-image-wrapper {
     width: initial;
-    border: 1px dashed #979797;
+    border: 1px dashed rgba(151, 151, 151, 0.2);
     border-bottom: none;
     background-image: linear-gradient(to bottom right, #414141, #3a3a3a);
     background-size: 200%;
-    height: 78%;
+    height: 80%;
     border-radius: .5rem .5rem 0 0;
     display: flex;
     align-items: center;
@@ -22,9 +22,9 @@
 }
 .website-info {
     background-color: #242424;
-    border: 1px solid #707070;
+    border: 1px solid rgba(112, 112, 112, 0.2);
     border-top: none;
-    height: 22%;
+    height: 20%;
     text-align: center;
     display: flex;
     align-items: center;

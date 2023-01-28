@@ -1,18 +1,17 @@
-import {useEffect, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import useUsers from '../../utils/useUsers';
 import { markNotificationsAsReadRoute, profilePictureRoute } from '../../utils/APIRoutes';
 import NotificationItem from '../NotificationItem/NotificationItem';
+import useUsers from '../../utils/useUsers';
 import './Header.css';
 
 function Header({header}) {
     const notificationsWrapper = useRef();
     const {user, noUsers} = useUsers();
     const location = useLocation();
+    const [notificationsVisible, setNotificationsVisible] = useState(false);
     
     
-    
-    // const links = document.querySelectorAll('.navigation-link');
     useEffect(() => {
         document.querySelectorAll('.navigation-link').forEach(link => {
             link.classList.remove('active-page');
@@ -38,12 +37,14 @@ function Header({header}) {
     }
     
     function handleNotificationsWrapper() {
+        notificationsWrapper.current.classList.toggle('visible');
         fetch(markNotificationsAsReadRoute, {
             method: 'PUT',
             headers: { 'x-access-token': JSON.parse(localStorage.getItem('token')) }
         });
-        notificationsWrapper.current.classList.toggle('visible');
+        setNotificationsVisible(prev => !prev);
     }
+
     return (
         <header ref={header}>
             <div className="header-content">

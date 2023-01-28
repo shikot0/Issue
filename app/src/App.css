@@ -20,6 +20,7 @@ body {
   /* background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b); */
   background-image: radial-gradient(circle at 0 0, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
   overflow-x: hidden;
+  color-scheme: dark;
 }
 main {
   display: flex;
@@ -34,10 +35,10 @@ main {
   width: 95%;
 }
 #new-issue-page, #issue-list-page, #issue-page, #account-page {
-  margin: 3rem 0 0;
+  padding: 3rem 0 0;
 }
 #website-page {
-  margin: 10% 0 0;
+  padding: 8rem 0 0;
 }
 input, .text-box {
   padding: .5rem 0 .5rem 1rem;
@@ -270,11 +271,15 @@ input button {
 
 @media screen and (max-width: 800px) {
   #website-page {
-      margin: 8rem 0 0;
+      margin: 0;
+      padding: 6rem 0 0;
   }
 }
-/* @media screen and (max-width: 550px) {
+@media screen and (max-width: 550px) {
   #website-page {
-      margin: 8rem 0 0;
+      padding: 5rem 0 0;
   }
-} */
+  #account-page {
+    padding: 1rem 0 0;
+  }
+}

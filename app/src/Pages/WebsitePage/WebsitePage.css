@@ -29,7 +29,6 @@
     font-size: 1.6rem;
 }
 #website-page header .header-skeleton {
-    /* align-self: flex-end; */
     margin: 0 0 1.5rem;
 }
 .detail {
@@ -42,4 +41,25 @@
 }
 #website-page .issues-grid-wrapper {
     margin: 3rem 0 0;
+}
+
+
+@media screen and (max-width: 600px) {
+    #website-page header {
+        max-height: 5rem; 
+    }
+    #website-page .website-details-wrapper {
+        gap: 2rem;
+        padding: 0 0 .75rem;
+    }
+    .detail-value {
+        font-size: 1.5rem;
+    }
+    #website-page header .header-skeleton {
+        margin: 0 0 1.25rem;
+    }
+    #website-page .website-image-wrapper {
+        width: 8rem;
+        height: 8rem;
+    }
 }

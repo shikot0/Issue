@@ -18,7 +18,7 @@ function App() {
   // const navigate = useNavigate();
   const header = useRef();
   const footer = useRef();
-  const location = useLocation();
+  const location = useLocation(); 
   
   useEffect(() => {
     if(location.pathname === '/' && header.current && footer.current) {
@@ -33,7 +33,6 @@ function App() {
       footer.current.classList.remove('hide-nav');
     }
   },[location.pathname]);
-
 
   return (
     <>
@@ -52,7 +51,7 @@ function App() {
             </Routes>
         </main> 
         <Footer footer={footer}/>
-        <Analytics/>
+        {/* <Analytics/> */}
     </> 
   );
 }

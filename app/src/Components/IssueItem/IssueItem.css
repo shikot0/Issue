@@ -15,10 +15,9 @@
     position: relative;
     cursor: pointer;
     transition: .2s cubic-bezier(0.5,-0.21, 0.55, 1.44);
-    animation: fade-in .3s linear 1 forwards;
+    animation: fade-in .2s linear 1 forwards;
 }
 .issue-item:hover {
-    scale: 1.025;
     translate: 0 -10%;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
 }

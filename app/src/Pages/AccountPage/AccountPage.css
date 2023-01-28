@@ -52,12 +52,18 @@
         padding: 0 .5rem;
     }
     #account-page .user {
-        width: 100%;
+        width: 95%;
     }
     #account-page .issues-grid-wrapper {
         width: 100%;
     }
     .profile-picture-wrapper {
+        width: 20vw;
+        height: 20vw;
+        max-width: 11rem;
+        max-height: 11rem;
+    }
+    .profile-picture-skeleton {
         width: 20vw;
         height: 20vw;
         max-width: 11rem;

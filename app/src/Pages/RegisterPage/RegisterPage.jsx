@@ -8,6 +8,7 @@ import './RegisterPage.css';
 function RegisterPage() {
     const [currentUserImage, setCurrentUserImage] = useState();
     const emailInput = useRef();
+    const imageInput = useRef();
     const [signUpData, setSignUpData] = useState({
         username: "",
         email: "",
@@ -15,11 +16,46 @@ function RegisterPage() {
         confirmPassword: "",
         profilePicture: {}
     });
-    
+
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
     });
+
+    function handleFocus() {
+        imageInput.current.click();
+    }
+
+    function handleShowUserImage(e) {
+        e.preventDefault();
+        if(e.target.files[0].size < 400000) {
+            setCurrentUserImage(e.target.files[0]);
+            e.target.classList.remove('drag-over');
+        }else {
+            toast.error('Please choose a smaller image', toastOptions)
+        }
+    };
+    
+    function handleDragImage(e) {
+        e.preventDefault();
+        if(e.dataTransfer.files[0].size < 1500000) {
+            setCurrentUserImage(e.dataTransfer.files[0]);
+        }else {
+            toast.error('Please choose a smaller image', toastOptions)
+        }
+        e.target.classList.remove('drag-over');
+    };
+    
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.target.classList.add('drag-over')
+    };
+
+    function handleDragLeave(e) {
+        console.log(e)
+        e.preventDefault();
+        e.target.classList.remove('drag-over')
+    };
     
     const navigate = useNavigate();
     
@@ -44,14 +80,6 @@ function RegisterPage() {
     function handleLogin(e) {
         setLoginData({...loginData, [e.target.name]: e.target.value})
     }
-    
-    function handleShowUserImage(e) {
-        if(e.target.files[0].size < 400000) {
-            setCurrentUserImage(e.target.files[0]);
-        }else {
-            toast.error('Please choose a smaller image', toastOptions)
-        }
-    }
 
     async function handleSignUpValidation() {
         const {password, confirmPassword, email, username} = signUpData;
@@ -73,7 +101,7 @@ function RegisterPage() {
     async function handleSetUserImage(e) {
         e.preventDefault();
         const {password, email, username} = signUpData;
-        if(password.length > 8 && email !== "" && !emailInput.current.validity.valid && username.length > 3 && currentUserImage) {
+        if(password.length >= 8 && email !== "" && emailInput.current.validity.valid && username.length >= 3 && currentUserImage) {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
             
@@ -207,7 +235,7 @@ function RegisterPage() {
                             back
                         </button>
                         <h2>Set your profile picture</h2>
-                        <div className="image-container gradient-border">
+                        <div ref={imageInput} className="image-container gradient-border" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                             <img className={currentUserImage ? 'profile-photo' : 'hidden'} src={currentUserImage ? URL.createObjectURL(currentUserImage) : `${process.env.PUBLIC_URL}/logos/person-outline.svg`} alt="profile" />
                         </div>
                         <input type="file" accept="image/*" onInput={handleShowUserImage} aria-label='profile-picture input' required/>

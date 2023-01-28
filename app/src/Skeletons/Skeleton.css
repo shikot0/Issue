@@ -65,8 +65,8 @@
 .profile-picture-skeleton {
     width: 11vw;
     height: 11vw;
-    max-width: 10rem;
-    max-height: 10rem;
+    max-width: 9rem;
+    max-height: 9rem;
     border-radius: 10rem;
     position: relative;
     display: flex;

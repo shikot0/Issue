@@ -4,6 +4,7 @@ import { allIssuesRoute, allIssuesFromUserRoute, issueRoute, getIssuesFromWebsit
 function useIssues(username, website, id, page=1) {
     const [issues, setIssues] = useState([]);
     const [noIssues, setNoIssues] = useState(false);
+
     useEffect(() => {
         if(username) {
             fetch(`${allIssuesFromUserRoute}/${username}`)
@@ -53,6 +54,8 @@ function useIssues(username, website, id, page=1) {
                 setIssues(data);
                 if(data.noIssues) {
                     setIssues([]);
+                }
+                if(data.noIssues && page === 1) {
                     setNoIssues(true);
                 }
             }).catch(err => {    

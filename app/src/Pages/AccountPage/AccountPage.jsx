@@ -46,7 +46,7 @@ function AccountPage() {
                 <>
                     <ProfilePictureSkeleton/>
                     <UsernameSkeleton/>
-                </>    
+                    </>    
                 : null}
             </div>
             <IssuesWrapper issues={issues}/>

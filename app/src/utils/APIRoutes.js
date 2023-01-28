@@ -1,5 +1,5 @@
-// export const host = 'http://localhost:5000';  
-export const host  = 'https://issue-j83z.onrender.com';
+export const host = 'http://localhost:5000';  
+// export const host  = 'https://issue-j83z.onrender.com';
 
 //          USER ROUTES
 export const loginRoute = `${host}/api/user/login`;
