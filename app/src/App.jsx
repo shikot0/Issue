@@ -51,7 +51,7 @@ function App() {
             </Routes>
         </main>     
         <Footer footer={footer}/>
-        {/* <Analytics/> */}
+        <Analytics/>
     </> 
   );
 }
