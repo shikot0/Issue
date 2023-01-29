@@ -19,7 +19,7 @@
 .issue-grid .issue {
     width: 100%;
     cursor: pointer;
-    animation: fade-in .2s linear 1 forwards;
+    animation: fade-up .2s linear 1 forwards;
 }
 .issue-grid .issue .issue-name {
     max-width: 50%;

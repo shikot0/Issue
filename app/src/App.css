@@ -35,10 +35,10 @@ main {
   width: 95%;
 }
 #new-issue-page, #issue-list-page, #issue-page, #account-page {
-  padding: 3rem 0 0;
+  padding-top: 3rem;
 }
 #website-page {
-  padding: 8rem 0 0;
+  padding-top: 8rem;
 }
 input, .text-box {
   padding: .5rem 0 .5rem 1rem;
@@ -269,17 +269,46 @@ input button {
   cursor: pointer;
 }
 
+
+@keyframes fade-in {
+	from {
+		scale: .85;
+		filter: blur(1rem)
+	}
+}
+
+@keyframes fade-up {
+	from {
+		scale: .85;
+    translate: 0 10%;
+		filter: blur(1rem)
+	}
+}
+
+@keyframes gradient-bg {
+	0% {
+		background-position: 0%;
+	}
+	50% {
+		background-position: 100%;
+	}
+	100% {
+		background-position: 0%;
+	}
+}
+
 @media screen and (max-width: 800px) {
   #website-page {
       margin: 0;
-      padding: 6rem 0 0;
+      padding-top: 6rem;
   }
 }
+
 @media screen and (max-width: 550px) {
   #website-page {
-      padding: 5rem 0 0;
+      padding-top: 5rem;
   }
   #account-page {
-    padding: 1rem 0 0;
+    padding-top: 1rem;
   }
 }

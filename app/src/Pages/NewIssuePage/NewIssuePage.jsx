@@ -98,17 +98,17 @@ function NewIssuePage() {
     function createIssue() {
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);
+        console.log(linkInput.current)
         
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);
-        }else if(!issue.link) {
-            toast.error('Please add a link to the site', toastOptions);
+        }else if(!issue || linkInput.current.validity.patternMismatch || !website.domains.some(domain => issue.link.includes(domain))) {
+            toast.error('Please add a valid link to the site', toastOptions);
         }else if(!issue.description) {
             toast.error('Please add a short description of the issue', toastOptions)
         }else if(!uploadedImage) {
             toast.error('Please add an image of the issue', toastOptions);
-        }else if(issue.openedBy && issue.website) {
-            // console.log(issue)
+        }else if(issue.openedBy && issue.website && !linkInput.current.validity.patternMismatch) {
             fetch(`${createIssueRoute}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -157,7 +157,8 @@ function NewIssuePage() {
             <form>
                 <div className="name-and-link">
                     <input onInput={handleIssueData} type="text" name="name" placeholder='Name of issue' aria-label='issue name'/>
-                    <input onInput={handleIssueData} ref={linkInput} type="url" name="link" placeholder={website ? website.domains[0] : 'issue.com'} aria-label='issue link'/>
+                    {/* <input onInput={handleIssueData} ref={linkInput} type="url" name="link" pattern='[a-zA-Z0-9._+-]+.[a-zA-Z0-9-]' title='Please provide a valid website' placeholder={website ? website.domains[0] : 'issue.com'} aria-label='issue link'/> */}
+                    <input onInput={handleIssueData} ref={linkInput} type="url" name="link" pattern='[a-zA-Z0-9._+-]+\.[a-zA-Z0-9-]{2,}' title='Please provide a valid website' placeholder={website ? website.domains[0] : 'issue.com'} aria-label='issue link'/>
                 </div>
                 <textarea onInput={handleIssueData} name="description" className='text-box' placeholder='A short description of the issue' aria-label='issue description'></textarea>
                 <div className="image-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>

@@ -22,9 +22,9 @@ function RegisterPage() {
         password: "",
     });
 
-    function handleFocus() {
-        imageInput.current.click();
-    }
+    // function handleFocus() {
+    //     imageInput.current.click();
+    // }
 
     function handleShowUserImage(e) {
         e.preventDefault();

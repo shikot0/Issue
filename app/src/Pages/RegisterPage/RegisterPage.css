@@ -4,9 +4,6 @@
 	justify-items: center;
 	align-items: center;
 }
-/* #register-page input[type$='text'],  #register-page input[type$='email']{
-	width: 80%;
-} */
 .form-wrapper {
     max-width: 23rem;
 	width: 100%;
@@ -17,7 +14,6 @@
 	border-radius: .75rem;
 	grid-auto-flow: column;
 	grid-auto-columns: 100%; 
-    /* background-color: #2a272ac4; */
     background-color: var(--secondary-color);
 	background-size: 200%;
 	box-shadow: 0 0 20rem rgba(33, 0, 180, 0.4), 0 20rem 20rem rgba(182, 0, 233, 0.4);
@@ -31,24 +27,6 @@
 .form-wrapper input {
 	width: 100%;
 }
-@keyframes fade-in {
-	from {
-		scale: .85;
-		filter: blur(10px)
-	}
-}
-@keyframes gradient-bg {
-	0% {
-		background-position: 0%;
-	}
-	50% {
-		background-position: 100%;
-	}
-	100% {
-		background-position: 0%;
-	}
-}
-
 #register-page form {
 	display: flex;
 	flex-direction: column;
@@ -65,9 +43,6 @@
 	justify-content: center;
 	width: 100%;
 }
-/* .password-input-wrapper input {
-	width: 100%;
-} */
 .toggle-password-button {
 	display: flex;
 	align-items: center;
@@ -113,7 +88,6 @@
 }
 .form-back-button {
 	background-color: var(--tertiary-color);
-	/* background-color: #4b4a54; */
 	border: none;
 	display: flex;
 	align-items: center;
@@ -141,11 +115,7 @@
     width: 7.5rem;
     height: 7.5rem;
     overflow: hidden;
-	/* padding: .15rem; */
-    /* border: 3px solid #40bde0;
-	box-shadow: 0 0 1.5rem #40bde0; */
     border: 3px solid transparent;
-	/* box-shadow: 0 0 1.5rem var(--secondary-cta-color), 0 0 1.5rem var(--primary-cta-color); */
 	box-shadow: 0 0 1.5rem var(--primary-cta-color), 0 0 1.5rem var(--secondary-cta-color);
     border-radius: 20rem;
 }
