@@ -25,13 +25,6 @@ function Issue ({issue, lastPostRef}) {
     useEffect(() => {
         setAttests(issue?.attests);
     },[issue])
-    
-    // const [editedValues, setEditedValues] = useState({
-    //     id: id,
-    //     name: '',
-    //     link: '',
-    //     description: '',
-    // })
 
     const [editedValues, setEditedValues] = useState({
         id: issue._id,
@@ -141,7 +134,7 @@ function Issue ({issue, lastPostRef}) {
     }
 
     function handleResolveIssue() {
-        if(website?.admins.some(admin => admin.username === currentUser.username) || issue.openedBy.username === currentUser.username) {
+        if(website?.admins.some(admin => admin.username === currentUser.username)) {
             fetch(`${issueRoute}/${issue._id}`, {
                 method: 'PUT'
             })
@@ -161,6 +154,14 @@ function Issue ({issue, lastPostRef}) {
         }
     }
 
+    function convertDate(date) {
+        const formatter = Intl.DateTimeFormat('en', {
+            dateStyle: 'full',
+        });
+        let numDate = new Date(date.slice(0, 10));
+        let returnedDate = formatter.format(numDate);
+        return returnedDate;
+    }
 
     return (
         <div className="issue" data-id={`${issue._id}`} ref={lastPostRef}>
@@ -172,14 +173,15 @@ function Issue ({issue, lastPostRef}) {
                     <img src={`${profilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
                 </div>    
                 : null}
-                {issue && issue.openedBy ? <Link to={`/user/${issue.openedBy.username}`} className="issue-creator gradient-text">{issue.openedBy.username}</Link> : null}
+                {issue && issue.openedBy ? 
+                <Link to={`/user/${issue.openedBy.username}`} className="issue-creator gradient-text">{issue.openedBy.username}</Link>
+                : null}
             </div>
         </header>
         <div className="issue-screenshot-wrapper">
-            {/* {issue._id && user && website? 
-                <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='issue'/>
-            : <ImageSkeleton/>} */}
+            {issue && issue._id ? 
             <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='issue'/>
+            : null}
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
         <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>
@@ -210,6 +212,9 @@ function Issue ({issue, lastPostRef}) {
                 <button type='button' className='helper-button' onClick={() => {toggleModal(modal.current)}}>No</button>
             </div>
         </div>
+        {issue && issue.dateOfCreation ? 
+        <time className='issue-time'>{convertDate(issue.dateOfCreation)}</time> 
+        : null}
     </div>
     )
 }

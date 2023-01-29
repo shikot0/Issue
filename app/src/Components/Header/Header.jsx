@@ -38,11 +38,13 @@ function Header({header}) {
     
     function handleNotificationsWrapper() {
         notificationsWrapper.current.classList.toggle('visible');
-        fetch(markNotificationsAsReadRoute, {
-            method: 'PUT',
-            headers: { 'x-access-token': JSON.parse(localStorage.getItem('token')) }
-        });
         setNotificationsVisible(prev => !prev);
+        if(notificationsVisible) {
+            fetch(markNotificationsAsReadRoute, {
+                method: 'PUT',
+                headers: { 'x-access-token': JSON.parse(localStorage.getItem('token')) }
+            });
+        }
     }
 
     return (

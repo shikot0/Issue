@@ -6,9 +6,15 @@
     align-items: center;
 }
 .attest-button {
-    width: min-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
     border: none;
     background-color: transparent;
     font-size: 1.25rem;
     cursor: pointer;
+}
+.attest-button svg {
+    fill: var(--secondary-cta-color);
 }

@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Issue from '../../Components/Issue/Issue';
 import useIssues from '../../utils/useIssues';
 import { IssueSkeleton } from '../../Skeletons/Skeletons';
@@ -32,7 +33,11 @@ function IssueListPage() {
 
     function handleWrapperItemClick(e) {
         if(e.target.classList.contains('issue')) {
-            navigate(`/issue/${e.target.dataset.id}`)
+            if(e.buttons === 4) {
+                window.open(`/issue/${e.target.dataset.id}`)
+            }else {
+                navigate(`/issue/${e.target.dataset.id}`)
+            }
         }
     }
 
@@ -42,17 +47,9 @@ function IssueListPage() {
         });
     }, [returnedIssues])
 
-    // useEffect(() => { 
-    //     console.log(returnedIssues)
-    //     if(returnedIssues === []) {
-    //         setNoIssues(true);
-    //     }
-    // },[returnedIssues])
-
-    
     return (
         <section id="issue-list-page">
-            <div className="issue-grid" onClick={handleWrapperItemClick}>
+            <div className="issue-grid" onMouseDown={handleWrapperItemClick}>
                 {!noIssues ? issues.length !== 0 ? issues.map((issue, index) => {
                     if(index === issues.length-1) {
                         return <Issue key={index} issue={issue} lastPostRef={lastPostRef}/>
@@ -72,6 +69,7 @@ function IssueListPage() {
                     <IssueSkeleton/>
                 </>: <h2 className='not-found-hint'>No issues have been opened, please check back later.</h2>}
             </div>
+            <ToastContainer/>
         </section>
     )
 }

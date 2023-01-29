@@ -38,7 +38,7 @@ function App() {
     <>
         <Header header={header}/> 
         <main>
-            <Routes>
+            <Routes>     
               <Route path="/" element={<InfoPage/>}/>
               <Route path="/home" element={<HomePage/>}/>
               <Route path="/register" element={<RegisterPage/>}/>
@@ -49,9 +49,9 @@ function App() {
               <Route path="issuelist" element={<IssueListPage/>}/>
               <Route path="issue/:id" element={<IssuePage/>}/>
             </Routes>
-        </main> 
+        </main>     
         <Footer footer={footer}/>
-        <Analytics/>
+        {/* <Analytics/> */}
     </> 
   );
 }

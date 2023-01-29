@@ -9,7 +9,6 @@ import './RegisterWebsitePage.css';
 function RegisterWebsitePage() {
     const [uploadedImage, setUploadedImage] = useState('');
     const [query, setQuery] = useState('');
-    const navigate = useNavigate();
     const {user: currentUser} = useUsers();
     const {user: users} = useUsers('all')
     const imageInput = useRef();
@@ -25,6 +24,7 @@ function RegisterWebsitePage() {
         primaryContact: '',
         secondaryContact: ''
     });
+    const navigate = useNavigate();
     
     const toastOptions = {
         position: "top-right",
@@ -42,9 +42,10 @@ function RegisterWebsitePage() {
 
     useEffect(() => {
         setWebsite(prev => {
-            return {...prev, registeredBy: currentUser?.username}
+            return {...prev, registeredBy: currentUser?.username, admins: [{_id: currentUser?._id, username: currentUser?.username, email: currentUser?.email}]}
         })
-    },[currentUser])
+    
+    }, [currentUser])
 
     function handleFocus() {
         imageInput.current.click();
@@ -85,8 +86,12 @@ function RegisterWebsitePage() {
     }
     
     function handleAddDomain() { 
-        setWebsite({...website, domains: [...website.domains, domainInput.current.value]});
-        domainInput.current.value = '';
+        if(domainInput.current.validity.valid) {
+            setWebsite({...website, domains: [...website.domains, domainInput.current.value]});
+            domainInput.current.value = '';
+        }else {
+            toast.error('Please enter a valid domain', toastOptions)
+        }
     }
 
     function handleDeleteDomain(index) { 
@@ -121,7 +126,7 @@ function RegisterWebsitePage() {
     }
 
     window.addEventListener('click', e => {
-        if(e.target !== adminInput.current && usersWrapper.current) {
+        if(e.target !== adminInput.current && e.target !== usersWrapper.current && !e.target.classList.contains('user-item') && !e.target.parentElement.classList.contains('user-item') && usersWrapper.current) {
             usersWrapper.current.classList.remove('visible')
         }
     })
@@ -212,15 +217,21 @@ function RegisterWebsitePage() {
                             }) : null}
                         </div>
                     </div>
-                    { website.admins.length !== 0 ? <div className="admins-wrapper">
-                        {website.admins.length !== 0 ? website.admins.map((admin, index) => {
+                    { website.admins.length > 1 ? <div className="admins-wrapper">
+                        {website.admins.length > 1 ? website.admins.filter(admin => {
+                            if(admin._id !== currentUser._id) {
+                                return admin;
+                            }else {
+                                return false;
+                            }
+                        }).map((admin, index) => {
                             // return <p key={index} onClick={() => {handleDeleteAdmin(index)}} className="admin deletable">{admin}</p>
                             return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
                         }): null}
                     </div> : null }
                     <div className="input-wrapper">
                         <label htmlFor="domains">Domains:</label>
-                        <input ref={domainInput} className='domain-input' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domains' placeholder='e.g issue.com'/>
+                        <input ref={domainInput} className='domain-input' pattern='[a-zA-Z0-9._+-]+\.[a-zA-Z0-9-]{2,}' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domains' placeholder='e.g issue.com'/>
                         <button type='button' ref={newDomainButton} className='helper-button' onClick={handleAddDomain}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg>
                         </button>

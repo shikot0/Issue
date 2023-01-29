@@ -16,6 +16,10 @@
   font-family: 'Inter';
   color: var(--primary-text-color);
 }
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(56, 56, 56) black;
+}
 body {
   /* background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b); */
   background-image: radial-gradient(circle at 0 0, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
@@ -29,6 +33,15 @@ main {
   min-height: 100vh;
   background-attachment: fixed;
   overflow: hidden;
+}
+html::-webkit-scrollbar {
+  width: .5rem;
+}
+html::-webkit-scrollbar-track {
+  background-color: black;
+}
+html::-webkit-scrollbar-thumb {
+  background-color: rgb(56, 56, 56);
 }
 #register-page, #home-page, #issue-list-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem; 
@@ -284,7 +297,6 @@ input button {
 		filter: blur(1rem)
 	}
 }
-
 @keyframes gradient-bg {
 	0% {
 		background-position: 0%;
@@ -296,6 +308,26 @@ input button {
 		background-position: 0%;
 	}
 }
+@keyframes animated-background {
+  0% {
+      background-position: 0%;
+  }
+  50% {
+      background-position: 100%;
+  }
+  100% {
+      background-position: 0%;
+  }
+
+  /* 0% {
+      background-position: 0%;
+  }
+  100% {
+      background-position: 100%;
+  } */
+}
+
+
 
 @media screen and (max-width: 800px) {
   #website-page {

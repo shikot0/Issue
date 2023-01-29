@@ -29,6 +29,11 @@ function LatestIssues() {
 
     function handleMouseDown(e) {
         e.preventDefault();
+        if(e.target.classList.contains('issue-item')) {
+            if(e.buttons === 4) {
+                window.open(`/issue/${e.target.dataset.id}`, '_blank');
+            }
+        }
         setIsMouseDown(true);
         setStartX(e.pageX - slider.current.offsetLeft);
         setScrollLeft(slider.current.scrollLeft);
@@ -46,13 +51,6 @@ function LatestIssues() {
         slider.current.scrollLeft = scrollLeft - walk;
     }
 
-    useEffect(() => {
-        if(issues.length === 0) {
-            setNoIssues(true);
-        }else {
-            setNoIssues(false);
-        }
-    },[issues])
 
     function handleWrapperItemClick(e) {
         if(e.target.classList.contains('issue-item')) {
@@ -82,10 +80,8 @@ function LatestIssues() {
                     <IssueItemSkeleton/>
                     <IssueItemSkeleton/>
                 </>}
-            </div> : null}
-        {noIssues ? 
-            <h2>There have been no issues reported today.</h2>
-        : null}
+            </div>
+            : <h2>There have been no issues reported today.</h2>}
         </>
     )
 }

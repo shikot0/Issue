@@ -33,7 +33,7 @@ module.exports.setIssueScreenshot = async (req, res, next) => {
         issue.screenshot.ContentType = mimetype; 
 
         await issue.save();
-        return res.json({msg:'Your issue was successfully created!', status: true});
+        return res.json({msg:'Your issue has successfully been created!', status: true});
     } catch(err) {
         next(err)
     }
@@ -191,6 +191,7 @@ module.exports.getAllIssuesFromUser = async (req, res, next) => {
             "description",
             "attests",
             "website",
+            "dateOfCreation",
             "link",
             "resolved"
         ]);
@@ -212,10 +213,11 @@ module.exports.getAllIssues = async (req, res, next) => {
         let returnedIssues;
         page = page -1;
         
-        issues = await Issues.find().select([
+        issues = await Issues.find({resolved: false}).select([
             "openedBy",
             "name",
             "description",
+            "dateOfCreation",
             "attests",
             "website",
             "link",
@@ -253,6 +255,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
         let issues = await Issues.find({dateOfCreation: currentDate}).select([
             'name',
             'description',
+            'dateOfCreation',
             'website',
             'attests',
             'resolved',

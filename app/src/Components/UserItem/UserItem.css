@@ -13,5 +13,5 @@
     height: 3rem;
 }
 .user-item .username {
-    font-size: clamp(.9rem, 2vw, 1.25rem)
+    font-size: clamp(.8rem, 1.75vw, 1.1rem)
 }

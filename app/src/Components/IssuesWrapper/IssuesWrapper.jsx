@@ -18,8 +18,15 @@ function IssuesWrapper({issues, website}) {
     };
 
     function handleWrapperItemClick(e) {
+        // if(e.target.classList.contains('issue-item')) {
+        //     navigate(`/issue/${e.target.dataset.id}`);
+        // }
         if(e.target.classList.contains('issue-item')) {
-            navigate(`/issue/${e.target.dataset.id}`);
+            if(e.buttons === 4) {
+                window.open(`/issue/${e.target.dataset.id}`)
+            }else {
+                navigate(`/issue/${e.target.dataset.id}`)
+            }
         }
     }
     return (
@@ -33,7 +40,7 @@ function IssuesWrapper({issues, website}) {
                 </div>
                 <motion.div
                 layout 
-                onClick={handleWrapperItemClick}
+                onMouseDown={handleWrapperItemClick}
                 className="issues-wrapper">
                     <AnimatePresence>
                         {website ? 

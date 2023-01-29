@@ -24,21 +24,20 @@
 .issue-grid .issue .issue-name {
     max-width: 50%;
     word-wrap: break-word;
-    font-size: clamp(1.1rem, 1.4vw, 1.5rem);
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
 }
-#issue-list-page .issue .tooltip-section {
+#issue-list-page .issue .tooltip-section, #issue-list-page .issue .delete-modal, #issue-list-page .issue-status, #issue-list-page .issue .link{
     display: none;
 }
-#issue-list-page .issue .delete-modal {
-    display: none;
+#issue-list-page .issue-screenshot-wrapper {
+    height: 15rem;
 }
-#issue-list-page .issue-screenshot {
-    max-height: 20rem;
-    object-fit: cover;
+#issue-list-page .image-skeleton {
+    height: 15rem;
 }
 #issue-list-page .issue-description {
     word-wrap: break-word;
 }
-#issue-list-page .image-skeleton {
-    height: 15rem;
+#issue-list-page .issue .issue-time {
+    display: none;
 }

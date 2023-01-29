@@ -59,7 +59,6 @@ function NewIssuePage() {
         setIssue(prev => {
             return {...prev, link: e.target.innerText}
         })
-        console.log(issue);
     }
 
     function handleShowUserImage(e) {
@@ -98,7 +97,6 @@ function NewIssuePage() {
     function createIssue() {
         const formData = new FormData();
         formData.append('fileupload', uploadedImage);
-        console.log(linkInput.current)
         
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);

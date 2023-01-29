@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import './IssueItem.css';
+
 function IssueItem({issue}) {
     function truncate(text, maxLength) {
         let newText;
