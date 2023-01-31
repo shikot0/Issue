@@ -1,4 +1,6 @@
 const Websites = require('../Models/websiteModel');
+const Users = require('../Models/userModel');
+const jwt = require('jsonwebtoken');
 
 module.exports.registerWebsite = async (req, res, next) => {
     try {
@@ -43,7 +45,6 @@ module.exports.setWebsiteImage = async (req, res, next) => {
 module.exports.websiteImage = async (req, res, next) => {
     try {
         const id = req.params.id;
-        // console.log(id)
         const website = await Websites.findOne({_id: id}); 
         res.type('Content-Type', website.websiteImage.ContentType)
         return res.status(200).send(website.websiteImage.Data)
@@ -93,5 +94,26 @@ module.exports.getAllWebsites = async (req, res, next) => {
         }
     } catch(err) {
         next(err)
+    }
+}
+
+module.exports.editWebsite = async (req, res, next) => {
+    try {
+        const {admins} = req.body;
+        const id = req.params.id;
+        const accessToken = req.headers["x-access-token"];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+        const user = await Users.findOne({email: decoded})
+        const website = await Websites.findOne({_id: id});
+
+        if(website.admins.some(admin => admin.username === user.username)) {
+            website.admins = admins;
+            await website.save();
+            return res.json({status: 200, msg: 'Successfully edited website admins'})
+        }else {
+            return res.json({status: 400, msg: 'You do not have permission to edit this website'})
+        }
+    } catch(err) {
+        next(err);
     }
 }

@@ -23,5 +23,5 @@ export const latestIssuesRoute = `${host}/api/issue/latestissues`;
 //          WEBSITE ROUTES
 export const registerWebsiteRoute = `${host}/api/website/register`;
 export const websiteImageRoute = `${host}/api/website/websiteimage`;
-export const getWebsiteRoute = `${host}/api/website/website`;
+export const websiteRoute = `${host}/api/website/website`;
 export const getAllRegisteredWebsitesRoute = `${host}/api/website/allwebsites`;

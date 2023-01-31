@@ -207,7 +207,7 @@ function RegisterWebsitePage() {
                         <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='admins' placeholder='e.g shikoto'/>
                         <div ref={usersWrapper} className="users-wrapper">
                             {users ? users.filter(user => {
-                                if(user._id !== currentUser._id && !website.admins.includes(user) && user.username.includes(query)) {
+                                if(user._id !== currentUser._id && !website.admins.some(admin => admin.username === user.username) && user.username.includes(query)) {
                                     return user;
                                 }else {
                                     return false

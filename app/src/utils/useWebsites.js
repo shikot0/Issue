@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getWebsiteRoute, getAllRegisteredWebsitesRoute } from "./APIRoutes";
+import { websiteRoute, getAllRegisteredWebsitesRoute } from "./APIRoutes";
 
 function useWebsites(name) {
     const [websites, setWebsites] = useState();
@@ -7,7 +7,7 @@ function useWebsites(name) {
 
     useEffect(() => {
         if(name) {
-            fetch(`${getWebsiteRoute}/${name}`)
+            fetch(`${websiteRoute}/${name}`)
             .then(res => res.json())
             .then(data => {
                 setWebsites(data);

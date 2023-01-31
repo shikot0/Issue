@@ -100,13 +100,14 @@ function NewIssuePage() {
         
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);
-        }else if(!issue || linkInput.current.validity.patternMismatch || !website.domains.some(domain => issue.link.includes(domain))) {
+        // }else if(!issue || linkInput.current.validity.patternMismatch || !website.domains.some(domain => issue.link.includes(domain))) {
+        }else if(!issue || !website.domains.some(domain => issue.link.includes(domain))) {
             toast.error('Please add a valid link to the site', toastOptions);
         }else if(!issue.description) {
             toast.error('Please add a short description of the issue', toastOptions)
         }else if(!uploadedImage) {
             toast.error('Please add an image of the issue', toastOptions);
-        }else if(issue.openedBy && issue.website && !linkInput.current.validity.patternMismatch) {
+        }else if(issue.openedBy && issue.website) {
             fetch(`${createIssueRoute}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
