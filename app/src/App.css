@@ -168,7 +168,7 @@ input button {
   cursor: pointer;
   background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
               linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
-  border: 3px solid transparent;
+  border: 2px solid transparent;
   border-radius: .3rem;
   padding: .25rem .5rem;
 }

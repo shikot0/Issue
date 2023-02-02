@@ -20,14 +20,17 @@
     align-items: center;
     border-radius: 1rem;
     border: 3px dashed var(--primary-cta-color);
-    width: 14rem;
-    height: 14rem;
+    width: 13rem;
+    height: 13rem;
     overflow: hidden;
 }
 .website-image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+#register-website-page .upload-hint-text, #register-website-page .browse-button {
+    font-size: clamp(1rem, 2vw, 1.15rem);
 }
 #register-website-page form {
     width: 100%;
@@ -49,10 +52,12 @@
     justify-content: space-between;
     position: relative;
 }
+.input-wrapper label {
+    font-size: .9rem;
+}
 .domains-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
-    /* grid-auto-rows: 12rem; */
     align-items: center;
     gap: 1rem;
 }

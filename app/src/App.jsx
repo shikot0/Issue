@@ -32,7 +32,7 @@ function App() {
       header.current.classList.remove('hide-nav');
       footer.current.classList.remove('hide-nav');
     }
-  },[location.pathname]);
+  },[location.pathname]);      
 
   return (
     <>

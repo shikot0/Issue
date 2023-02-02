@@ -16,14 +16,12 @@ function Header({header}) {
         document.querySelectorAll('.navigation-link').forEach(link => {
             link.classList.remove('active-page');
             const moreLinkLeft = (window.location.pathname).slice(1,).indexOf('/') !== -1;
-            if(moreLinkLeft) {
-                if(link.href === location.pathname.slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/'))) {
-                    link.classList.add('active-page')
-                }
+            if(moreLinkLeft && link.href === location.pathname.slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/'))) {
+                link.classList.add('active-page')
+            }else if(!moreLinkLeft && link.href === location.pathname.slice(1,).slice(0,)) {
+                link.classList.add('active-page')
             }else {
-                if(link.href === location.pathname.slice(1,).slice(0,)) {
-                    link.classList.add('active-page')
-                }
+                link.classList.remove('active-page')
             }
         })
     }, [location])

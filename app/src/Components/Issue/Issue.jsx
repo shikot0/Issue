@@ -9,7 +9,6 @@ import {toast} from 'react-toastify';
 import './Issue.css';
 
 function Issue ({issue, lastPostRef}) {
-// const Issue = React.forwardRef(({issue}, ref) => {
     const [inEditMode, setInEditMode] = useState(false);
     const {user} = useUsers(issue?.openedBy?.username);
     const {user: currentUser} = useUsers(); 
@@ -21,7 +20,7 @@ function Issue ({issue, lastPostRef}) {
     const tooltip = useRef();
     const modal = useRef();
     const navigate = useNavigate();
-    const [attests, setAttests] = useState(0);
+    const [attests, setAttests] = useState();
     useEffect(() => {
         setAttests(issue?.attests);
     },[issue])
@@ -105,7 +104,7 @@ function Issue ({issue, lastPostRef}) {
             .then(data => {
                 if(data.status === 200) {
                     toast.success(data.msg, toastOptions);
-                    setTimeout(() => {navigate(`/user/${user.username}`)}, 2000)
+                    // setTimeout(() => {navigate(`/user/${user.username}`)}, 2000)
                     setInEditMode(false);
                 }else {
                     toast.error('There was an error', toastOptions);
@@ -165,6 +164,9 @@ function Issue ({issue, lastPostRef}) {
 
     return (
         <div className="issue" data-id={`${issue._id}`} ref={lastPostRef}>
+        {issue && issue.website && issue.website.name ? 
+            <Link to={`/website/${issue.website.name}`}><small className='website-link gradient-text'>{issue.website.name}</small></Link>
+        : null}
         <header>
             <h2 ref={name} name='name' onKeyUp={handleInput} className="issue-name">{issue.name}</h2>
             <div className="user">
@@ -180,7 +182,7 @@ function Issue ({issue, lastPostRef}) {
         </header>
         <div className="issue-screenshot-wrapper">
             {issue && issue._id ? 
-            <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='issue'/>
+            <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue'/>
             : null}
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
@@ -189,7 +191,7 @@ function Issue ({issue, lastPostRef}) {
         <AttestButton issueId={issue._id} attests={attests} setAttests={setAttests}/>
         {issue && issue.openedBy && issue.openedBy.username === currentUser.username && inEditMode ? 
             <div className="edit-buttons-wrapper">
-                <button type='button' className='cta danger' onClick={handleEditIssue}>Submit</button>
+                <button type='button' className='cta danger' onClick={handleEditIssue}>Save</button>
                 <button type='button' className='cta' onClick={() => {setInEditMode(false)}}>Cancel</button>
             </div>
         : null}
@@ -197,7 +199,7 @@ function Issue ({issue, lastPostRef}) {
         {issue && issue.openedBy && issue.openedBy.username === currentUser.username && !inEditMode ? 
         <div className="tooltip-section">
             <div ref={tooltip} className="issue-tooltip">
-                {issue.openedBy.username === currentUser.username && !inEditMode ? <button type='button' className='edit-button gradient-text' onClick={() => {setInEditMode(true)}}>Edit</button> : null}
+                {issue.openedBy.username === currentUser.username && !inEditMode ? <button type='button' className='edit-button helper-button' onClick={() => {setInEditMode(true)}}>Edit</button> : null}
                 {issue.openedBy.username === currentUser.username && !inEditMode ? <button type='button' className='delete-button cta danger' onClick={() => {toggleModal(modal.current)}}>Delete Issue</button> : null}
             </div>
             <button type='button' className='open-tooltip-button' onClick={() => {toggleTooltip(tooltip.current)}}>

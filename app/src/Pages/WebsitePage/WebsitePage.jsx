@@ -38,7 +38,7 @@ function WebsitePage() {
 
     const toastOptions = {
         position: "top-right",
-        autoClose: 8000,
+        autoClose: 2000,
         pauseOnHover: true,
         draggable: true,
         theme: "dark",
@@ -121,7 +121,13 @@ function WebsitePage() {
             : null}
             <div ref={tooltip} className="admins-tooltip">
                 <div className="admins-wrapper">
-                    {website && website.admins ? website.admins.map((admin, index) => {
+                    {website && website.admins ? website.admins.filter(user => {
+                            if(user._id !== currentUser._id && user.username.includes(query)) {
+                                return user;
+                            }else {
+                                return false;
+                            }
+                        }).map((admin, index) => {
                         return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
                     }): null}
                 </div>
@@ -132,11 +138,11 @@ function WebsitePage() {
                 <div className="input-wrapper">
                     <input ref={adminInput} value={query} onInput={e => {setQuery(e.target.value)}} className='admin-input' onFocus={handleShowUsers} type="text" name='admins' placeholder='e.g shikoto' aria-label='admins'/>
                     <div ref={usersWrapper} className="users-wrapper">
-                        {users ? users.filter(user => {
-                            if(user._id !== currentUser._id && website.admins && !website.admins.some(admin => admin.username === user.username) && user.username.includes(query)) {
+                        {users && website.admins ? users.filter(user => {
+                            if(user._id !== currentUser._id && !website.admins.some(admin => admin.username === user.username) && user.username.includes(query)) {
                                 return user;
                             }else {
-                                return false
+                                return false;
                             }
                         }).map((user, index) => {
                             return <UserItem key={index} user={user} handleClick={handleAddAdmin}/>
