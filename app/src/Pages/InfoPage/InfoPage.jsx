@@ -19,7 +19,7 @@ function InfoPage() {
             <section className="features-section"> 
                 <div className="feature">
                     <div className="feature-text">
-                        <h2>Use it on any device!</h2>
+                        <h2 className='feature-heading'>Use it on any device!</h2>
                         <p className="feature-description">
                             Issue can be used on any device with an internet connection which allows you to report issues from wherever you are in the World!
                         </p>
@@ -27,10 +27,19 @@ function InfoPage() {
                     <img src={`${process.env.PUBLIC_URL}/devices.svg`} alt="devices" className='feature-image' />
                 </div>
                 <div className="feature">
+                    <img src={`${process.env.PUBLIC_URL}/devices.svg`} alt="devices" className='feature-image' />
                     <div className="feature-text">
-                        <h2>Use it on any device!</h2>
+                        <h2 className='feature-heading'>Issues are sorted by relevance!</h2>
                         <p className="feature-description">
-                            Report any issue not matter how trivial and wait for a fix.
+                            Issues are sorted by how they affect the general public therefore more urgent ones get pushed to the top for more visibility.
+                        </p>
+                    </div>
+                </div>
+                <div className="feature">
+                    <div className="feature-text">
+                        <h2 className='feature-heading'>Report any issues!</h2>
+                        <p className="feature-description">
+                            Report any issue not matter how trivial or site-breaking and wait for a fix.
                         </p>
                     </div>
                     <img src={`${process.env.PUBLIC_URL}/devices.svg`} alt="devices" className='feature-image' />

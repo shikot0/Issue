@@ -38,6 +38,12 @@ function IssueListPage() {
             }else {
                 navigate(`/issue/${e.target.dataset.id}`)
             }
+        }else if(e.target.parentElement.parentElement.classList.contains('issue')) {
+            if(e.buttons === 4) {
+                window.open(`/issue/${e.target.parentElement.parentElement.dataset.id}`)
+            }else {
+                navigate(`/issue/${e.target.parentElement.parentElement.dataset.id}`)
+            }
         }
     }
 

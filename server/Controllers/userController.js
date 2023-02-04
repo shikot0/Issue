@@ -54,6 +54,17 @@ module.exports.login = async (req, res, next) => {
     }
 }  
 
+module.exports.profilePicture = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await Users.findOne({_id: id}); 
+        res.type('Content-Type', user.profilePicture.ContentType)
+        return res.status(200).send(user.profilePicture.Data)
+    } catch(err) {
+        next(err)
+    }
+}
+
 module.exports.setProfilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -66,7 +77,7 @@ module.exports.setProfilePicture = async (req, res, next) => {
             user.profilePicture.ContentType = mimetype; 
     
             await user.save();
-            return res.json({status: 200});
+            return res.json({status: 200, msg: 'Profile picture saved successfully!'});
         }else {
             return res.json({status: 400, msg: 'There has been an error'});
         }
@@ -111,17 +122,6 @@ module.exports.currentUser = async (req, res, next) => {
         }
     } catch(err) {
         next(err);
-    }
-}
-
-module.exports.profilePicture = async (req, res, next) => {
-    try {
-        const id = req.params.id;
-        const user = await Users.findOne({_id: id}); 
-        res.type('Content-Type', user.profilePicture.ContentType)
-        return res.status(200).send(user.profilePicture.Data)
-    } catch(err) {
-        next(err)
     }
 }
 

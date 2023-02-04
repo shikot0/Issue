@@ -16,11 +16,11 @@ function RegisterPage() {
         confirmPassword: "",
         profilePicture: {}
     });
-
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
     });
+    const navigate = useNavigate();
 
     // function handleFocus() {
     //     imageInput.current.click();
@@ -52,12 +52,9 @@ function RegisterPage() {
     };
 
     function handleDragLeave(e) {
-        console.log(e)
         e.preventDefault();
         e.target.classList.remove('drag-over')
     };
-    
-    const navigate = useNavigate();
     
     const toastOptions = {
         position: "top-right",

@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+// import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import { profilePictureRoute } from '../../utils/APIRoutes';
 import useUsers from '../../utils/useUsers';
@@ -6,15 +6,6 @@ import './Footer.css';
 
 function Footer({footer}) {
     const {user, noUsers} = useUsers();
-    
-    const links = document.querySelectorAll('.navigation-link');
-    useEffect(() => {
-        document.querySelectorAll('.navigation-link').forEach(link => {
-            if(link.href.includes((window.location.pathname).slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/')))) {
-                link.classList.add('active-page')
-            }
-        })
-    }, [links])
 
     function activeLink(e) {
         document.querySelectorAll('.navigation-link').forEach(link => {

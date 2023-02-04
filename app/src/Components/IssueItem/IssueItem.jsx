@@ -3,7 +3,7 @@ import {motion} from 'framer-motion';
 import './IssueItem.css';
 
 function IssueItem({issue}) {
-    function truncate(text, maxLength) {
+    function truncateText(text, maxLength) {
         let newText;
         if(text.length > maxLength) {
             newText = `${text.slice(0, maxLength)}...`;
@@ -21,7 +21,7 @@ function IssueItem({issue}) {
         setTimeout(() => {
             target.style.setProperty('--mouse-x', `${x}px`);
             target.style.setProperty('--mouse-y', `${y}px`);
-        }, 25)
+        }, 35)
     }
 
     return (
@@ -35,8 +35,8 @@ function IssueItem({issue}) {
         className="issue-item">
             <small className="issue-website-name">{issue.website && issue.website.name ? issue.website.name: 'unknown name'}</small>
             <div className="issue-main">
-                <h3 className="issue-name">{issue.name}</h3>
-                <p className="issue-description">{truncate(issue.description, 50)}</p>
+                <h3 className="issue-name">{truncateText(issue.name, 25)}</h3>
+                <p className="issue-description">{truncateText(issue.description, 50)}</p>
                 <Link to={`/user/${issue.openedBy.username}`} className='issue-creator gradient-text'>{issue.openedBy.username}</Link>
                 {/* <Link to={`/u/${issue.openedBy}`} className='issue-creator gradient-text'>{issue.openedBy}</Link> */}
             </div>

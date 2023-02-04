@@ -20,8 +20,8 @@
     text-decoration: none;
 }
 .issue .website-link {
-    font-weight: 500;
-    font-size: .9rem;
+    font-weight: 700;
+    font-size: 1rem;
 }
 .issue header {
     all: unset;
@@ -30,9 +30,21 @@
     justify-content: space-between;
 }
 .issue .issue-name {
-    max-width: 50%;
+    max-width: 60%;
     word-wrap: break-word;
-    font-size: clamp(1.25rem, 1.8vw, 2rem);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+.issue .issue-name-truncated {
+    display: none;
+    max-width: 60%;
+    word-wrap: break-word;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+} 
+#issue-list-page .issue .issue-name {
+    display: none;
+}
+#issue-list-page .issue .issue-name-truncated {
+    display: initial;
 }
 .user {
     all: unset;
@@ -47,8 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 10rem;
     overflow: hidden;
     border: 2px solid transparent;
@@ -67,6 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     border-radius: .5rem;
     overflow: hidden;
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
@@ -78,6 +91,25 @@
     height: 100%;
     width: 100%; 
     object-fit: cover;
+}
+#issue-page .issue .screenshot-download-button {
+    display: initial;
+}
+.issue-screenshot-wrapper:hover .screenshot-download-button {
+    opacity: 1;
+    scale: 1;
+}
+.screenshot-download-button {
+    display: none;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    padding: .5rem .75rem;
+    background-color: var(--secondary-color);
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: .5rem;
+    scale: .9;
+    opacity: 0;
 }
 .issue-link {
     font-weight: 500;

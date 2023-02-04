@@ -69,7 +69,7 @@ function WebsitePage() {
     function handleDeleteAdmin(user) { 
         let newAdmins = website.admins;
         let index = website.admins.indexOf(user);
-        newAdmins.splice(index,1);
+        newAdmins.splice(index, 1);
         setWebsite({...website, admins: [...newAdmins]}) 
     }
 

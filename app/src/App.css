@@ -281,7 +281,9 @@ input button {
   background-color: red;
   cursor: pointer;
 }
-
+.hidden-input {
+  display: none;
+}
 
 @keyframes fade-in {
 	from {

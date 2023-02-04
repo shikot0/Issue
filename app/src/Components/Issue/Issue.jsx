@@ -162,13 +162,28 @@ function Issue ({issue, lastPostRef}) {
         return returnedDate;
     }
 
+    function truncateText(text, maxLength) {
+        let newText;
+        if(text.length > maxLength) {
+            newText = `${text.slice(0, maxLength)}...`;
+        }else {
+            newText = text.slice(0, maxLength)
+        }
+        return newText;
+    }
+    
     return (
         <div className="issue" data-id={`${issue._id}`} ref={lastPostRef}>
         {issue && issue.website && issue.website.name ? 
             <Link to={`/website/${issue.website.name}`}><small className='website-link gradient-text'>{issue.website.name}</small></Link>
         : null}
         <header>
-            <h2 ref={name} name='name' onKeyUp={handleInput} className="issue-name">{issue.name}</h2>
+            {issue && issue.name ? 
+                <>
+                <h2 className="issue-name-truncated">{truncateText(issue.name, 15)}</h2>
+                <h2 ref={name} name='name' onKeyUp={handleInput} className="issue-name">{issue.name}</h2>
+                </>
+            : null}
             <div className="user">
                 {user && user._id ? 
                 <div className="profile-picture-wrapper gradient-border">
@@ -182,8 +197,9 @@ function Issue ({issue, lastPostRef}) {
         </header>
         <div className="issue-screenshot-wrapper">
             {issue && issue._id ? 
-            <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue'/>
+                <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue'/>
             : null}
+            <a href={`${issueScreenshotRoute}/${issue._id}`} download className='screenshot-download-button'>Download</a>
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
         <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>

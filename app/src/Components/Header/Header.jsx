@@ -8,24 +8,45 @@ import './Header.css';
 function Header({header}) {
     const notificationsWrapper = useRef();
     const {user, noUsers} = useUsers();
-    const location = useLocation();
     const [notificationsVisible, setNotificationsVisible] = useState(false);
+    const location = useLocation();
     
-    
+
+    const links = document.querySelectorAll('.navigation-link');
     useEffect(() => {
+        const moreLinkLeft = window.location.pathname.toString().slice(1,).indexOf('/') !== -1;
+        let firstIndex = window.location.pathname.toString().indexOf(1,'/') + 1;
         document.querySelectorAll('.navigation-link').forEach(link => {
             link.classList.remove('active-page');
-            const moreLinkLeft = (window.location.pathname).slice(1,).indexOf('/') !== -1;
-            if(moreLinkLeft && link.href === location.pathname.slice(1,).slice(0, (window.location.pathname).slice(1,).indexOf('/'))) {
-                link.classList.add('active-page')
-            }else if(!moreLinkLeft && link.href === location.pathname.slice(1,).slice(0,)) {
-                link.classList.add('active-page')
+            if(moreLinkLeft && link.pathname === window.location.pathname.slice(0, window.location.toString().slice(0,).indexOf(firstIndex, '/'))) {
+                link.classList.add('active-page');
+            }else if(!moreLinkLeft && link.pathname === window.location.pathname) {
+                link.classList.add('active-page');
+            }else if(window.location.pathname === '') {
+                link.classList.remove('active-page')
             }else {
                 link.classList.remove('active-page')
             }
         })
-    }, [location])
+    }, [links])
 
+    useEffect(() => {
+        const currentPage = location.pathname
+        const moreLinkLeft = currentPage.toString().slice(1,).indexOf('/') !== -1;
+        let firstIndex = currentPage.toString().indexOf(1,'/') + 1;
+        document.querySelectorAll('.navigation-link').forEach(link => {
+            link.classList.remove('active-page');
+            if(moreLinkLeft && link.pathname === currentPage.slice(0, window.location.toString().slice(0,).indexOf(firstIndex, '/'))) {
+                link.classList.add('active-page');
+            }else if(!moreLinkLeft && link.pathname === currentPage) {
+                link.classList.add('active-page');
+            }else if(currentPage === '') {
+                link.classList.remove('active-page');
+            }else {
+                link.classList.remove('active-page');
+            }
+        })
+    }, [location])
 
     function activeLink(e) {
         document.querySelectorAll('.navigation-link').forEach(link => {
