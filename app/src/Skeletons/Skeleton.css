@@ -38,11 +38,11 @@
 .image-skeleton {
     width: 100%;
     aspect-ratio: 1/1.2;
-    animation: animated-background 10s linear infinite forwards;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background-image: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
     background-size: 200%;
     border-radius: .5rem;
+    animation: animated-background 30s linear infinite forwards;
 }
 .profile-picture-skeleton {
     width: 11vw;

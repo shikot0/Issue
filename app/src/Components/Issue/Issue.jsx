@@ -8,7 +8,7 @@ import AttestButton from '../AttestButton/AttestButton';
 import {toast} from 'react-toastify';
 import './Issue.css';
 
-function Issue ({issue, lastPostRef}) {
+function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     const [inEditMode, setInEditMode] = useState(false);
     const {user} = useUsers(issue?.openedBy?.username);
     const {user: currentUser} = useUsers(); 
@@ -19,6 +19,7 @@ function Issue ({issue, lastPostRef}) {
     const {websites: website} = useWebsites(issue?.website?.name);
     const tooltip = useRef();
     const modal = useRef();
+    const image = useRef();
     const navigate = useNavigate();
     const [attests, setAttests] = useState();
     useEffect(() => {
@@ -172,6 +173,7 @@ function Issue ({issue, lastPostRef}) {
         return newText;
     }
     
+
     return (
         <div className="issue" data-id={`${issue._id}`} ref={lastPostRef}>
         {issue && issue.website && issue.website.name ? 
@@ -186,20 +188,23 @@ function Issue ({issue, lastPostRef}) {
             : null}
             <div className="user">
                 {user && user._id ? 
-                <div className="profile-picture-wrapper gradient-border">
-                    <img src={`${profilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
-                </div>    
+                    <div className="profile-picture-wrapper gradient-border">
+                        <img src={`${profilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
+                    </div>    
                 : null}
                 {issue && issue.openedBy ? 
-                <Link to={`/user/${issue.openedBy.username}`} className="issue-creator gradient-text">{issue.openedBy.username}</Link>
+                    <Link to={`/user/${issue.openedBy.username}`} className="issue-creator gradient-text">{issue.openedBy.username}</Link>
                 : null}
             </div>
         </header>
         <div className="issue-screenshot-wrapper">
             {issue && issue._id ? 
-                <img src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue'/>
+                <>
+                <img ref={image} src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue' onClick={handleOpenLightbox}/>
+                <a href={`${issueScreenshotRoute}/${issue._id}`} download={`${issue.name}.png`} className='screenshot-download-button'>Download</a>
+                </>
             : null}
-            <a href={`${issueScreenshotRoute}/${issue._id}`} download className='screenshot-download-button'>Download</a>
+            {/* <a href={`${issueScreenshotRoute}/${issue._id}`} target='_blank' rel='noreferrer' className='screenshot-download-button'>Download</a> */}
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
         <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>

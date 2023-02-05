@@ -45,7 +45,9 @@ html::-webkit-scrollbar-thumb {
 }
 #register-page, #home-page, #issue-list-page, #website-page, #new-issue-page, #register-website-page, #issue-page, #account-page {
   max-width: 75rem; 
-  width: 95%;
+  /* width: 95%; */
+  width: 100%;
+  padding: 0 2.5%;
 }
 #new-issue-page, #issue-list-page, #issue-page, #account-page {
   padding-top: 3rem;

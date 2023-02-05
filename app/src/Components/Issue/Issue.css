@@ -92,6 +92,9 @@
     width: 100%; 
     object-fit: cover;
 }
+#issue-page .issue-screenshot {
+    cursor: pointer;
+}
 #issue-page .issue .screenshot-download-button {
     display: initial;
 }

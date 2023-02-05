@@ -123,8 +123,14 @@ module.exports.getIssueScreenshot = async (req, res, next) => {
     try {   
         const id = req.params.id;
         const issue = await Issues.findOne({_id: id}); 
-        res.type('Content-Type', issue.screenshot.ContentType)
-        return res.status(200).send(issue.screenshot.Data)
+        if(issue) {
+            // res.header("Mime-Type", issue.screenshot.ContentType);
+            return res.status(200).send(issue.screenshot.Data);
+        } 
+        // res.header("Mime-Type", issue.screenshot.ContentType);
+        // res.header("X-Content-Type-Options", 'nosniff');
+        // res.header("Content-Type", `${issue.screenshot.ContentType}; charset=utf-8`);
+        // return res.status(200).send(issue.screenshot.Data);
     } catch(err) {
         next(err);
     }
