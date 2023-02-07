@@ -330,6 +330,29 @@ input button {
       background-position: 100%;
   } */
 }
+@keyframes rotate-loader {
+  0% {
+    rotate: 0deg;
+  }
+  50% {
+    scale: 1.1;
+  }
+  100% {
+    rotate: 360deg;
+    scale: 1;
+  }
+  /* 25% {
+    rotate: 180deg;
+  } */
+  /* 50% {
+    rotate: 360deg;
+    scale: 1.05;
+  } */
+  /* 75% {
+    rotate: 180deg;
+    scale: 1;
+  } */
+}
 
 
 

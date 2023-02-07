@@ -122,7 +122,7 @@
     translate: -50%;
     width: 14rem;
 }
-#website-page .issues-grid-wrapper {
+#website-page .issues-grid-wrapper, #website-page .loader-wrapper {
     margin: 3rem 0 0;
 }
 

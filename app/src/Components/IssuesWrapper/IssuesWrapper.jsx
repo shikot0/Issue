@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {motion, AnimatePresence} from 'framer-motion';
 import IssueItem from '../IssueItem/IssueItem';
+import Loader from '../Loader/Loader';
 import './IssuesWrapper.css';
 
 function IssuesWrapper({issues, website}) {
@@ -29,6 +30,7 @@ function IssuesWrapper({issues, website}) {
             }
         }
     }
+
     return (
         <>
         {issues && issues.length !== 0 ? 
@@ -58,15 +60,18 @@ function IssuesWrapper({issues, website}) {
                                 return issue;
                             }
                         }).map((issue,index) => {
-                            // return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
                             return <IssueItem key={index} issue={issue}/>
                         })}
                     </AnimatePresence>
                 </motion.div>
             </div>
-        : website ? 
-            <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> 
-        : <h3 className='no-issues-hint'>There are no issues</h3>}
+            // : website ? 
+            //     <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null
+        : <Loader/>}
+
+        {!issues && !website && issues.length === 0 ? <h3 className='no-issues-hint'>There are no issues</h3>: null}
+        {website && issues && issues.length === 0 ? <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null}
+        {/* <Loader /> */}
         </> 
     )
 }

@@ -1,0 +1,18 @@
+.loader-wrapper {
+    height: 100%;
+    display: flex;
+    flex-grow: 100;
+    align-items: center;
+    justify-content: center;
+    margin: 
+}
+
+.loader {
+    border: 3px solid transparent;
+    border-top: 3px solid var(--primary-cta-color);
+    border-bottom: 3px solid var(--secondary-cta-color);
+    border-radius: 10rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    animation: rotate-loader .5s linear infinite forwards;
+}

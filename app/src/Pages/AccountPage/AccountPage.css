@@ -79,6 +79,9 @@
 #account-page .issues-grid-wrapper {
     width: 65%;
 }
+#account-page .loader-wrapper {
+    height: 15rem;
+}
 
 @media screen and (max-width: 800px) {
     #account-page {

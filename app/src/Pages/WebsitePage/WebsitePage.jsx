@@ -151,7 +151,7 @@ function WebsitePage() {
                 </div>
             </div>
         </header>
-        {website && website.name ? <IssuesWrapper issues={issues} website={website}/> : null}  
+        {website && website.name && issues ? <IssuesWrapper issues={issues} website={website}/> : null}  
         </>  
         : <h3 className='not-found-hint'>Sorry this website could not be found.</h3>}
         <ToastContainer/>
