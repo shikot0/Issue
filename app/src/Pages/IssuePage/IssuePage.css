@@ -15,6 +15,7 @@
     width: 100vw;
     display: flex;
     align-items: center;
+    /* align-items: flex-start; */
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.6);
     /* box-shadow: 0 0 5rem rgba(0, 0, 0); */
@@ -44,5 +45,6 @@
 .image-lightbox img {
     max-height: 90%;
     max-width: 100%;
+    width: 100%;
     object-fit: contain;
 }

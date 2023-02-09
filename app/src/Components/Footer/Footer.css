@@ -20,7 +20,7 @@ footer.hidden {
 footer .profile-picture-wrapper {
     width: 2.25rem;
     height: 2.25rem;
-    border: .2rem solid transparent;
+    border: 2px solid transparent;
     translate: none;
 }
 footer .navigation-link svg {

@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {allUsersRoute, getUserRoute} from './APIRoutes';
+import {allUsersRoute, userRoute} from './APIRoutes';
 import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
@@ -9,7 +9,7 @@ function useUsers(username) {
     
     useEffect(() => {
         if(username && username !== 'all') {
-            fetch(`${getUserRoute}/${username}`)
+            fetch(`${userRoute}/${username}`)
             .then(res => res.json())
             .then(data => {
                 setUser(data);

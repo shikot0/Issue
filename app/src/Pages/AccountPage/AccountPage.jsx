@@ -1,10 +1,11 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { profilePictureRoute } from '../../utils/APIRoutes';
+import { profilePictureRoute, userRoute } from '../../utils/APIRoutes';
 import { ProfilePictureSkeleton, UsernameSkeleton } from '../../Skeletons/Skeletons';
 import {toast, ToastContainer} from 'react-toastify';
 import useUsers from '../../utils/useUsers';
 import useIssues from '../../utils/useIssues';
+import Loader from '../../Components/Loader/Loader';
 import IssuesWrapper from '../../Components/IssuesWrapper/IssuesWrapper';
 import './AccountPage.css';
 
@@ -12,9 +13,14 @@ function AccountPage() {
     const {username} = useParams();
     const {user, noUsers} = useUsers(username);
     const {user: currentUser} = useUsers();
-    const {issues} = useIssues(username);
+    const {issues, noIssues} = useIssues(username);
     const profilePictureInput = useRef();
+    const [updatedUsername, setUpdatedUsername] = useState('');
+    const [inEditMode, setInEditMode] = useState(false);
     const [updatedUserImage, setUpdatedUserImage] = useState('');
+    const [canSaveUsername, setCanSaveUsername] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const usernameInput = useRef();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -85,14 +91,55 @@ function AccountPage() {
                 if(response.status === 200) {
                     toast.success(response.msg, toastOptions);
                     setTimeout(() => {window.location.reload()}, 2000)
-                    // window.location.reload(); 
                 }
             }).catch(err => {
                 toast.error(err.message, toastOptions)
             })
         }
     }
+    
+    function handleUsernameInput() {
+        if(usernameInput.current) {
+            setUpdatedUsername(usernameInput.current.innerText);
+        }
+        if(updatedUsername !== '') {
+            setCanSaveUsername(true);
+        }
+    }
 
+    function handleEditUsername() {
+        if(usernameInput.current) {
+            if(!inEditMode) {
+                setInEditMode(true);
+                usernameInput.current.contentEditable = true;
+            }else {
+                setInEditMode(false);
+                usernameInput.current.contentEditable = false;
+            }
+        }
+    }
+
+    function handleSaveUsername() {
+        setIsLoading(true)
+        if(updatedUsername) {
+            fetch(`${userRoute}/${currentUser._id}`, {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({username: updatedUsername})
+            })
+            .then(res => res.json())
+            .then(data => {
+                setIsLoading(false)
+                if(data.status === 200) {
+                    toast.success(data.msg, toastOptions);
+                    setTimeout(() => {navigate(`/user/${data.username}`)}, 1500)
+                }else {
+                    toast.error(data.msg);
+                }
+            })
+        }
+    }
+    
     return( 
         <section id="account-page">
             {!noUsers ?
@@ -115,8 +162,16 @@ function AccountPage() {
                                 <button type='button' className='cta' onClick={handleUpdateUserImage}>Update</button>
                             : null}
                         </div>
-                        <p className="username gradient-text">{user.username}</p>
+                        <p ref={usernameInput} className="username gradient-text" spellCheck='false' onInput={handleUsernameInput}>
+                            {user.username}
+                        </p>
+                        {user.username === currentUser.username && !inEditMode ? <button className='helper-button' onClick={handleEditUsername}>Edit</button> : null}
+                        <div className="edit-options">
+                            {user.username === currentUser.username && inEditMode ? <button className='helper-button' onClick={handleEditUsername}>Cancel</button> : null}
+                            {user.username === currentUser.username && inEditMode && canSaveUsername ? <button className='cta' onClick={handleSaveUsername}>Save</button> : null}
+                        </div>
                         {user.username === currentUser.username ? <button className='logout-button' onClick={logout}>logout</button> : null}
+                        {isLoading ? <Loader />: null}
                     </>
                     : null
                 }
@@ -127,7 +182,7 @@ function AccountPage() {
                     </>    
                 : null}
             </div>
-            <IssuesWrapper issues={issues}/>
+            <IssuesWrapper issues={issues} noIssues={noIssues}/>
             </>
             : <h3 className='not-found-hint'>Sorry this user could not be found.</h3>}
             <ToastContainer/>

@@ -4,7 +4,7 @@ export const host  = 'https://issue-j83z.onrender.com';
 //          USER ROUTES
 export const loginRoute = `${host}/api/user/login`;
 export const registerRoute = `${host}/api/user/register`;
-export const getUserRoute = `${host}/api/user/user`;
+export const userRoute = `${host}/api/user/user`;
 export const getCurrentUserRoute = `${host}/api/user/currentuser`;
 export const profilePictureRoute = `${host}/api/user/profilepicture`;
 export const allUsersRoute = `${host}/api/user/allusers`;

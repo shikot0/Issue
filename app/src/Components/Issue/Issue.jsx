@@ -187,24 +187,23 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
                 </>
             : null}
             <div className="user">
-                {user && user._id ? 
-                    <div className="profile-picture-wrapper gradient-border">
-                        <img src={`${profilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
-                    </div>    
-                : null}
-                {issue && issue.openedBy ? 
-                    <Link to={`/user/${issue.openedBy.username}`} className="issue-creator gradient-text">{issue.openedBy.username}</Link>
+                {user && user._id && issue && issue.openedBy? 
+                    <Link to={`/user/${issue.openedBy.username}`} className="user">
+                        <div className="profile-picture-wrapper gradient-border">
+                            <img src={`${profilePictureRoute}/${user._id}`} className="profile-picture" alt='user'/>
+                        </div>   
+                        <p className='issue-creator gradient-text'>{issue.openedBy.username}</p> 
+                    </Link>
                 : null}
             </div>
         </header>
         <div className="issue-screenshot-wrapper">
-            {issue && issue._id ? 
+            {issue && issue._id && issue.name ? 
                 <>
-                <img ref={image} src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue' onClick={handleOpenLightbox}/>
-                <a href={`${issueScreenshotRoute}/${issue._id}`} download={`${issue.name}.png`} className='screenshot-download-button'>Download</a>
+                    <img ref={image} src={`${issueScreenshotRoute}/${issue._id}`} className="issue-screenshot" alt='Issue' onClick={handleOpenLightbox}/>
+                    <a href={`${issueScreenshotRoute}/${issue._id}`} download={`${issue.name}.png`} className='screenshot-download-button'>Download</a>
                 </>
             : null}
-            {/* <a href={`${issueScreenshotRoute}/${issue._id}`} target='_blank' rel='noreferrer' className='screenshot-download-button'>Download</a> */}
         </div>
         <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
         <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>

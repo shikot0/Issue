@@ -5,7 +5,7 @@ import IssueItem from '../IssueItem/IssueItem';
 import Loader from '../Loader/Loader';
 import './IssuesWrapper.css';
 
-function IssuesWrapper({issues, website}) {
+function IssuesWrapper({issues, noIssues, website}) {
     const [filter, setFilter] = useState('');
     const navigate = useNavigate();
     
@@ -33,7 +33,7 @@ function IssuesWrapper({issues, website}) {
 
     return (
         <>
-        {issues && issues.length !== 0 ? 
+        {!noIssues && issues.length !== 0 ? 
             <div className="issues-grid-wrapper">
                 <div className="filter-buttons-wrapper">
                     <button type='button' className="filter-button selected" value={''} onClick={handleFilter}>All</button>
@@ -65,13 +65,10 @@ function IssuesWrapper({issues, website}) {
                     </AnimatePresence>
                 </motion.div>
             </div>
-            // : website ? 
-            //     <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null
-        : <Loader/>}
+        : noIssues ? null : <Loader/>}
 
-        {!issues && !website && issues.length === 0 ? <h3 className='no-issues-hint'>There are no issues</h3>: null}
-        {website && issues && issues.length === 0 ? <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null}
-        {/* <Loader /> */}
+        {!issues && !website && !noIssues ? <h3 className='no-issues-hint'>There are no issues</h3>: null}
+        {website && issues && !noIssues === 0 ? <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null}
         </> 
     )
 }

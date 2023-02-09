@@ -1,7 +1,5 @@
 const Users = require('../Models/userModel');
 const bcrypt = require('bcrypt');
-// const generateToken = require('../utils/generateToken'); 
-// require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 module.exports.register = async (req, res, next) => {
@@ -98,6 +96,25 @@ module.exports.getUser = async (req, res, next) => {
             return res.json(user);
         }else {
             return res.json({noUser: true})
+        }
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports.editUsername = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const {username} = req.body;
+        const user = await Users.findOne({_id: id});
+        
+        console.log(username)
+        if(user) {
+            user.username = username;
+            await user.save();
+            return res.json({status: 200, msg: 'Successfully changed username!', username: username})
+        }else {
+            return res.json({status: 400, msg: 'User not found'});
         }
     } catch(err) {
         next(err);

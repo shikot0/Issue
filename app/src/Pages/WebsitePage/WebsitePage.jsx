@@ -16,7 +16,7 @@ function WebsitePage() {
     // const {websites: website, noWebsites} = useWebsites(name);
     const {websites: returnedWebsite, noWebsites} = useWebsites(name);
     const [website, setWebsite] = useState({});
-    const {issues} = useIssues(null, name, null);
+    const {issues, noIssues} = useIssues(null, name, null);
     const {user: currentUser} = useUsers();
     const {user: users} = useUsers('all');
     const tooltip = useRef();
@@ -106,7 +106,7 @@ function WebsitePage() {
                 <ImageSkeleton/>}
             </div>
             <div className="website-details-wrapper">
-                {website ? 
+                {website && website.name ?  
                 <p className="website-name gradient-text">{website.name}</p>
                 : <HeaderSkeleton/>}
                 <div className="detail">
@@ -151,7 +151,7 @@ function WebsitePage() {
                 </div>
             </div>
         </header>
-        {website && website.name && issues ? <IssuesWrapper issues={issues} website={website}/> : null}  
+        {website && website.name && issues ? <IssuesWrapper issues={issues} noIssues={noIssues} website={website}/> : null}  
         </>  
         : <h3 className='not-found-hint'>Sorry this website could not be found.</h3>}
         <ToastContainer/>

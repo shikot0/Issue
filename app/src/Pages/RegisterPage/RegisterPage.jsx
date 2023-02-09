@@ -1,14 +1,13 @@
 import {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { ToastContainer, toast } from "react-toastify";
 import { registerRoute, loginRoute, profilePictureRoute } from '../../utils/APIRoutes';
+import { ToastContainer, toast } from "react-toastify";
+import Loader from '../../Components/Loader/Loader';
 import 'react-toastify/dist/ReactToastify.css';
 import './RegisterPage.css';
 
 function RegisterPage() {
     const [currentUserImage, setCurrentUserImage] = useState();
-    const emailInput = useRef();
-    const imageInput = useRef();
     const [signUpData, setSignUpData] = useState({
         username: "",
         email: "",
@@ -20,6 +19,9 @@ function RegisterPage() {
         username: "",
         password: "",
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const emailInput = useRef();
+    const imageInput = useRef();
     const navigate = useNavigate();
 
     // function handleFocus() {
@@ -102,6 +104,8 @@ function RegisterPage() {
             const formData = new FormData();
             formData.append('fileupload', currentUserImage);
             
+            setIsLoading(true);
+            
             fetch(registerRoute, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -125,6 +129,7 @@ function RegisterPage() {
                       .then(response => {
                         if(response.status === 200) {
                             navigate('/home');
+                            setIsLoading(false);
                         }
                     }).catch(err => {
                         console.error(err.message)
@@ -132,9 +137,9 @@ function RegisterPage() {
                 }else {
                     toast.error(response.msg, toastOptions)
                 }
-               }).catch(err => {
-                    console.error(err.message)
-               })
+            }).catch(err => {
+                console.error(err.message)
+            })
         }else {
             toast.error('Please check that all required fields are filled.',toastOptions)
         }
@@ -147,6 +152,7 @@ function RegisterPage() {
         }else if(password === "") {
             toast.error("Please add your password", toastOptions);
         }else {
+            setIsLoading(true);
             const data = await fetch(loginRoute, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -163,6 +169,7 @@ function RegisterPage() {
             if(response.status === 400) {
                 toast.error(response.msg, toastOptions);
             }else if(response.status === 200) {
+                setIsLoading(false);
                 // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`;
                 // document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`;
                 localStorage.setItem('token', JSON.stringify(response.token));
@@ -239,7 +246,10 @@ function RegisterPage() {
                         <button type='button' className='cta' onClick={handleSetUserImage}>Submit</button>
                     </form>
                 </div>
-            <ToastContainer/>
+                {isLoading ? 
+                    <Loader/>
+                : null}
+                <ToastContainer/>
         </section>
     )
 }

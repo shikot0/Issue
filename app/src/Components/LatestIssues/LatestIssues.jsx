@@ -17,7 +17,7 @@ function LatestIssues() {
     useEffect(() => {
         fetch(latestIssuesRoute).then(res => res.json())
         .then(data => {
-            if(data.length !== 0) {
+            if(!data.noIssues) {
                 setIssues(data);
             }else {
                 setNoIssues(true);
@@ -58,6 +58,7 @@ function LatestIssues() {
         }
     }
 
+
     return (
         <>
         {!noIssues ? 
@@ -68,7 +69,7 @@ function LatestIssues() {
                 onMouseMove={handleMouseMove}
                 onClick={handleWrapperItemClick}
             >
-                {issues.length !== 0 ? issues.map((issue,index) => {
+                {!noIssues && issues.length > 0 ? issues.map((issue,index) => {
                     // return <IssueItem key={index} issue={issue} onClick={handleNavigate(issue)}/>
                     // return <Link to={`/issue/${issue._id}`} key={index}><IssueItem issue={issue}/></Link>
                     return <IssueItem key={index} issue={issue}/>

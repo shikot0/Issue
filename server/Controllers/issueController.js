@@ -177,7 +177,7 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
             "dateOfCreation"
         ]);
         
-        if(issues) {
+        if(issues && issues !== [] && issues.length > 0) {
             return res.json(issues);
         }else {
             return res.json({noIssues: true})
@@ -202,7 +202,7 @@ module.exports.getAllIssuesFromUser = async (req, res, next) => {
             "resolved"
         ]);
         
-        if(issues) {
+        if(issues && issues !== [] && issues.length > 0) {
             return res.json(issues);
         }else {
             return res.json({noIssues: true})
@@ -245,7 +245,7 @@ module.exports.getAllIssues = async (req, res, next) => {
             returnedIssues = issues.slice(0,)
         }
         
-        if(issues) {
+        if(issues && issues !== [] && issues.length > 0) {
             return res.json(returnedIssues)
         }else {
             return res.json({noIssues: true})
@@ -269,7 +269,7 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'openedBy'
         ]).sort({attests: -1, createdAt: -1});
         // console.log(issues) 
-        if(issues) {
+        if(issues && issues !== [] && issues.length > 0) {
             return res.json(issues)
         }else {
             return res.json({noIssues: true})
