@@ -47,9 +47,10 @@ html::-webkit-scrollbar-thumb {
   max-width: 75rem; 
   /* width: 95%; */
   width: 100%;
-  padding: 0 2.5%;
+  padding-right: 2.5%;
+  padding-left: 2.5%;
 }
-#new-issue-page, #issue-list-page, #issue-page, #account-page {
+#new-issue-page, #issue-list-page, #account-page {
   padding-top: 3rem;
 }
 #website-page {

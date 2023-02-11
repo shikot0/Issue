@@ -1,5 +1,6 @@
 #issue-list-page {
-    padding: 0 0 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 #issue-list-page a {
     text-decoration: none;

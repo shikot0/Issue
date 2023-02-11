@@ -102,10 +102,6 @@
 #issue-page .issue .screenshot-download-button {
     display: initial;
 }
-.issue-screenshot-wrapper:hover .screenshot-download-button {
-    opacity: 1;
-    scale: 1;
-}
 .screenshot-download-button {
     display: none;
     position: absolute;
@@ -115,9 +111,13 @@
     background-color: var(--secondary-color);
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: .5rem;
-    scale: .9;
-    opacity: 0;
+    /* scale: .9; */
+    /* opacity: 0; */
 }
+/* .issue-screenshot-wrapper:hover .screenshot-download-button {
+    opacity: 1;
+    scale: 1;
+} */
 .issue-link {
     font-weight: 500;
 }

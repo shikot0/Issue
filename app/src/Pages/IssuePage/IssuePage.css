@@ -4,14 +4,15 @@
     justify-content: center;
     position: relative;
     min-height: 100vh;
-    padding-bottom: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 .image-lightbox {
     position: absolute;
     top: 0%;
     left: 50%;
     translate: -50% 0;
-    min-height: 100%;
+    min-height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
@@ -28,7 +29,7 @@
 }
 .image-lightbox .close-button {
     position: absolute;
-    top: 2rem;
+    top: 2.5rem;
     right: 1.75rem;
     display: flex;
     align-items: center;
