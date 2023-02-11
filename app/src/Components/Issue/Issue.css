@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    gap: 1.25rem;
+    gap: 1rem;
     width: 100%; 
     max-width: 42rem;
     border-radius: .5rem;
@@ -50,10 +50,10 @@
     display: flex;
     align-items: center;
     gap: .75rem;
-    transition: .2s;
     border-radius: .75rem;
     padding: .25rem .25rem;
     cursor: pointer;
+    transition: .2s;
 }
 .issue .user:hover {
     background-color: var(--secondary-color);
@@ -72,12 +72,6 @@
     border-radius: 10rem;
     overflow: hidden;
     border: 2px solid transparent;
-}
-.issue-time {
-    position: absolute;
-    right: 1.25rem;
-    bottom: 1.25rem;
-    font-size: .75rem;
 }
 .issue-screenshot-wrapper {
     display: flex;
@@ -118,6 +112,11 @@
     opacity: 1;
     scale: 1;
 } */
+.issue-info {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
 .issue-link {
     font-weight: 500;
 }
@@ -132,6 +131,12 @@
 }
 .issue-description {
     font-weight: 500;
+}
+#issue-list-page .issue .issue-description {
+    display: none;
+}
+#issue-list-page .issue .issue-description-truncated {
+    display: initial;
 }
 .issue-name:focus, .issue-link:focus, .issue-description:focus {
     border-radius: .15rem;
@@ -207,4 +212,10 @@
     align-items: center;
     justify-content: center;
     gap: 2rem;
+}
+.issue-time {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    font-size: .75rem;
 }

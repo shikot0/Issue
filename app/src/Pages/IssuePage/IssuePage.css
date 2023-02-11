@@ -40,6 +40,13 @@
     cursor: pointer;
     z-index: 5;
 }
+.image-lightbox .close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .5rem;
+    background-color: var(--primary-color);
+}
 .image-lightbox .close-button svg {
     fill: var(--secondary-cta-color);
 }

@@ -115,6 +115,7 @@ function AccountPage() {
             }else {
                 setInEditMode(false);
                 usernameInput.current.contentEditable = false;
+                usernameInput.current.innerText = user.username;
             }
         }
     }
@@ -123,7 +124,7 @@ function AccountPage() {
         setIsLoading(true)
         if(updatedUsername) {
             fetch(`${userRoute}/${currentUser._id}`, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({username: updatedUsername})
             })
@@ -134,7 +135,7 @@ function AccountPage() {
                     toast.success(data.msg, toastOptions);
                     setTimeout(() => {navigate(`/user/${data.username}`)}, 1500)
                 }else {
-                    toast.error(data.msg);
+                    toast.error(data.msg, toastOptions);
                 }
             })
         }
@@ -170,7 +171,7 @@ function AccountPage() {
                             {user.username === currentUser.username && inEditMode ? <button className='helper-button' onClick={handleEditUsername}>Cancel</button> : null}
                             {user.username === currentUser.username && inEditMode && canSaveUsername ? <button className='cta' onClick={handleSaveUsername}>Save</button> : null}
                         </div>
-                        {user.username === currentUser.username ? <button className='logout-button' onClick={logout}>logout</button> : null}
+                        {user._id === currentUser._id && !inEditMode ? <button className='logout-button' onClick={logout}>logout</button> : null}
                         {isLoading ? <Loader />: null}
                     </>
                     : null

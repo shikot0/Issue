@@ -1,4 +1,5 @@
 const Users = require('../Models/userModel');
+const Issues = require('../Models/issueModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -107,12 +108,17 @@ module.exports.editUsername = async (req, res, next) => {
         const id = req.params.id;
         const {username} = req.body;
         const user = await Users.findOne({_id: id});
+        // const existingUser = await Users.findOne({username: username}) || await Users.findOne({username: username.toLowerCase()}) || await Users.findOne({username: username.toUpperCase()});
+        const existingUser = await Users.findOne({username: username}) ? await Users.findOne({username: username}) : await Users.findOne({username: username.toLowerCase()}) ? await Users.findOne({username: username.toLowerCase}) : await Users.findOne({username: username.toUpperCase()}) ? await Users.findOne({username: username.toUpperCase()}) : null;
         
-        console.log(username)
-        if(user) {
-            user.username = username;
+        if(user && username && !existingUser) {
+            await Issues.updateMany({"openedBy.username": user.username}, { $set: {"openedBy.username": username.trim() }});
+            // console.log(Issues.find())
+            user.username = username.trim();
             await user.save();
             return res.json({status: 200, msg: 'Successfully changed username!', username: username})
+        }else if(existingUser) {
+            return res.json({status: 400, msg: 'Sorry that username has already been taken'});
         }else {
             return res.json({status: 400, msg: 'User not found'});
         }

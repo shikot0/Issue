@@ -9,8 +9,8 @@ router.post('/profilepicture/:id', setProfilePicture);
 router.get('/profilepicture/:id', profilePicture);
 
 router.get('/user/:username', getUser);  
-router.put('/user/:id', editUsername);  
-router.put('/notifications', markNotificationsAsRead)
+router.patch('/user/:id', editUsername);  
+router.patch('/notifications', markNotificationsAsRead)
 router.get('/currentuser/:token', currentUser);
 router.get('/allusers', allUsers);
 

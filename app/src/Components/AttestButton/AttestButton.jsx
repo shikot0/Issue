@@ -11,14 +11,14 @@ function AttestButton({issueId, attests, setAttests}) {
             setAttests(prev => prev+1);
             attestsWrapper.current.classList.add('gradient-text');
             fetch(`${issueRoute}/${issueId}/attest`, {
-                method: 'PUT'
+                method: 'PATCH'
             })
         }else {
             setAttested(false);
             setAttests(prev => prev-1);
             attestsWrapper.current.classList.remove('gradient-text');
             fetch(`${issueRoute}/${issueId}/removeattest`, {
-                method: 'PUT'
+                method: 'PATCH'
             })
         }
     }

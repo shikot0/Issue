@@ -190,18 +190,25 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
 module.exports.getAllIssuesFromUser = async (req, res, next) => {
     try {
         const username = req.params.username.toLowerCase();
-        const user = await Users.findOne({username: username}); 
-        let issues = await Issues.find({"openedBy.username": user.username}).select([
-            "openedBy",
-            "name",
-            "description",
-            "attests",
-            "website",
-            "dateOfCreation",
-            "link",
-            "resolved"
-        ]);
-        
+        let user;
+        let issues; 
+
+        if(username) {
+            user = await Users.findOne({username: username});
+            if(user && username) {
+                issues = await Issues.find({"openedBy.username": user.username}).select([
+                    "openedBy",
+                    "name",
+                    "description",
+                    "attests",
+                    "website",
+                    "dateOfCreation",
+                    "link",
+                    "resolved"
+                ]);
+            } 
+        }
+
         if(issues && issues !== [] && issues.length > 0) {
             return res.json(issues);
         }else {

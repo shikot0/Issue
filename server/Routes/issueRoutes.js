@@ -13,8 +13,8 @@ router.get('/issuescreenshot/:id', getIssueScreenshot);
 
 router.get('/issue/:id', getIssue);
 router.delete('/issue/:id', deleteIssue);
-router.put('/issue/:id', resolveIssue);
-router.put('/issue/:id/:action', attestIssue);
-router.put('/issue', editIssue);
+router.patch('/issue/:id', resolveIssue);
+router.patch('/issue/:id/:action', attestIssue);
+router.patch('/issue', editIssue);
 
 module.exports = router; 

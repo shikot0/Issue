@@ -60,7 +60,7 @@ function Header({header}) {
         setNotificationsVisible(prev => !prev);
         if(notificationsVisible) {
             fetch(markNotificationsAsReadRoute, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: { 'x-access-token': JSON.parse(localStorage.getItem('token')) }
             });
         }

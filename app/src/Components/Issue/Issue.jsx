@@ -98,7 +98,7 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
         if(editedValues.id && editedValues.name && editedValues.link && editedValues.description) {
             fetch(issueRoute, {
                 headers: {"Content-Type": "application/json"},
-                method: 'PUT',
+                method: 'PATCH',
                 body: JSON.stringify(editedValues)
             })
             .then(res => res.json())
@@ -136,7 +136,7 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     function handleResolveIssue() {
         if(website?.admins.some(admin => admin.username === currentUser.username)) {
             fetch(`${issueRoute}/${issue._id}`, {
-                method: 'PUT'
+                method: 'PATCH'
             })
             .then(res => res.json())
             .then(data => {
@@ -173,6 +173,12 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
         return newText;
     }
     
+    function cancelEdit() {
+        setInEditMode(false);
+        name.current.innerText = issue.name;
+        link.current.innerText = issue.link;
+        description.current.innerText = issue.description;
+    }
 
     return (
         <div className="issue" data-id={`${issue._id}`} ref={lastPostRef}>
@@ -205,14 +211,17 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
                 </>
             : null}
         </div>
-        <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
-        <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>
-        <p ref={description} name='description' onKeyUp={handleInput} className="issue-description">{issue.description}</p>
+        <div className="issue-info">
+            <p className='issue-status'>Status: <span ref={status} onClick={handleResolveIssue} className={issue.resolved ? 'resolved' : 'pending'}>{issue.resolved ? 'Resolved' : 'Pending'}</span></p>
+            <p className="link-hint">Link: <a ref={link} name='link' onKeyUp={handleInput} className='issue-link gradient-text' href={issue.link ? issue.link.slice(0,7) === 'http://' || issue.link.slice(0,8) ==='https://' ? issue.link : `http://${issue.link}` : ''} spellCheck='false'>{issue.link}</a></p>
+            <p ref={description} name='description' onKeyUp={handleInput} className="issue-description">{issue.description}</p>
+            <p className="issue-description-truncated">{truncateText(issue.description, 35)}</p>
+        </div>
         <AttestButton issueId={issue._id} attests={attests} setAttests={setAttests}/>
         {issue && issue.openedBy && issue.openedBy.username === currentUser.username && inEditMode ? 
             <div className="edit-buttons-wrapper">
                 <button type='button' className='cta danger' onClick={handleEditIssue}>Save</button>
-                <button type='button' className='cta' onClick={() => {setInEditMode(false)}}>Cancel</button>
+                <button type='button' className='cta' onClick={cancelEdit}>Cancel</button>
             </div>
         : null}
 
