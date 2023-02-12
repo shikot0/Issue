@@ -24,18 +24,55 @@ module.exports.createIssue = async (req, res, next) => {
     }
 }
 
-module.exports.setIssueScreenshot = async (req, res, next) => {
+module.exports.setIssueScreenshots = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const {data, mimetype} = req.files.fileupload;
-        const issue = await Issues.findOne({_id: id})
-        issue.screenshot.Data = data;
-        issue.screenshot.ContentType = mimetype; 
+        const data = req.files.fileupload;
+        // console.log(data)
+        const issue = await Issues.findOne({_id: id});
+        
+        if(data && Array.isArray(data)) {
+            let counter = 0;
+            for(screenshot of data) {
+                if(screenshot) {
+                    // issue.screenshots[counter] = {Data: screenshot.data, ContentType: screenshot.mimetype};
+                    issue.screenshots.push({Data: screenshot.data, ContentType: screenshot.mimetype});
+                    // console.log(data)
+                    console.log(screenshot)
+                    // issue.screenshots[counter].Data = screenshot.data
+                    // issue.screenshots[counter].ContentType = screenshot.mimetype;
+                }
+                counter++;
+            }
+            issue.numberOfScreenshots = counter;
+        }else if(data) {
+            issue.screenshots = {Data: data.data, ContentType: data.mimetype};
+            issue.numberOfScreenshots = 1;
+        }
 
         await issue.save();
         return res.json({msg:'Your issue has successfully been created!', status: true});
     } catch(err) {
         next(err)
+    }
+}
+
+module.exports.getIssueScreenshots = async (req, res, next) => {
+    try {   
+        const id = req.params.id;
+        const imageNumber = req.params.number;
+        const issue = await Issues.findOne({_id: id}); 
+
+        if(issue && !imageNumber) {
+            return res.status(200).send(issue.screenshots);
+        }else if(issue.screenshots && issue.numberOfScreenshots !== 0 && imageNumber >= 0 && imageNumber <= issue.numberOfScreenshots-1) {
+            let screenshot = issue.screenshots[imageNumber];
+            return res.status(200).send(screenshot.Data);
+        }else {
+            return res.status(400).json({msg: 'There has been an error, please try again'})
+        }
+    } catch(err) {
+        next(err);
     }
 }
 
@@ -119,23 +156,6 @@ module.exports.editIssue = async (req, res, next) => {
     }
 }
 
-module.exports.getIssueScreenshot = async (req, res, next) => {
-    try {   
-        const id = req.params.id;
-        const issue = await Issues.findOne({_id: id}); 
-        if(issue) {
-            // res.header("Mime-Type", issue.screenshot.ContentType);
-            return res.status(200).send(issue.screenshot.Data);
-        } 
-        // res.header("Mime-Type", issue.screenshot.ContentType);
-        // res.header("X-Content-Type-Options", 'nosniff');
-        // res.header("Content-Type", `${issue.screenshot.ContentType}; charset=utf-8`);
-        // return res.status(200).send(issue.screenshot.Data);
-    } catch(err) {
-        next(err);
-    }
-}
-
 module.exports.getIssue = async (req, res, next) => {
     try {   
         const id = req.params.id;
@@ -148,6 +168,7 @@ module.exports.getIssue = async (req, res, next) => {
             "description",
             "resolved",
             "link",
+            "numberOfScreenshots",
             "dateOfCreation"
         ]);
 
@@ -174,6 +195,7 @@ module.exports.getIssuesFromWebsite = async (req, res, next) => {
             "description",
             "resolved",
             "link",
+            "numberOfScreenshots",
             "dateOfCreation"
         ]);
         
@@ -204,6 +226,7 @@ module.exports.getAllIssuesFromUser = async (req, res, next) => {
                     "website",
                     "dateOfCreation",
                     "link",
+                    "numberOfScreenshots",
                     "resolved"
                 ]);
             } 
@@ -234,6 +257,7 @@ module.exports.getAllIssues = async (req, res, next) => {
             "attests",
             "website",
             "link",
+            "numberOfScreenshots",
             "resolved"
         ]).sort({attests: -1});
 
@@ -273,9 +297,9 @@ module.exports.getLatestIssues = async(req, res, next) => {
             'attests',
             'resolved',
             "link",
+            "numberOfScreenshots",
             'openedBy'
         ]).sort({attests: -1, createdAt: -1});
-        // console.log(issues) 
         if(issues && issues !== [] && issues.length > 0) {
             return res.json(issues)
         }else {

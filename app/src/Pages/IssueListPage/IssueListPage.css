@@ -30,11 +30,8 @@
 #issue-list-page .issue .tooltip-section, #issue-list-page .issue .delete-modal, #issue-list-page .issue-status, #issue-list-page .issue .link{
     display: none;
 }
-#issue-list-page .issue-screenshot-wrapper {
-    height: 15rem;
-}
 #issue-list-page .image-skeleton {
-    height: 15rem;
+    height: 12rem;
 }
 #issue-list-page .issue-description {
     word-wrap: break-word;

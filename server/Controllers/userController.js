@@ -57,7 +57,7 @@ module.exports.profilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
         const user = await Users.findOne({_id: id}); 
-        res.type('Content-Type', user.profilePicture.ContentType)
+        // res.type('Content-Type', user.profilePicture.ContentType);
         return res.status(200).send(user.profilePicture.Data)
     } catch(err) {
         next(err)
@@ -113,7 +113,6 @@ module.exports.editUsername = async (req, res, next) => {
         
         if(user && username && !existingUser) {
             await Issues.updateMany({"openedBy.username": user.username}, { $set: {"openedBy.username": username.trim() }});
-            // console.log(Issues.find())
             user.username = username.trim();
             await user.save();
             return res.json({status: 200, msg: 'Successfully changed username!', username: username})

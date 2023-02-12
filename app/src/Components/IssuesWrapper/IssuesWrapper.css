@@ -55,10 +55,21 @@
 }
 .no-issues-hint {
     text-align: center;
-    padding: 2rem 0 0;
-    width: 100%;
+    padding: 5rem 0 0;
 }
 .issues-wrapper .issue-item {
     /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
     background: var(--tertiary-color);
+}
+
+@media screen and (max-width: 900px) {
+    .no-issues-hint {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .no-issues-hint {
+        width: 100%;
+    }
 }

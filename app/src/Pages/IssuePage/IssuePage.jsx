@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {IssueSkeleton} from '../../Skeletons/Skeletons';
-import { issueScreenshotRoute } from '../../utils/APIRoutes';
+// import { issueScreenshotRoute } from '../../utils/APIRoutes';
 import { ToastContainer } from 'react-toastify';
 import useIssues from '../../utils/useIssues';
 import useUsers from '../../utils/useUsers';
@@ -14,18 +14,24 @@ function IssuePage() {
     const {user} = useUsers(issue?.openedBy?.username);
     const lightbox = useRef();
     const lightboxImage = useRef();
+    const imageDownloadButton = useRef();
     
     // const [attests, setAttests] = useState(0);
     // useEffect(() => {
     //     setAttests(issue?.attests);
     // },[issue])
 
-    function handleOpenLightbox() {
+    function handleOpenLightbox(e) {
+        const link = e.target.src;
+        // console.log(e.target)
         if(lightbox.current && lightboxImage.current) {
             document.querySelector('#issue-page').style.minHeight = `${lightboxImage.current.clientHeight}px`;
             // document.querySelector('#issue-page').style.maxHeight = `${lightboxImage.current.clientHeight}px`;
             document.querySelector('.issue').style.display = 'none';
             lightbox.current.classList.add('visible');
+            imageDownloadButton.current.href = link;
+            lightboxImage.current.src = link;
+            // console.log(lightbox.current)
         }
     }
     
@@ -39,7 +45,6 @@ function IssuePage() {
     
     window.addEventListener('resize', () => {
         // console.log('resize')
-        console.log(lightboxImage.current)
         if(lightbox.current && lightboxImage.current && lightbox.current.classList.contains('visible')) {
             // console.log(lightboxImage.current.clientHeight)
             // console.log(document.querySelector('#issue-page'));
@@ -58,7 +63,8 @@ function IssuePage() {
                     <button type='button' className='close-button' onClick={handleCloseLightbox}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="close"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"/></g></g></svg>
                     </button>
-                    <img ref={lightboxImage} src={`${issueScreenshotRoute}/${issue._id}`} alt="issue" />
+                    <img ref={lightboxImage} alt="issue" />
+                    <a ref={imageDownloadButton} href={`#issue-page`} className='screenshot-download-button'>Download</a>
                 </div>
             </>
             : <IssueSkeleton/>

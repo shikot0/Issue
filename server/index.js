@@ -16,7 +16,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use('/api/user', userRoutes);
 app.use('/api/issue', issueRoutes); 
 app.use('/api/website', websiteRoutes); 
-
+ 
 mongoose.set('strictQuery', false);
 
 mongoose.connect(process.env.MONGO_URL, {

@@ -30,7 +30,7 @@ function IssuesWrapper({issues, noIssues, website}) {
             }
         }
     }
-
+    
     return (
         <>
         {!noIssues && issues.length !== 0 ? 
@@ -67,8 +67,8 @@ function IssuesWrapper({issues, noIssues, website}) {
             </div>
         : noIssues ? null : <Loader/>}
 
-        {!issues && !website && !noIssues ? <h3 className='no-issues-hint'>There are no issues</h3>: null}
-        {website && issues && !noIssues === 0 ? <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null}
+        {!website && noIssues ? <h3 className='no-issues-hint'>There are no issues</h3>: null}
+        {website && noIssues ? <h3 className='no-issues-hint'>There are no issues, be the first to add one <Link to={`/newissue/${website.name.toLowerCase()}`}>here!</Link></h3> : null}
         </> 
     )
 }

@@ -80,6 +80,11 @@ function LatestIssues() {
                     <IssueItemSkeleton/>
                     <IssueItemSkeleton/>
                     <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
+                    <IssueItemSkeleton/>
                 </>}
             </div>
             : <h2>There have been no issues reported today.</h2>}

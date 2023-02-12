@@ -13,6 +13,7 @@ const issueSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
+            trim: true,
             min: 5,
             max: 50
         },
@@ -23,6 +24,7 @@ const issueSchema = new mongoose.Schema(
         description: {
             type: String,
             required: true,
+            trim: true,
             min: 10,
             max: 500
         },
@@ -30,9 +32,16 @@ const issueSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        screenshot: {
+        screenshots: [{
             Data: Buffer,
-            ContentType: String
+            ContentType: String,
+            default: {}
+        }],
+        numberOfScreenshots: {
+            type: Number,
+            min: 0,
+            max: 4,
+            default: 0
         },
         resolved: {
             type: Boolean,

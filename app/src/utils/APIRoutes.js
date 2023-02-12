@@ -11,9 +11,9 @@ export const allUsersRoute = `${host}/api/user/allusers`;
 export const markNotificationsAsReadRoute = `${host}/api/user/notifications`;
 
 //          ISSUE ROUTES
-export const createIssueRoute = `${host}/api/issue/createissue`;
 export const issueRoute = `${host}/api/issue/issue`;
-export const issueScreenshotRoute = `${host}/api/issue/issuescreenshot`;
+export const createIssueRoute = `${host}/api/issue/createissue`;
+// export const issueScreenshotRoute = `${host}/api/issue/screenshot`;
 export const allIssuesFromUserRoute = `${host}/api/issue/alluserissues`;
 export const allIssuesRoute = `${host}/api/issue/allissues`;
 export const getIssuesFromWebsiteRoute = `${host}/api/issue/issuesfromwebsite`;
