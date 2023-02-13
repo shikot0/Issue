@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import Issue from '../../Components/Issue/Issue';
 import useIssues from '../../utils/useIssues';
 import { IssueSkeleton } from '../../Skeletons/Skeletons';
+import Loader from '../../Components/Loader/Loader';
 import './IssueListPage.css';
 
 function IssueListPage() { 
@@ -62,24 +63,28 @@ function IssueListPage() {
     return (
         <section id="issue-list-page">
             <div className="issue-grid" onMouseDown={handleWrapperItemClick}>
-                {!noIssues ? issues.length !== 0 ? issues.map((issue, index) => {
-                    if(index === issues.length-1) {
-                        return <Issue key={index} issue={issue} lastPostRef={lastPostRef}/>
-                    }
-                    return <Issue key={index} issue={issue}/>
-                }): 
-                <>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                    <IssueSkeleton/>
-                </>: <h2 className='not-found-hint'>No issues have been opened, please check back later.</h2>}
+                {!noIssues ? issues.length !== 0 ? 
+                    // <Loader /> 
+                    issues.map((issue, index) => {
+                        if(index === issues.length-1) {
+                            return <Issue key={index} issue={issue} lastPostRef={lastPostRef}/>
+                        }
+                        return <Issue key={index} issue={issue}/>
+                    })
+                    : <>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                        <IssueSkeleton/>
+                    </>
+                : <h2 className='not-found-hint'>No issues have been opened, please check back later.</h2>}
+                {returnedIssues.length !== 0 && !noIssues ? <Loader/>: null}
             </div>
             <ToastContainer/>
         </section>

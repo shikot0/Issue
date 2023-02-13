@@ -8,6 +8,7 @@ const issueSchema = new mongoose.Schema(
         },
         website: {
             type: Object,
+            trim: true,
             required: true
         },
         name: {
@@ -19,6 +20,7 @@ const issueSchema = new mongoose.Schema(
         },
         attests: {
             type: Number,
+            trim: true,
             default: 0,
         },
         description: {

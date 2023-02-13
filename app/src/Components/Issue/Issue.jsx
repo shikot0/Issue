@@ -213,7 +213,7 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
                 : null}
             </div>
         </header>
-        <div className="issue-screenshots-wrapper">
+        <div className={`issue-screenshots-wrapper ${issue.numberOfScreenshots === 3 ? 'three-screenshots' : ''} ${issue.numberOfScreenshots === 2 ? 'two-screenshots' : ''} ${issue.numberOfScreenshots === 1 ? 'one-screenshot' : ''}`}>
             {issue && issue.name && issue._id && issue.numberOfScreenshots && screenshotArray ? 
                 screenshotArray.map((screenshot, index) => {
                     return (

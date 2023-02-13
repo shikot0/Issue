@@ -101,7 +101,7 @@
     margin: 1.5rem 0 0;
     height: 15rem;
 }
-#account-page .no-issue-hint {
+#account-page .no-issues-hint {
     width: 60%;
 }
 
@@ -110,9 +110,6 @@
         width: 50%;
     }
     #account-page .issues-grid-wrapper {
-        width: 50%;
-    }
-    #account-page .no-issue-hint {
         width: 50%;
     }
 }
@@ -144,8 +141,5 @@
         height: 20vw;
         max-width: 11rem;
         max-height: 11rem;
-    }
-    #account-page .no-issue-hint {
-        width: 100%;
     }
 }

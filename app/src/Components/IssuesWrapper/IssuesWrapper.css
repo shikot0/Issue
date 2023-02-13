@@ -61,6 +61,9 @@
     /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
     background: var(--tertiary-color);
 }
+.issues-wrapper .loader-wrapper {
+    min-height: 15rem;
+}
 
 @media screen and (max-width: 900px) {
     .no-issues-hint {

@@ -11,26 +11,29 @@ const websiteSchema = new mongoose.Schema(
         //     ref: 'website',
         //     required: true
         // },
-        name: {
-            type: String,
-            required: true,
-            min: 5,
-            max: 50
-        },
-        queryName: {
-            type: String,
-            required: true,
-            min: 5,
-            max: 50
-        },
         // description: {
         //     type: String,
         //     required: true,
         //     min: 10,
         //     max: 300
         // },
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+            min: 5,
+            max: 50
+        },
+        queryName: {
+            type: String,
+            required: true,
+            trim: true,
+            min: 5,
+            max: 50
+        },
         domains: {
             type: Array,
+            trim: true,
             required: true
         },
         admins: {
@@ -48,10 +51,12 @@ const websiteSchema = new mongoose.Schema(
         },
         primaryContact: {
             type: String,
+            trim: true,
             required: true
         },
         secondaryContact: {
             type: String,
+            trim: true,
             required: true
         },
         dateOfCreation: {

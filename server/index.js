@@ -16,6 +16,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use('/api/user', userRoutes);
 app.use('/api/issue', issueRoutes); 
 app.use('/api/website', websiteRoutes); 
+// app.use('/favicon.ico', './favicon.ico'); 
  
 mongoose.set('strictQuery', false);
 

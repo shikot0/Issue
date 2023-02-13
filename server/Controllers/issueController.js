@@ -35,12 +35,8 @@ module.exports.setIssueScreenshots = async (req, res, next) => {
             let counter = 0;
             for(screenshot of data) {
                 if(screenshot) {
-                    // issue.screenshots[counter] = {Data: screenshot.data, ContentType: screenshot.mimetype};
                     issue.screenshots.push({Data: screenshot.data, ContentType: screenshot.mimetype});
-                    // console.log(data)
                     console.log(screenshot)
-                    // issue.screenshots[counter].Data = screenshot.data
-                    // issue.screenshots[counter].ContentType = screenshot.mimetype;
                 }
                 counter++;
             }
@@ -63,7 +59,7 @@ module.exports.getIssueScreenshots = async (req, res, next) => {
         const imageNumber = req.params.number;
         const issue = await Issues.findOne({_id: id}); 
 
-        if(issue && !imageNumber) {
+        if(issue.screenshots && !imageNumber) {
             return res.status(200).send(issue.screenshots);
         }else if(issue.screenshots && issue.numberOfScreenshots !== 0 && imageNumber >= 0 && imageNumber <= issue.numberOfScreenshots-1) {
             let screenshot = issue.screenshots[imageNumber];

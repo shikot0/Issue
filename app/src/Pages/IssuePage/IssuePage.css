@@ -23,9 +23,11 @@
     background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
     pointer-events: none;
+    scale: .95rem;
 }
 .image-lightbox.visible {
     opacity: 1;
+    scale: 1rem;
     pointer-events: all;
 }
 .image-lightbox .close-button {
