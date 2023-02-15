@@ -57,7 +57,7 @@ module.exports.profilePicture = async (req, res, next) => {
     try {
         const id = req.params.id;
         const user = await Users.findOne({_id: id}); 
-        // res.type('Content-Type', user.profilePicture.ContentType);
+        res.setHeader('Content-Type', user.profilePicture.ContentType);
         return res.status(200).send(user.profilePicture.Data)
     } catch(err) {
         next(err)

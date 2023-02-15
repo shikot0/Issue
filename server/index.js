@@ -6,6 +6,7 @@ const fileuploader = require('express-fileupload');
 const userRoutes = require('./Routes/userRoutes');
 const issueRoutes = require('./Routes/issueRoutes');
 const websiteRoutes = require('./Routes/websiteRoutes');
+// const icon = require('./favicon.ico');
 require('dotenv').config();
 
 const app = express();
@@ -16,8 +17,10 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use('/api/user', userRoutes);
 app.use('/api/issue', issueRoutes); 
 app.use('/api/website', websiteRoutes); 
-// app.use('/favicon.ico', './favicon.ico'); 
- 
+// app.get('/favicon.ico', (req,res,next) => {
+//     res.status(200).send(icon)
+// }); 
+  
 mongoose.set('strictQuery', false);
 
 mongoose.connect(process.env.MONGO_URL, {

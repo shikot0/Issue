@@ -63,6 +63,7 @@ module.exports.getIssueScreenshots = async (req, res, next) => {
             return res.status(200).send(issue.screenshots);
         }else if(issue.screenshots && issue.numberOfScreenshots !== 0 && imageNumber >= 0 && imageNumber <= issue.numberOfScreenshots-1) {
             let screenshot = issue.screenshots[imageNumber];
+            res.setHeader('Content-Type', screenshot.ContentType);
             return res.status(200).send(screenshot.Data);
         }else {
             return res.status(400).json({msg: 'There has been an error, please try again'})

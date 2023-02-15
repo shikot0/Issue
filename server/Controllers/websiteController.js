@@ -46,7 +46,7 @@ module.exports.websiteImage = async (req, res, next) => {
     try {
         const id = req.params.id;
         const website = await Websites.findOne({_id: id}); 
-        res.type('Content-Type', website.websiteImage.ContentType)
+        res.setHeader('Content-Type', website.websiteImage.ContentType)
         return res.status(200).send(website.websiteImage.Data)
     } catch(err) {
         next(err)
