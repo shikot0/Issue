@@ -112,6 +112,9 @@
     #account-page .issues-grid-wrapper {
         width: 50%;
     }
+    #account-page .no-issues-hint {
+        width: 50%;
+    }
 }
 
 @media screen and (max-width: 800px) {

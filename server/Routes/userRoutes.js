@@ -11,7 +11,8 @@ router.get('/profilepicture/:id', profilePicture);
 router.get('/user/:username', getUser);  
 router.patch('/user/:id', editUsername);  
 router.patch('/notifications', markNotificationsAsRead)
-router.get('/currentuser/:token', currentUser);
+// router.get('/currentuser/:token', currentUser);
+router.get('/currentuser', currentUser);
 router.get('/allusers', allUsers);
 
 module.exports = router;

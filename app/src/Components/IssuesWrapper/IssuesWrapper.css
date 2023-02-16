@@ -1,3 +1,8 @@
+.issues-grid-wrapper h2 {
+    text-align: center;
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    margin: 0 0 1rem;
+}
 .issues-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
@@ -58,21 +63,8 @@
     padding: 5rem 0 0;
 }
 .issues-wrapper .issue-item {
-    /* background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color)); */
-    background: var(--tertiary-color);
+    background-image: linear-gradient(to bottom right, var(--secondary-color), var(--tertiary-color));
 }
 .issues-wrapper .loader-wrapper {
     min-height: 15rem;
-}
-
-@media screen and (max-width: 900px) {
-    .no-issues-hint {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .no-issues-hint {
-        width: 100%;
-    }
 }

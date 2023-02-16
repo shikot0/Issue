@@ -5,7 +5,7 @@ import useWebsites from '../../utils/useWebsites';
 import useUsers from '../../utils/useUsers';
 import IssuesWrapper from '../../Components/IssuesWrapper/IssuesWrapper';
 import { websiteImageRoute, websiteRoute } from '../../utils/APIRoutes';
-import { HeaderSkeleton, ImageSkeleton } from '../../Skeletons/Skeletons';
+import { HeaderSkeleton, ImageSkeleton, WebsiteDescriptionSkeleton } from '../../Skeletons/Skeletons';
 import {toast, ToastContainer} from 'react-toastify';
 import UserItem from '../../Components/UserItem/UserItem';
 import './WebsitePage.css';
@@ -22,9 +22,12 @@ function WebsitePage() {
     const tooltip = useRef();
     const adminInput = useRef();
     const usersWrapper = useRef();
+    const description = useRef();
+    const descriptionButton = useRef();
     const navigate = useNavigate();
+    const formatter = Intl.NumberFormat('en', {notation: 'compact'});
 
-    useEffect(() => {
+    useEffect(() => {    
         if(!localStorage.getItem('token')) {
             navigate('/register')
         }
@@ -44,11 +47,19 @@ function WebsitePage() {
         theme: "dark",
     }
 
-    const formatter = Intl.NumberFormat('en', {notation: 'compact'});
-
     function formatNum(num) {
         let number = formatter.format(num);
         return number;
+    }
+
+    function handleShowDescription() {
+        if(description.current && !description.current.classList.contains('show-full-description')) {
+            description.current.classList.add('show-full-description');
+            descriptionButton.current.innerText = 'show less';
+        }else {
+            description.current.classList.remove('show-full-description');
+            descriptionButton.current.innerText = 'show more';
+        }
     }
 
     function toggleTooltip(tooltip) {
@@ -94,7 +105,6 @@ function WebsitePage() {
 
     }
 
-
     return (
         <section id="website-page">
         {!noWebsites ? 
@@ -131,7 +141,7 @@ function WebsitePage() {
                         return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
                     }): null}
                 </div>
-                <button  className='save-button gradient-bg' onClick={editWebsite}>
+                <button className='save-button gradient-bg' onClick={editWebsite}>
                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="plus"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></g></g></svg> */}
                     Save
                 </button>  
@@ -151,7 +161,30 @@ function WebsitePage() {
                 </div>
             </div>
         </header>
-        {website && website.name && issues ? <IssuesWrapper issues={issues} noIssues={noIssues} website={website}/> : null}  
+        <div className='website-info-section'>
+            {website && website.description ? 
+                    <div ref={description} className='website-description'>
+                        {website && website.domains ? 
+                            <div className='website-domains-wrapper'>Domains: 
+                                {website.domains.sort((first, second) => {
+                                    return first.length > second.length ? -1 : 1;
+                                }).map((domain, index) => {
+                                    return <a key={index} className="domain" href={domain ? domain.slice(0,7) === 'http://' || domain.slice(0,8) ==='https://' ? domain : `http://${domain}` : ''} spellCheck='false'>{domain}</a>
+                                })}
+                            </div>
+                        : null}
+                        {website.description}
+                        <button ref={descriptionButton} type='button' className='show-more-button' onClick={handleShowDescription}>show more</button>
+                    </div>
+            : <WebsiteDescriptionSkeleton/>}
+            {/* <WebsiteDescriptionSkeleton/> */}
+            <div className='website-issues-chart-wrapper'>
+                <canvas></canvas>
+            </div>
+        </div>
+        {website && website.name && issues ? 
+            <IssuesWrapper issues={issues} noIssues={noIssues} website={website}/>
+        : null}  
         </>  
         : <h3 className='not-found-hint'>Sorry this website could not be found.</h3>}
         <ToastContainer/>

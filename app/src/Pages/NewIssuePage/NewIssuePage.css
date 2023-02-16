@@ -36,11 +36,12 @@
 #new-issue-page .website .website-about .name {
     font-size: clamp(1.75rem, 2vw, 2rem)
 }
-.domain-wrapper {
+.domains-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, minmax(8rem, 1fr));
+    grid-template-columns: repeat(3, minmax(4rem, 1fr));
     justify-content: center;
     align-items: center;
+    justify-items: flex-start;
     gap: 1rem;
 }
 #new-issue-page form {

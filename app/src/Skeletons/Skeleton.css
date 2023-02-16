@@ -1,39 +1,43 @@
 .header-skeleton {
     width: 25%;
-    height: 2.5rem;
-    min-width: 5rem;
-    max-width: 10rem;
+    height: 2.15rem;
+    min-width: 7.5rem;
+    max-width: 12.5rem;
+    width: 25%;
     background-color: var(--tertiary-color);
     border-radius: .25rem;
 }
 .short-text-skeleton {
     width: 25%;
-    height: 1.5rem;
+    height: 1.25rem;
     min-width: 5rem;
-    max-width: 10rem;
+    max-width: 15rem;
+    width: 25%;
     background-color: var(--tertiary-color);
     border-radius: .25rem;
 }
 .mid-length-text-skeleton {
     width: 50%;
-    height: 1.5rem;
+    height: 1.25rem;
     min-width: 10rem;
-    max-width: 20rem;
+    max-width: 25rem;
+    width: 55%;
     background-color: var(--tertiary-color);
     border-radius: .25rem;
 }
 .long-text-skeleton {
     width: 80%;
-    height: 1.5rem;
+    height: 1.25rem;
     min-width: 15rem;
-    max-width: 25rem;
+    max-width: 40rem;
+    width: 90%;
     background-color: var(--tertiary-color);
     border-radius: .25rem;
 }
 .paragraph-skeleton {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .75rem;
 }
 .image-skeleton {
     width: 100%;
@@ -87,6 +91,7 @@
     flex-direction: column;
     gap: 1rem;
     width: 100%; 
+    min-height: 30rem;
     max-width: 42rem;
     border-radius: .5rem;
     padding: 2rem 1.5rem;
@@ -102,4 +107,14 @@
     background-size: 200%;
     border-radius: .5rem;
     animation: animated-background 3s linear infinite forwards;
+}
+.website-description-skeleton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    height: 12.25rem;
+    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: .5rem;
+    padding: 1.25rem;
 }

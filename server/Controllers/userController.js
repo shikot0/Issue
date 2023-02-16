@@ -128,7 +128,8 @@ module.exports.editUsername = async (req, res, next) => {
 
 module.exports.currentUser = async (req, res, next) => {
     try {
-        const userToken = req.params.token;
+        // const userToken = req.params.token;  
+        const userToken = req.headers['x-access-token'];
         const decoded = jwt.verify(userToken, process.env.JWT_SECRET);
         const user = await Users.findOne({email: decoded}).select([
                 "_id",

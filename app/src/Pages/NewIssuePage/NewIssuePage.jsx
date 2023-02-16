@@ -174,7 +174,7 @@ function NewIssuePage() {
                 </div>
                 <div className="website-about">
                     <h2 className="name">{website ? website.name: 'website'}</h2> 
-                    <div className="domain-wrapper">
+                    <div className="domains-wrapper">
                         {website && website.domains && website.domains.map((domain, index) => {
                             return <p className='domain' onClick={handleAutofill} key={index}>{domain}</p>
                         })}

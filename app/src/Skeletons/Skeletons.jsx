@@ -41,6 +41,7 @@ function ParagraphSkeleton() {
             <MidLengthTextSkeleton/>
             <ShortTextSkeleton/>
             <LongTextSkeleton/>
+            <MidLengthTextSkeleton/>
         </div>
     )
 }
@@ -54,6 +55,7 @@ function ImageSkeleton() {
 function IssueSkeleton() {
     return (
         <div className="issue-skeleton">
+            <ShortTextSkeleton/>
             <HeaderSkeleton/>
             <ImageSkeleton/>
             <ParagraphSkeleton/>
@@ -65,5 +67,13 @@ function WebsiteItemSkeleton() {
         <div className="website-item-skeleton"></div>
     )
 }
+function WebsiteDescriptionSkeleton() {
+    return (
+        <div className="website-description-skeleton">
+            <HeaderSkeleton />
+            <ParagraphSkeleton />
+        </div>
+    )
+}
 
-export {UsernameSkeleton, HeaderSkeleton, ShortTextSkeleton, MidLengthTextSkeleton, LongTextSkeleton, ParagraphSkeleton, ImageSkeleton, IssueSkeleton, ProfilePictureSkeleton, IssueItemSkeleton, WebsiteItemSkeleton}
+export {UsernameSkeleton, HeaderSkeleton, WebsiteDescriptionSkeleton, ShortTextSkeleton, MidLengthTextSkeleton, LongTextSkeleton, ParagraphSkeleton, ImageSkeleton, IssueSkeleton, ProfilePictureSkeleton, IssueItemSkeleton, WebsiteItemSkeleton}

@@ -33,7 +33,10 @@ function useUsers(username) {
             // let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
             let savedUser = JSON.parse(localStorage.getItem('token'));
             if(savedUser) {
-                fetch(`${getCurrentUserRoute}/${savedUser}`)
+                // fetch(`${getCurrentUserRoute}/${savedUser}`, {
+                fetch(`${getCurrentUserRoute}`, {
+                    headers: { "x-access-token": savedUser },
+                })
                 .then(res => res.json())
                 .then(data => {
                     setUser(data);

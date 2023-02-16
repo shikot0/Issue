@@ -21,6 +21,7 @@ function RegisterWebsitePage() {
         websiteName: '',
         domains: [],
         admins: [],
+        description: '',
         primaryContact: '',
         secondaryContact: ''
     });
@@ -143,6 +144,8 @@ function RegisterWebsitePage() {
             toast.error('Please add your primary contact for this website', toastOptions)
         }else if(!website.secondaryContact) {
             toast.error('Please add your secondary contact for this website', toastOptions)
+        }else if(!website.description) {
+            toast.error('Please add a description for this website', toastOptions)
         }else if(!uploadedImage) {
             toast.error('Please add an image for your website', toastOptions);
         }else if(website.registeredBy){
@@ -217,18 +220,20 @@ function RegisterWebsitePage() {
                             }) : null}
                         </div>
                     </div>
-                    { website.admins.length > 1 ? <div className="admins-wrapper">
-                        {website.admins.length > 1 ? website.admins.filter(admin => {
-                            if(admin._id !== currentUser._id) {
-                                return admin;
-                            }else {
-                                return false;
-                            }
-                        }).map((admin, index) => {
-                            // return <p key={index} onClick={() => {handleDeleteAdmin(index)}} className="admin deletable">{admin}</p>
-                            return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
-                        }): null}
-                    </div> : null }
+                    { website.admins.length > 1 ? 
+                        <div className="admins-wrapper">
+                            {website.admins.length > 1 ? website.admins.filter(admin => {
+                                if(admin._id !== currentUser._id) {
+                                    return admin;
+                                }else {
+                                    return false;
+                                }
+                            }).map((admin, index) => {
+                                // return <p key={index} onClick={() => {handleDeleteAdmin(index)}} className="admin deletable">{admin}</p>
+                                return <UserItem key={index} user={admin} handleClick={handleDeleteAdmin}/>
+                            }): null}
+                        </div>
+                    : null }
                     <div className="input-wrapper">
                         <label htmlFor="domains">Domains:</label>
                         <input ref={domainInput} className='domain-input' pattern='[a-zA-Z0-9._+-]+\.[a-zA-Z0-9-]{2,}' onKeyDown={e => {handleEnterButton(e, newDomainButton.current)}} type="text" name='domains' placeholder='e.g issue.com'/>
@@ -242,6 +247,10 @@ function RegisterWebsitePage() {
                         }): null}
                     </div>
                 </section>
+                <div className="description-input-wrapper">
+                    <label htmlFor="description">Description:</label>
+                    <textarea name="description" className='text-box' onInput={handleWebsiteData}></textarea>
+                </div>
             </form>
             <button type='button' className='cta' onClick={registerWebsite}>Submit</button>
             <ToastContainer/>

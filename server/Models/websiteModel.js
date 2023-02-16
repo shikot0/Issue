@@ -11,12 +11,12 @@ const websiteSchema = new mongoose.Schema(
         //     ref: 'website',
         //     required: true
         // },
-        // description: {
-        //     type: String,
-        //     required: true,
-        //     min: 10,
-        //     max: 300
-        // },
+        description: {
+            type: String,
+            required: true,
+            min: 10,
+            max: 300
+        },
         name: {
             type: String,
             required: true,

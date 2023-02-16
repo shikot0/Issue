@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports.registerWebsite = async (req, res, next) => {
     try {
-        const {registeredBy, websiteName, domains, admins, primaryContact, secondaryContact} = req.body;
+        const {registeredBy, websiteName, domains, description, admins, primaryContact, secondaryContact} = req.body;
         const websiteCheck = await Websites.findOne({queryName: websiteName.toLowerCase()});
 
         if(websiteCheck) {
@@ -15,6 +15,7 @@ module.exports.registerWebsite = async (req, res, next) => {
                 name: websiteName,
                 queryName: websiteName.toLowerCase(),
                 domains,
+                description,
                 admins,
                 primaryContact,
                 secondaryContact,
@@ -60,6 +61,7 @@ module.exports.getWebsite = async (req, res, next) => {
             "_id",
             "name",
             "domains",
+            "description",
             "admins",
             "queryName",
             "numberOfIssues",

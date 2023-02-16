@@ -35,6 +35,7 @@ function IssuesWrapper({issues, noIssues, website}) {
         <>
         {!noIssues && issues.length !== 0 ? 
             <div className="issues-grid-wrapper">
+                <h2>Issues</h2>
                 <div className="filter-buttons-wrapper">
                     <button type='button' className="filter-button selected" value={''} onClick={handleFilter}>All</button>
                     <button type='button' className="filter-button" value={'resolved'} onClick={handleFilter}>Resolved</button>
