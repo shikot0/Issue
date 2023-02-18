@@ -40,7 +40,6 @@ function useIssues(username, website, id, page=1) {
             })
             .then(data => {
                 setIssues(data);
-                // console.log(data);
                 if(data.noIssue) {
                     setNoIssues(true);
                 }

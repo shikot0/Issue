@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { markNotificationsAsReadRoute, profilePictureRoute } from '../../utils/APIRoutes';
+import {useCookies} from 'react-cookie';
 import NotificationItem from '../NotificationItem/NotificationItem';
 import useUsers from '../../utils/useUsers';
 import './Header.css';
@@ -8,6 +9,7 @@ import './Header.css';
 function Header({header}) {
     const notificationsWrapper = useRef();
     const {user, noUsers} = useUsers();
+    const [cookies] = useCookies(["token"]);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const location = useLocation();
     
@@ -61,7 +63,9 @@ function Header({header}) {
         if(notificationsVisible) {
             fetch(markNotificationsAsReadRoute, {
                 method: 'PATCH',
-                headers: { 'x-access-token': JSON.parse(localStorage.getItem('token')) }
+                headers: {"x-access-token": cookies.token}
+            }).catch(err => {
+                console.error(err);
             });
         }
     }

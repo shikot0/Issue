@@ -20,7 +20,7 @@
     scale: .95;
 }
 .issue-item:hover {
-    translate: 0 -10%;
+    translate: 0 -5%;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.4);
 }
 .issue-item:hover::before {

@@ -32,6 +32,7 @@ html::-webkit-scrollbar-thumb {
 body {
   /* background-image: radial-gradient(circle, #0f0f0f, #121212, #151515, #181818, #1b1b1b); */
   background-image: radial-gradient(circle at 0 0, #0f0f0f, #121212, #151515, #181818, #1b1b1b);
+  background-attachment: fixed;
   overflow-x: hidden;
   color-scheme: dark;
 }
@@ -47,8 +48,8 @@ main {
   max-width: 75rem; 
   /* width: 95%; */
   width: 100%;
-  padding-right: 2.5%;
-  padding-left: 2.5%;
+  padding-right: 2%;
+  padding-left: 2%;
 }
 #new-issue-page, #issue-list-page, #account-page {
   padding-top: 3rem;
@@ -100,7 +101,20 @@ input button {
   border-radius: 1rem;
   background-image: linear-gradient(to bottom, var(--primary-cta-color), var(--secondary-cta-color))
 }
-
+.gradient-bg {
+  background-image: url('../public/gradient-bg.webp');
+  background-size: cover;
+}
+.gradient-text {
+  background-image: url('../public/gradient-bg.webp');
+  background-size: 100%;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-border {
+  background: linear-gradient(var(--primary-color), var(--primary-color)) padding-box,
+  linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
+}
 .cta {
   padding: .5rem 1rem;
   border-radius: .125rem;
@@ -168,12 +182,13 @@ input button {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  font-size: clamp(.7rem, 1.5vw, 1.4rem);
   background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
               linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
   border: 2px solid transparent;
   border-radius: .3rem;
   padding: .25rem .5rem;
+  cursor: pointer;
 }
 .helper-button svg {
   width: 1.5rem;
@@ -197,21 +212,6 @@ input button {
 }
 .deletable:hover::after {
   opacity: 1;
-}
-
-.gradient-bg {
-  background-image: url('../public/gradient-bg.webp');
-  background-size: cover;
-}
-.gradient-text {
-  background-image: url('../public/gradient-bg.webp');
-  background-size: 100%;
-  background-clip: text;
-  color: transparent;
-}
-.gradient-border {
-  background: linear-gradient(var(--primary-color), var(--primary-color)) padding-box,
-  linear-gradient(to bottom right, var(--secondary-cta-color), var(--primary-cta-color)) border-box;
 }
 .domain {
   font-size: .9rem;
@@ -273,6 +273,7 @@ input button {
   fill: var(--secondary-cta-color)
 }
 .logout-button {
+  font-size: clamp(.7rem, 1.5vw, 1.4rem);
   font-weight: 700;
   background-color: var(--secondary-cta-color);
   border: none;

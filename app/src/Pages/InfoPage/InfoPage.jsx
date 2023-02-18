@@ -1,8 +1,20 @@
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './InfoPage.css';
+import { useCookies } from 'react-cookie';
 
 function InfoPage() {
+    const [cookies] = useCookies(["token"]);
     const navigate = useNavigate();
+
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
+            navigate('/register');
+        } 
+    },[cookies.token, navigate]);
 
     function handleNavigate() {
         navigate('/register')

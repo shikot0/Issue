@@ -6,15 +6,25 @@ import useIssues from '../../utils/useIssues';
 import { IssueSkeleton } from '../../Skeletons/Skeletons';
 import Loader from '../../Components/Loader/Loader';
 import './IssueListPage.css';
+import { useCookies } from 'react-cookie';
 
 function IssueListPage() { 
     const [page, setPage] = useState(1);
+    const [cookies] = useCookies(["token"]);
     // const [noIssues, setNoIssues] = useState(false);
     const {issues: returnedIssues, noIssues} = useIssues(null, null, null, page);
     const [issues, setIssues] = useState(returnedIssues);
-    const navigate = useNavigate();
     const intObserver = useRef();
+    const navigate = useNavigate();
 
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
+            navigate('/register');
+        } 
+    },[cookies.token, navigate]);
 
     const lastPostRef = useCallback(issue => {
         if(intObserver.current) {

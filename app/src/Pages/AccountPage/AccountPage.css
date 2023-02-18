@@ -1,11 +1,11 @@
 #account-page {
     display: flex;
+    padding-bottom: 1.5rem;
     gap: 2rem;
 }
 #account-page .user {
     width: 40%;
     margin: 2rem 0 0;
-    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); 
     display: grid;
     grid-auto-flow: column;
     justify-content: start;
@@ -17,6 +17,7 @@
     min-height: 5rem; 
     max-height: 6rem;
     border: 1px solid var(--tertiary-color);
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); 
     border-radius: 5rem 1rem 1rem 5rem;
 }
 .profile-picture-wrapper {
@@ -72,7 +73,7 @@
     top: 120%;
 }
 #account-page .username {
-    font-size: clamp(1rem, 1.5vw, 1.4rem);
+    font-size: clamp(.85rem, 1.5vw, 1.4rem);
     font-weight: 600;
 }
 #account-page .username:focus {
@@ -145,4 +146,14 @@
         max-width: 11rem;
         max-height: 11rem;
     }
+}
+
+@media  screen and (max-width: 400px) {
+    #account-page .user {
+        gap: .4rem;
+    }
+    .profile-picture-wrapper {
+        width: 25vw;
+        height: 25vw;
+    }   
 }

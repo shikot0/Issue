@@ -1,9 +1,11 @@
 import { issueRoute } from '../../utils/APIRoutes';
 import {useState, useRef} from 'react';
+import {useCookies} from 'react-cookie';
 import './AttestButton.css';
 
 function AttestButton({issueId, attests, setAttests}) {
     const [attested, setAttested] = useState(false);
+    const [cookies] = useCookies(["token"]);
     const attestsWrapper = useRef();
 
     function handleAttest() {
@@ -12,14 +14,16 @@ function AttestButton({issueId, attests, setAttests}) {
             setAttests(prev => prev+1);
             attestsWrapper.current.classList.add('gradient-text');
             fetch(`${issueRoute}/${issueId}/attest`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                headers: {'x-access-token': cookies.token}
             })
         }else {
             setAttested(false);
             setAttests(prev => prev-1);
             attestsWrapper.current.classList.remove('gradient-text');
             fetch(`${issueRoute}/${issueId}/removeattest`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                headers: {'x-access-token': cookies.token}
             })
         }
     }

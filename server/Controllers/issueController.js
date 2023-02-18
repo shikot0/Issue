@@ -16,9 +16,17 @@ module.exports.createIssue = async (req, res, next) => {
 
         const targetWebsite = await Websites.findOne({_id: website.id});
         targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
+        
+        const date = new Date().getDay();
+        const weekday = new Date().toLocaleString('default', {weekday: 'short'}).toLowerCase();
 
+        if(targetWebsite.issuesOpenedOn[date]) {
+            targetWebsite.issuesOpenedOn[date].issues = targetWebsite.issuesOpenedOn[date].issues+1;
+        }else {
+            targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+        }
         await targetWebsite.save();
-        return res.json({status: true, id: issue._id});
+        return res.json({succeeded: true, id: issue._id});
     } catch(err) {
         next(err);
     }
@@ -28,26 +36,31 @@ module.exports.setIssueScreenshots = async (req, res, next) => {
     try {
         const id = req.params.id;
         const data = req.files.fileupload;
-        // console.log(data)
+        const accessToken = req.headers['x-access-token'];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const issue = await Issues.findOne({_id: id});
-        
-        if(data && Array.isArray(data)) {
-            let counter = 0;
-            for(screenshot of data) {
-                if(screenshot) {
-                    issue.screenshots.push({Data: screenshot.data, ContentType: screenshot.mimetype});
-                    console.log(screenshot)
-                }
-                counter++;
-            }
-            issue.numberOfScreenshots = counter;
-        }else if(data) {
-            issue.screenshots = {Data: data.data, ContentType: data.mimetype};
-            issue.numberOfScreenshots = 1;
-        }
+        const user = await Users.findOne({email: decoded});
 
-        await issue.save();
-        return res.json({msg:'Your issue has successfully been created!', status: true});
+        if(user && issue.openedBy.id === user._id) {
+            if(data && Array.isArray(data)) {
+                let counter = 0;
+                for(screenshot of data) {
+                    if(screenshot) {
+                        issue.screenshots.push({Data: screenshot.data, ContentType: screenshot.mimetype});
+                    }
+                    counter++;
+                }
+                issue.numberOfScreenshots = counter;
+            }else if(data) {
+                issue.screenshots = {Data: data.data, ContentType: data.mimetype};
+                issue.numberOfScreenshots = 1;
+            }
+            await issue.save();
+            return res.json({succeeded: true, msg:'Your issue has successfully been created!'});
+        }else {
+            return res.json({succeeded: false, msg:'You do not have permission to edit this issue!'});
+        }
+        
     } catch(err) {
         next(err)
     }
@@ -76,15 +89,19 @@ module.exports.getIssueScreenshots = async (req, res, next) => {
 module.exports.deleteIssue = async (req, res, next) => {
     try {
         const id = req.params.id;
+        const accessToken = req.headers['x-access-token'];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const issue = await Issues.findOne({_id:id});
-        if(issue) {
+        const user = await Users.findOne({email: decoded});
+
+        if(user && issue && issue.openedBy.id === user._id) {
             const targetWebsite = await Websites.findOne({_id: issue.website.id});
             await Issues.deleteOne({_id:id});
             targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
             await targetWebsite.save();
-            res.json({status: 200, msg: 'Issue has been deleted'});
+            res.json({succeeded: true, msg: 'Issue has been deleted'});
         }else {
-            res.json({status: 400, msg: 'There has been an error please try again'});
+            res.json({succeeded: false, msg: 'There has been an error please try again'});
         }
     } catch(err) {
         next(err);
@@ -96,7 +113,7 @@ module.exports.resolveIssue = async (req, res, next) => {
         const id = req.params.id;
         const issue = await Issues.findOne({_id: id});
 
-        if(!issue.resolved) {
+        if(issue && !issue.resolved) {
             issue.resolved = true;
             const user = await Users.findOne({_id: issue.openedBy.id});
             if(user.notifications.length >= 8) {
@@ -106,11 +123,13 @@ module.exports.resolveIssue = async (req, res, next) => {
             }
             await user.save();
             await issue.save();
-            return res.json({msg: 'Successfully closed issue!', resolved: true})
-        }else {
+            return res.json({succeeded: true, resolved: true, msg: 'Successfully closed issue!'})
+        }else if(issue) {
             issue.resolved = false;
             await issue.save();
-            return res.json({msg: 'Successfully reopened issue!', resolved: false})
+            return res.json({succeeded: true, resolved: false, msg: 'Successfully reopened issue!'})
+        }else {
+            return res.json({succeeded: false, msg: 'There has been an error'})
         }
 
     } catch(err) {
@@ -122,17 +141,21 @@ module.exports.attestIssue = async (req, res, next) => {
     try {
         const id = req.params.id;
         const action = req.params.action;
+        const accessToken = req.headers['x-access-token'];
+        const decoded = jwt.verify(accessToken, JWT_SECRET);
         const issue = await Issues.findOne({_id: id});
-        if(issue && action === 'attest') {
+        const user = await Users.findOne({email: decoded});
+
+        if(user && issue && action === 'attest') {
             issue.attests = issue.attests+1;
             issue.save();
-        } else if(issue && action === 'removeattest') {
+        }else if(user && issue && action === 'removeattest') {
             issue.attests = issue.attests-1;
             issue.save();
         }else {
-            return res.json('error');
+            return res.json({succeeded: false, msg: 'Could not attest this issue'});
         }
-        return res.json('successful')
+        return res.json({succeeded: true})
     } catch(err) {
         next(err);
     }
@@ -141,13 +164,21 @@ module.exports.attestIssue = async (req, res, next) => {
 module.exports.editIssue = async (req, res, next) => {
     try {
         const {id, name, link, description} = req.body;
+        const accessToken = req.headers['x-access-token'];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET)
         const issue = await Issues.findOne({_id: id});
+        const user = await Users.findOne({email: decoded});
 
-        issue.name = name;
-        issue.link = link;
-        issue.description = description;
-        await issue.save();
-        return res.json({status: 200, msg: 'Successfully edited issue'})
+        if(user && issue.openedBy.id === user._id) {
+            issue.name = name;
+            issue.link = link;
+            issue.description = description;
+            await issue.save();
+            return res.json({succeeded: true, msg: 'Successfully edited issue'})
+        }else {
+            return res.json({succeeded: false, msg: 'You do not have permission to edit this issue'})
+        }
+
     } catch(err) {
         next(err);
     }
@@ -265,7 +296,6 @@ module.exports.getAllIssues = async (req, res, next) => {
                 }else {
                     returnedIssues = issues.slice(page * 10,)
                 }
-                // console.lokg(page)
             }else {
                 return res.json({noIssues: true});
             }

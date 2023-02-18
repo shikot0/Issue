@@ -1,5 +1,5 @@
-import {useRef} from 'react';
-import {useParams} from 'react-router-dom';
+import {useEffect, useRef} from 'react';
+import {useParams, useNavigate} from 'react-router-dom';
 import {IssueSkeleton} from '../../Skeletons/Skeletons';
 // import { issueScreenshotRoute } from '../../utils/APIRoutes';
 import { ToastContainer } from 'react-toastify';
@@ -7,19 +7,31 @@ import useIssues from '../../utils/useIssues';
 import useUsers from '../../utils/useUsers';
 import Issue from '../../Components/Issue/Issue';
 import './IssuePage.css';
+import { useCookies } from 'react-cookie';
 
 function IssuePage() {
     const {id} = useParams();
     const {issues: issue, noIssues} = useIssues(null,null,id);
     const {user} = useUsers(issue?.openedBy?.username);
+    const [cookies] = useCookies(["token"]);
     const lightbox = useRef();
     const lightboxImage = useRef();
     const imageDownloadButton = useRef();
+    const navigate = useNavigate();
     
     // const [attests, setAttests] = useState(0);
     // useEffect(() => {
     //     setAttests(issue?.attests);
     // },[issue])
+
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
+            navigate('/register')
+        } 
+    },[cookies.token, navigate]);
 
     function handleOpenLightbox(e) {
         const link = e.target.src;

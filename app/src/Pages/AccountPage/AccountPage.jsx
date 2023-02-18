@@ -7,37 +7,44 @@ import useUsers from '../../utils/useUsers';
 import useIssues from '../../utils/useIssues';
 import Loader from '../../Components/Loader/Loader';
 import IssuesWrapper from '../../Components/IssuesWrapper/IssuesWrapper';
+import { useCookies } from 'react-cookie';
 import './AccountPage.css';
 
 function AccountPage() {
     const {username} = useParams();
     const {user, noUsers} = useUsers(username);
-    const {user: currentUser} = useUsers();
-    const {issues, noIssues} = useIssues(username);
-    const profilePictureInput = useRef();
+    const [cookies, setCookies] = useCookies(["token"]);
     const [updatedUsername, setUpdatedUsername] = useState('');
     const [inEditMode, setInEditMode] = useState(false);
     const [updatedUserImage, setUpdatedUserImage] = useState('');
     const [canSaveUsername, setCanSaveUsername] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const usernameInput = useRef();
+    const profilePictureInput = useRef();
+    const {user: currentUser} = useUsers();
+    const {issues, noIssues} = useIssues(username);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if(!localStorage.getItem('token')) {
-            navigate('/register')
-        }
-    },[navigate]);
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
+            navigate('/register');
+        } 
+    },[cookies.token, navigate]);
 
     function handleFocus() {
         profilePictureInput.current.click();
     }
 
     function logout() {
-        // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-        localStorage.removeItem('token');
+        setCookies("token", null, {
+            path: '/',
+        })
         navigate('/register');
     }
+    // console.log(cookies)
     
     function handleShowUserImage(e) {
         e.preventDefault();
@@ -82,13 +89,13 @@ function AccountPage() {
             let formData = new FormData();
             formData.append('fileupload', updatedUserImage)
             fetch(`${profilePictureRoute}/${user._id}`, {
-                headers: { "x-access-token": JSON.parse(localStorage.getItem('token')) },
+                headers: { "x-access-token": cookies.token },
                 method: "POST",
                 body: formData
             })
             .then(res => res.json())
             .then(response => {
-                if(response.status === 200) {
+                if(response.succeded) {
                     toast.success(response.msg, toastOptions);
                     setTimeout(() => {window.location.reload()}, 2000)
                 }
@@ -120,22 +127,22 @@ function AccountPage() {
         }
     }
 
-    function handleSaveUsername() {
+    function handleUpdateUsername() {
         setIsLoading(true)
         if(updatedUsername) {
             fetch(`${userRoute}/${currentUser._id}`, {
                 method: 'PATCH',
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "x-access-token": cookies.token },
                 body: JSON.stringify({username: updatedUsername})
             })
             .then(res => res.json())
-            .then(data => {
+            .then(response => {
                 setIsLoading(false)
-                if(data.status === 200) {
-                    toast.success(data.msg, toastOptions);
-                    setTimeout(() => {navigate(`/user/${data.username}`)}, 1500)
+                if(response.succeeded) {
+                    toast.success(response.msg, toastOptions);
+                    setTimeout(() => {navigate(`/user/${response.username}`)}, 1500)
                 }else {
-                    toast.error(data.msg, toastOptions);
+                    toast.error(response.msg, toastOptions);
                 }
             })
         }
@@ -169,7 +176,7 @@ function AccountPage() {
                         {user.username === currentUser.username && !inEditMode ? <button className='helper-button' onClick={handleEditUsername}>Edit</button> : null}
                         <div className="edit-options">
                             {user.username === currentUser.username && inEditMode ? <button className='helper-button' onClick={handleEditUsername}>Cancel</button> : null}
-                            {user.username === currentUser.username && inEditMode && canSaveUsername ? <button className='cta' onClick={handleSaveUsername}>Save</button> : null}
+                            {user.username === currentUser.username && inEditMode && canSaveUsername ? <button className='cta' onClick={handleUpdateUsername}>Save</button> : null}
                         </div>
                         {user._id === currentUser._id && !inEditMode ? <button className='logout-button' onClick={logout}>logout</button> : null}
                         {isLoading ? <Loader />: null}

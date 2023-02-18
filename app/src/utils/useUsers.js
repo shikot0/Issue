@@ -1,11 +1,13 @@
 import {useState, useEffect} from 'react';
+import { useCookies } from 'react-cookie';
 import {allUsersRoute, userRoute} from './APIRoutes';
 import {getCurrentUserRoute} from './APIRoutes';
 
 function useUsers(username) {
     const [user, setUser] = useState('');
     const [noUsers, setNoUsers] = useState(false);
-    const token = localStorage.getItem('token');
+    const [cookies] = useCookies(["token"]);
+    const token = cookies.token;
     
     useEffect(() => {
         if(username && username !== 'all') {
@@ -31,11 +33,11 @@ function useUsers(username) {
             })
         }else{
             // let savedUser = document.cookie.split('=')[1] ? document.cookie.split('=')[1] : '';
-            let savedUser = JSON.parse(localStorage.getItem('token'));
-            if(savedUser) {
+            // let savedUser = JSON.parse(localStorage.getItem('token'));
+            if(token) {
                 // fetch(`${getCurrentUserRoute}/${savedUser}`, {
                 fetch(`${getCurrentUserRoute}`, {
-                    headers: { "x-access-token": savedUser },
+                    headers: { "x-access-token": token },
                 })
                 .then(res => res.json())
                 .then(data => {

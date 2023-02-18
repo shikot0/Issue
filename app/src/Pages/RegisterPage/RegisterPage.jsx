@@ -2,11 +2,13 @@ import {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { registerRoute, loginRoute, profilePictureRoute } from '../../utils/APIRoutes';
 import { ToastContainer, toast } from "react-toastify";
+import {useCookies} from 'react-cookie';
 import Loader from '../../Components/Loader/Loader';
 import 'react-toastify/dist/ReactToastify.css';
 import './RegisterPage.css';
 
 function RegisterPage() {
+    const [cookies, setCookie] = useCookies(["token"]);
     const [currentUserImage, setCurrentUserImage] = useState();
     const [signUpData, setSignUpData] = useState({
         username: "",
@@ -23,10 +25,32 @@ function RegisterPage() {
     const emailInput = useRef();
     const imageInput = useRef();
     const navigate = useNavigate();
+    const toastOptions = {
+        position: "top-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+    }
 
+    // useEffect(() => {
+    //     // setCookie("token", 'test', {
+    //     //     path: '/',
+    //     //     httpOnly: true,
+    //     //     secure: true
+    //     // })
+    //     setCookie("token", "test")
+    //     console.log(cookies)
+    // }, [])
     // function handleFocus() {
-    //     imageInput.current.click();
+        //     imageInput.current.click();
     // }
+    
+    useEffect(() => {
+        // if(cookies.token) {
+        //     navigate('/home')
+        // } 
+    },[cookies.token, navigate])
 
     function handleShowUserImage(e) {
         e.preventDefault();
@@ -57,26 +81,12 @@ function RegisterPage() {
         e.preventDefault();
         e.target.classList.remove('drag-over')
     };
-    
-    const toastOptions = {
-        position: "top-right",
-        autoClose: 8000,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-    }
      
-    useEffect(() => {
-        if(localStorage.getItem('token')) {
-            navigate('/home')
-        }
-    },[navigate])
-        
-    function handleSignUp(e) {
+    function handleSignUpData(e) {
         setSignUpData({...signUpData, [e.target.name]: e.target.value})
     }
 
-    function handleLogin(e) {
+    function handleLoginData(e) {
         setLoginData({...loginData, [e.target.name]: e.target.value})
     }
 
@@ -97,7 +107,7 @@ function RegisterPage() {
         }
     }
 
-    async function handleSetUserImage(e) {
+    async function handleSignUp(e) {
         e.preventDefault();
         const {password, email, username} = signUpData;
         if(password.length >= 8 && email !== "" && emailInput.current.validity.valid && username.length >= 3 && currentUserImage) {
@@ -117,20 +127,23 @@ function RegisterPage() {
             })
             .then(res => res.json()) 
             .then(response => {
-                if(response.status === 200) {
-                    // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`
-                    // document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`
-                    localStorage.setItem('token', JSON.stringify(response.token));
+                if(response.succeeded) {
+                    setCookie("token", response.token, {
+                        path: '/',
+                        secure: true
+                    })
                     fetch(`${profilePictureRoute}/${response.id}`, {
                         headers: { "x-access-token": response.token },
                         method: "POST",
                         body: formData
                     }).then(res => res.json())
                       .then(response => {
-                        if(response.status === 200) {
-                            navigate('/home');
+                            if(response.succeeded) {
+                                navigate('/home');
+                            }else {
+                                toast.error(response.msg, toastOptions)
+                            }
                             setIsLoading(false);
-                        }
                     }).catch(err => {
                         console.error(err.message)
                     })
@@ -153,28 +166,32 @@ function RegisterPage() {
             toast.error("Please add your password", toastOptions);
         }else {
             setIsLoading(true);
-            const data = await fetch(loginRoute, {
+            fetch(loginRoute, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     username,
                     password    
                 })
+            })
+            .then(res => res.json())
+            .then(response => {
+                if(response.succeeded) {
+                    setCookie("token", response.token, {
+                        path: '/',
+                        secure: true
+                    })
+                    setIsLoading(false);
+                    navigate('/home')
+                }else {
+                    setIsLoading(false);
+                    toast.error(response.msg, toastOptions);
+                }
             }).catch(err => {
                 console.error(err.message);
             })
 
-            const response = await data.json();
 
-            if(response.status === 400) {
-                toast.error(response.msg, toastOptions);
-            }else if(response.status === 200) {
-                setIsLoading(false);
-                // document.cookie = `token=; expires=Thu, 01 Jan 1970T00:00:00Z;`;
-                // document.cookie = `token=${response.token}; Expires=${new Date(Date.now() + 1000000000000)}; Secure=true; SameSite=None`;
-                localStorage.setItem('token', JSON.stringify(response.token));
-                navigate('/home')
-            }
         }
     }
     
@@ -205,16 +222,16 @@ function RegisterPage() {
         <section id="register-page"> 
                 <div className="form-wrapper">
                     <form>
-                        <input type="text" name="username" placeholder='Username' onChange={e => {handleSignUp(e)}} aria-label='Username Input' required/>
-                        <input ref={emailInput} type="email" pattern='[a-zA-Z0-9._+-]+@[a-zA-Z0-9 -]+\.[a-z]{2,}' name="email" placeholder='Email' onChange={e => {handleSignUp(e)}} aria-label='Email Input' required/>
+                        <input type="text" name="username" placeholder='Username' onChange={e => {handleSignUpData(e)}} aria-label='Username Input' required/>
+                        <input ref={emailInput} type="email" pattern='[a-zA-Z0-9._+-]+@[a-zA-Z0-9 -]+\.[a-z]{2,}' name="email" placeholder='Email' onChange={e => {handleSignUpData(e)}} aria-label='Email Input' required/>
                         <div className="password-input-wrapper">
-                            <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUp(e)}} aria-label='Password Input' required/>
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleSignUpData(e)}} aria-label='Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
                         </div>
                         <div className="password-input-wrapper">
-                            <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUp(e)}} aria-label='Confirm Password Input' required/>
+                            <input type="password" name="confirmPassword" placeholder='Confirm Password' onChange={e => {handleSignUpData(e)}} aria-label='Confirm Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
@@ -223,9 +240,9 @@ function RegisterPage() {
                         <p className="hint" onClick={handleSlideLeft}>Already have an account? <span>Login</span></p>
                     </form>
                     <form>
-                        <input type="text" name="username" placeholder='Username' onChange={e => {handleLogin(e)}} aria-label='Username Input' required/>
+                        <input type="text" name="username" placeholder='Username' onChange={e => {handleLoginData(e)}} aria-label='Username Input' required/>
                         <div className="password-input-wrapper">
-                            <input type="password" name="password" placeholder='Password' onChange={e => {handleLogin(e)}} aria-label='Password Input' required/>
+                            <input type="password" name="password" placeholder='Password' onChange={e => {handleLoginData(e)}} aria-label='Password Input' required/>
                             <button type='button' className='toggle-password-button' onClick={handlePasswordVisiblity}>
                                 <img src={`${process.env.PUBLIC_URL}/icons/eye-outline.svg`} alt="" />
                             </button>
@@ -243,7 +260,7 @@ function RegisterPage() {
                             <img className={currentUserImage ? 'profile-photo' : 'hidden'} src={currentUserImage ? URL.createObjectURL(currentUserImage) : `${process.env.PUBLIC_URL}/logos/person-outline.svg`} alt="profile" />
                         </div>
                         <input type="file" accept="image/*" onInput={handleShowUserImage} aria-label='profile-picture input' required/>
-                        <button type='button' className='cta' onClick={handleSetUserImage}>Submit</button>
+                        <button type='button' className='cta' onClick={handleSignUp}>Submit</button>
                     </form>
                 </div>
                 {isLoading ? 

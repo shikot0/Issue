@@ -9,9 +9,11 @@ import { HeaderSkeleton, ImageSkeleton, WebsiteDescriptionSkeleton } from '../..
 import {toast, ToastContainer} from 'react-toastify';
 import UserItem from '../../Components/UserItem/UserItem';
 import './WebsitePage.css';
+import { useCookies } from 'react-cookie';
 
 function WebsitePage() {
     const [query, setQuery] = useState('');
+    const [cookies] = useCookies(["token"]);
     const {name} = useParams();
     // const {websites: website, noWebsites} = useWebsites(name);
     const {websites: returnedWebsite, noWebsites} = useWebsites(name);
@@ -28,10 +30,13 @@ function WebsitePage() {
     const formatter = Intl.NumberFormat('en', {notation: 'compact'});
 
     useEffect(() => {    
-        if(!localStorage.getItem('token')) {
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
             navigate('/register')
-        }
-    },[navigate]);
+        } 
+    },[cookies.token, navigate]);
 
     useEffect(() => {
         if(returnedWebsite) {
@@ -95,11 +100,11 @@ function WebsitePage() {
             body: JSON.stringify({admins: website.admins})
         })
         .then(res => res.json())
-        .then(data => {
-            if(data.status === 200) {
-                toast.success(data.msg, toastOptions);
+        .then(response => {
+            if(response.succeeded) {
+                toast.success(response.msg, toastOptions);
             }else {
-                toast.error(data.msg, toastOptions);
+                toast.error(response.msg, toastOptions);
             }
         })
 
@@ -165,16 +170,19 @@ function WebsitePage() {
             {website && website.description ? 
                     <div ref={description} className='website-description'>
                         {website && website.domains ? 
-                            <div className='website-domains-wrapper'>Domains: 
-                                {website.domains.sort((first, second) => {
-                                    return first.length > second.length ? -1 : 1;
-                                }).map((domain, index) => {
-                                    return <a key={index} className="domain" href={domain ? domain.slice(0,7) === 'http://' || domain.slice(0,8) ==='https://' ? domain : `http://${domain}` : ''} spellCheck='false'>{domain}</a>
-                                })}
+                            <div className='website-domains-section'>
+                                Domains: 
+                                <div className="website-domains-wrapper">
+                                    {website.domains.sort((first, second) => {
+                                        return first.length > second.length ? -1 : 1;
+                                    }).map((domain, index) => {
+                                        return <a key={index} className="domain" href={domain ? domain.slice(0,7) === 'http://' || domain.slice(0,8) ==='https://' ? domain : `http://${domain}` : ''} spellCheck='false'>{domain}</a>
+                                    })}
+                                </div>
                             </div>
                         : null}
                         {website.description}
-                        <button ref={descriptionButton} type='button' className={`show-more-button ${description.current && description.current.scrollHeight < 196 ? 'hidden' : ''}`} onClick={handleShowDescription}>show more</button>
+                        <button ref={descriptionButton} type='button' className={`show-more-button ${description.current && description.current.scrollHeight < 216 ? 'hidden' : ''}`} onClick={handleShowDescription}>show more</button>
                     </div>
             : <WebsiteDescriptionSkeleton/>}
             {/* <WebsiteDescriptionSkeleton/> */}

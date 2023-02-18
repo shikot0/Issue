@@ -6,17 +6,22 @@ import SearchBar from '../../Components/SearchBar/SearchBar';
 import { WebsiteItemSkeleton } from '../../Skeletons/Skeletons';
 import useWebsites from '../../utils/useWebsites';
 import './HomePage.css';
+import { useCookies } from 'react-cookie';
 
 function HomePage() {
     const [query, setQuery] = useState('');
+    const [cookies] = useCookies(["token"]);
     const {websites, noWebsites} = useWebsites();
-
     const navigate = useNavigate();
-    useEffect(() => {
-        if(!localStorage.getItem('token')) {
-            navigate('/register')
-        }
-    },[navigate])
+
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
+            navigate('/register');
+        } 
+    },[cookies.token, navigate]);
     
     return (
         <section id="home-page">

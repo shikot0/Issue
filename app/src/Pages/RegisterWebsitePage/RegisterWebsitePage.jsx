@@ -5,12 +5,14 @@ import { registerWebsiteRoute, websiteImageRoute } from '../../utils/APIRoutes';
 import UserItem from '../../Components/UserItem/UserItem';
 import useUsers from '../../utils/useUsers';
 import './RegisterWebsitePage.css';
+import { useCookies } from 'react-cookie';
 
 function RegisterWebsitePage() {
     const [uploadedImage, setUploadedImage] = useState('');
     const [query, setQuery] = useState('');
     const {user: currentUser} = useUsers();
-    const {user: users} = useUsers('all')
+    const {user: users} = useUsers('all');
+    const [cookies] = useCookies(["token"]);
     const imageInput = useRef();
     const domainInput = useRef();
     const adminInput = useRef();
@@ -35,11 +37,14 @@ function RegisterWebsitePage() {
         theme: "dark",
     };
     
-    useEffect(() => {
-        if(!localStorage.getItem('token')) {
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
             navigate('/register')
-        }
-    },[navigate])
+        } 
+    },[cookies.token, navigate]);
 
     useEffect(() => {
         setWebsite(prev => {
@@ -155,24 +160,25 @@ function RegisterWebsitePage() {
                 body: JSON.stringify(website)
             })
             .then(res => res.json())
-            .then(data => {
-                const message = data.msg;
-                if(data.status === 200) {
-                    fetch(`${websiteImageRoute}/${data.id}`, {
+            .then(response => {
+                const message = response.msg;
+                if(response.succeeded) {
+                    fetch(`${websiteImageRoute}/${response.id}`, {
                         method: "POST",
+                        headers: {'x-access-token': cookies.token},
                         body: formData
                     })
                     .then(res => res.json())
-                    .then(data => {
-                        if(data.status) {
+                    .then(response => {
+                        if(response.succeeded) {
                             toast.success(message, {...toastOptions, autoClose: 1000});
                             setTimeout(() => {navigate('/home')}, 2000)
                         }
                     }).catch(err => {
                         console.error(err.message)
                     })
-                }else if(data.status === 400) {
-                    toast.error(data.msg, toastOptions)
+                }else if(response.status === 400) {
+                    toast.error(response.msg, toastOptions)
                 }
             }).catch(err => {
                 console.error(err.message);

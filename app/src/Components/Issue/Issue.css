@@ -267,9 +267,9 @@
 }
 
 @media screen and (max-width: 400px) {
-    .issue-item {
-        right: 1rem;
-        bottom: 1rem;
+    .issue-time {
+        right: .75rem;
+        bottom: .75rem;
         font-size: .5rem;
     }
 }

@@ -6,6 +6,7 @@ import useUsers from '../../utils/useUsers';
 import useWebsites from '../../utils/useWebsites';
 import AttestButton from '../AttestButton/AttestButton';
 import {toast} from 'react-toastify';
+import {useCookies} from 'react-cookie';
 import './Issue.css';
 
 function Issue ({issue, handleOpenLightbox, lastPostRef}) {
@@ -22,7 +23,9 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     const modal = useRef();
     const image = useRef();
     const navigate = useNavigate();
+    const [cookies] = useCookies(["token"]);
     const [attests, setAttests] = useState();
+
     useEffect(() => {
         setAttests(issue?.attests);
     },[issue])
@@ -106,18 +109,18 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     function handleEditIssue() {
         if(editedValues.id && editedValues.name && editedValues.link && editedValues.description) {
             fetch(issueRoute, {
-                headers: {"Content-Type": "application/json"},
+                headers: {"Content-Type": "application/json", 'x-access-token': cookies.token},
                 method: 'PATCH',
                 body: JSON.stringify(editedValues)
             })
             .then(res => res.json())
             .then(data => {
-                if(data.status === 200) {
+                if(data.succeeded) {
                     toast.success(data.msg, toastOptions);
                     // setTimeout(() => {navigate(`/user/${user.username}`)}, 2000)
                     setInEditMode(false);
                 }else {
-                    toast.error('There was an error', toastOptions);
+                    toast.error(data.msg, toastOptions);
                 }
             })
         }
@@ -129,10 +132,10 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
         })
         .then(res => res.json())
         .then(data => {
-            if(data.status === 200) {
+            if(data.succeeded) {
                 toast.success(data.msg, toastOptions);
                 setTimeout(() => {navigate(`/user/${user.username}`)}, 2000)
-            }else if(data.status === 400) {
+            }else {
                 toast.error(data.msg, toastOptions);
             }
         })
@@ -145,19 +148,23 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     function handleResolveIssue() {
         if(website?.admins.some(admin => admin.username === currentUser.username)) {
             fetch(`${issueRoute}/${issue._id}`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                headers: {"x-access-token": cookies.token}
             })
             .then(res => res.json())
             .then(data => {
-                toast.success(data.msg, toastOptions);
-                if(data.resolved) {
+                if(data.succeeded && data.resolved) {
                     status.current.classList.remove('pending');
                     status.current.classList.add('resolved');
                     status.current.innerText = 'Resolved';
-                }else {
+                    toast.success(data.msg, toastOptions);
+                }else if(data.succeeded) {
                     status.current.classList.remove('resolved');
                     status.current.classList.add('pending');
                     status.current.innerText = 'Pending';
+                    toast.success(data.msg, toastOptions);
+                }else {
+                    toast.error(data.msg, toastOptions);
                 }
             })
         }

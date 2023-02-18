@@ -1,6 +1,7 @@
 const Websites = require('../Models/websiteModel');
 const Users = require('../Models/userModel');
 const jwt = require('jsonwebtoken');
+const sharp = require('sharp');
 
 module.exports.registerWebsite = async (req, res, next) => {
     try {
@@ -8,7 +9,7 @@ module.exports.registerWebsite = async (req, res, next) => {
         const websiteCheck = await Websites.findOne({queryName: websiteName.toLowerCase()});
 
         if(websiteCheck) {
-            return res.json({status: 400, msg: 'A website has already been registered with that name, please choose another.'})
+            return res.json({succeeded: false, msg: 'A website has already been registered with that name, please choose another.'})
         }else {
             const website = await Websites.create({
                 registeredBy,
@@ -21,7 +22,7 @@ module.exports.registerWebsite = async (req, res, next) => {
                 secondaryContact,
                 dateOfCreation: new Date().toDateString()
             })
-            return res.json({status: 200, msg: 'Your Website was successfully registered!', id: website._id})
+            return res.json({succeeded: true, msg: 'Your Website was successfully registered!', id: website._id})
         }
     } catch(err) {
         next(err);
@@ -31,13 +32,31 @@ module.exports.registerWebsite = async (req, res, next) => {
 module.exports.setWebsiteImage = async (req, res, next) => {
     try {
         const id = req.params.id;
+        const accessToken = req.headers["x-access-token"];
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const {data, mimetype} = req.files.fileupload;
-        const website = await Websites.findOne({_id: id})
-        website.websiteImage.Data = data;
-        website.websiteImage.ContentType = mimetype; 
+        const website = await Websites.findOne({_id: id});
+        const user = await Users.findOne({email: decoded});
 
-        await website.save();
-        return res.json({status: 200});
+        let verified = website.admins.some(admin => {
+            return admin._id == user._id;
+        });
+
+        if(user && verified) {
+            sharp(data).resize(400, 400).toBuffer().then(result => {
+                if(result && mimetype) {
+                    website.websiteImage.Data = result;
+                    website.websiteImage.ContentType = mimetype; 
+                    website.save().then(() => {
+                        return res.json({succeeded: true});
+                    })
+                }else {
+                    return res.json({succeeded: false, msg: 'There has been an error'});
+                } 
+            });
+        }else {
+            return res.json({succeeded: false, msg: "You do not have permission to edit this website"});
+        }
     } catch(err) {
         next(err)
     }
@@ -111,9 +130,9 @@ module.exports.editWebsite = async (req, res, next) => {
         if(website.admins.some(admin => admin.username === user.username)) {
             website.admins = admins;
             await website.save();
-            return res.json({status: 200, msg: 'Successfully edited website admins'})
+            return res.json({succeeded: true, msg: 'Successfully edited website admins'})
         }else {
-            return res.json({status: 400, msg: 'You do not have permission to edit this website'})
+            return res.json({succeeded: false, msg: 'You do not have permission to edit this website'})
         }
     } catch(err) {
         next(err);

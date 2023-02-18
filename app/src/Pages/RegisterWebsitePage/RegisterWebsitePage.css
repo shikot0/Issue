@@ -131,4 +131,10 @@
     .website-details-section {
         gap: 1.5rem;
     }
+    .description-input-wrapper {
+        grid-column-start: initial;
+        grid-column-end: initial;
+        /* grid-row-start: 1;
+        grid-row-start: 3; */
+    }
 }

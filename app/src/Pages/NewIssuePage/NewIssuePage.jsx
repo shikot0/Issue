@@ -2,21 +2,26 @@ import {useState, useEffect, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import { issueRoute, createIssueRoute, websiteImageRoute /*,issueScreenshotRoute*/ } from '../../utils/APIRoutes';
 import {ToastContainer, toast} from 'react-toastify';
+import { ImageSkeleton } from '../../Skeletons/Skeletons';
+import {useCookies} from 'react-cookie';
 import useUsers from '../../utils/useUsers';
+import useWebsites from '../../utils/useWebsites';
 import 'react-toastify/dist/ReactToastify.css';
 import './NewIssuePage.css';
-import useWebsites from '../../utils/useWebsites';
-import { ImageSkeleton } from '../../Skeletons/Skeletons';
 
 function NewIssuePage() {
     const {websiteName} = useParams();
     const {user} = useUsers();
+    const [cookies] = useCookies(["token"]);
     const {websites: website} = useWebsites(websiteName);
     const [firstUploadedImage, setFirstUploadedImage] = useState('');
     const [secondUploadedImage, setSecondUploadedImage] = useState('');
     const [thirdUploadedImage, setThirdUploadedImage] = useState('');
     const [fourthUploadedImage, setFourthUploadedImage] = useState('');
-    const imageInput = useRef();
+    const firstImageInput = useRef();
+    const secondImageInput = useRef();
+    const thirdImageInput = useRef();
+    const fourthImageInput = useRef();
     const linkInput = useRef();
     const [issue, setIssue] = useState({
         name: '',
@@ -27,8 +32,8 @@ function NewIssuePage() {
     });
     const navigate = useNavigate();
 
-    function handleFocus() {
-        imageInput.current.click();
+    function handleFocus(input) {
+        input.current.click();
     }
 
     const toastOptions = {
@@ -39,11 +44,14 @@ function NewIssuePage() {
         theme: "dark",
     };
 
-    useEffect(() => {
-        if(!localStorage.getItem('token')) {
+    useEffect(() => {    
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/register')
+        // }
+        if(!cookies.token) {
             navigate('/register')
-        }
-    },[navigate])
+        } 
+    },[cookies.token, navigate]);
 
     useEffect(() => {
         setIssue(prev => {
@@ -141,18 +149,18 @@ function NewIssuePage() {
                 body: JSON.stringify(issue)
             })
             .then(res => res.json())
-            .then(data => {
-                if(data.status) {
-                    // fetch(`${issueScreenshotRoute}/${data.id}`, {
-                    fetch(`${issueRoute}/${data.id}/screenshot`, {
+            .then(response => {
+                if(response.succeeded) {
+                    fetch(`${issueRoute}/${response.id}/screenshot`, {
                         method: "POST",
+                        headers: {'x-access-token': cookies.token},
                         body: formData
                     })
                     .then(res => res.json())
-                    .then(data => {
-                        if(data.status) {
-                            toast.success(data.msg,{...toastOptions, autoClose: 1000});
-                            setTimeout(() => {navigate('/home')}, 2000)
+                    .then(response => {
+                        if(response.succeeded) {
+                            toast.success(response.msg,{...toastOptions, autoClose: 1000});
+                            // setTimeout(() => {navigate('/home')}, 2000)
                         }
                     }).catch(err => {
                         console.error(err.message)
@@ -191,26 +199,26 @@ function NewIssuePage() {
                 <div className="screenshot-inputs-wrapper">
                     <div className="screenshot-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e, 0)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
-                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>upload an image</button></p>
-                        <input ref={imageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 0)}} aria-label='issue screenshot input'/>
+                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={() => {handleFocus(firstImageInput)}}>upload an image</button></p>
+                        <input ref={firstImageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 0)}} aria-label='issue screenshot input'/>
                         <img src={firstUploadedImage ? URL.createObjectURL(firstUploadedImage) : ''} alt="profile" className={firstUploadedImage ? '' : 'hidden'}/>
                     </div>
                     <div className="screenshot-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e, 1)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
-                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>upload an image</button></p>
-                        <input ref={imageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 1)}} aria-label='issue screenshot input'/>
+                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={() => {handleFocus(secondImageInput)}}>upload an image</button></p>
+                        <input ref={secondImageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 1)}} aria-label='issue screenshot input'/>
                         <img src={secondUploadedImage ? URL.createObjectURL(secondUploadedImage) : ''} alt="profile" className={secondUploadedImage ? '' : 'hidden'}/>
                     </div>
                     <div className="screenshot-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e, 2)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
-                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>upload an image</button></p>
-                        <input ref={imageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 2)}} aria-label='issue screenshot input'/>
+                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={() => {handleFocus(thirdImageInput)}}>upload an image</button></p>
+                        <input ref={thirdImageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 2)}} aria-label='issue screenshot input'/>
                         <img src={thirdUploadedImage ? URL.createObjectURL(thirdUploadedImage) : ''} alt="profile" className={thirdUploadedImage ? '' : 'hidden'}/>
                     </div>
                     <div className="screenshot-input-wrapper" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e, 3)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='upload-hint-image'><g data-name="Layer 2"><g data-name="upload"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><rect x="4" y="4" width="16" height="2" rx="1" ry="1" transform="rotate(180 12 5)"/><rect x="17" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 19 6)"/><rect x="3" y="5" width="4" height="2" rx="1" ry="1" transform="rotate(90 5 6)"/><path d="M8 14a1 1 0 0 1-.8-.4 1 1 0 0 1 .2-1.4l4-3a1 1 0 0 1 1.18 0l4 2.82a1 1 0 0 1 .24 1.39 1 1 0 0 1-1.4.24L12 11.24 8.6 13.8a1 1 0 0 1-.6.2z"/><path d="M12 21a1 1 0 0 1-1-1v-8a1 1 0 0 1 2 0v8a1 1 0 0 1-1 1z"/></g></g></svg>
-                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={handleFocus}>upload an image</button></p>
-                        <input ref={imageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 3)}} aria-label='issue screenshot input'/>
+                        <p className='upload-hint-text'>Drag and Drop or <button type="button" className='browse-button' onClick={() => {handleFocus(fourthImageInput)}}>upload an image</button></p>
+                        <input ref={fourthImageInput} type="file" accept='image/*' className='image-input' onInput={e => {handleShowUserImage(e, 3)}} aria-label='issue screenshot input'/>
                         <img src={fourthUploadedImage ? URL.createObjectURL(fourthUploadedImage) : ''} alt="profile" className={fourthUploadedImage ? '' : 'hidden'}/>
                     </div>
                 </div>

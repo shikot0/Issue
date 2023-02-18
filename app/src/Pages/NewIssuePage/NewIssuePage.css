@@ -7,6 +7,12 @@
     gap: 3rem;
     padding: 0 0 2rem;
 }
+#new-issue-page form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+}
 #new-issue-page .website {
     display: flex;
     gap: 1.5rem;
@@ -38,17 +44,13 @@
 }
 .domains-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, minmax(4rem, 1fr));
+    /* grid-template-columns: repeat(3, minmax(5rem, 1fr)); */
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
-    justify-items: flex-start;
+    /* justify-items: center; */
+    justify-items: stretch;
     gap: 1rem;
-}
-#new-issue-page form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3.5rem;
 }
 #new-issue-page .domain {
     cursor: pointer;

@@ -46,6 +46,11 @@ const websiteSchema = new mongoose.Schema(
             default: 0,
             min: 0
         },
+        issuesOpenedOn: [{
+            day: String,
+            issues: Number,
+            default: {}
+        }],
         websiteImage: {
             Data: Buffer,
             ContentType: String
