@@ -174,7 +174,7 @@ function WebsitePage() {
                             </div>
                         : null}
                         {website.description}
-                        <button ref={descriptionButton} type='button' className='show-more-button' onClick={handleShowDescription}>show more</button>
+                        <button ref={descriptionButton} type='button' className={`show-more-button ${description.current && description.current.scrollHeight < 196 ? 'hidden' : ''}`} onClick={handleShowDescription}>show more</button>
                     </div>
             : <WebsiteDescriptionSkeleton/>}
             {/* <WebsiteDescriptionSkeleton/> */}
