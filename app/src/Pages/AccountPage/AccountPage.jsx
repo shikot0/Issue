@@ -13,7 +13,7 @@ import './AccountPage.css';
 function AccountPage() {
     const {username} = useParams();
     const {user, noUsers} = useUsers(username);
-    const [cookies, setCookies] = useCookies(["token"]);
+    const [cookies, setCookies, removeCookie] = useCookies(["token"]);
     const [updatedUsername, setUpdatedUsername] = useState('');
     const [inEditMode, setInEditMode] = useState(false);
     const [updatedUserImage, setUpdatedUserImage] = useState('');
@@ -39,12 +39,14 @@ function AccountPage() {
     }
 
     function logout() {
-        setCookies("token", null, {
-            path: '/',
-        })
+        // setCookies("token", null, {
+        //     path: '/',
+        // })
+        removeCookie("token", {
+            sameSite: 'none'
+        });
         navigate('/register');
     }
-    // console.log(cookies)
     
     function handleShowUserImage(e) {
         e.preventDefault();

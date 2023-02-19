@@ -81,6 +81,7 @@ module.exports.getWebsite = async (req, res, next) => {
             "name",
             "domains",
             "description",
+            "issuessOpenedOn",
             "admins",
             "queryName",
             "numberOfIssues",

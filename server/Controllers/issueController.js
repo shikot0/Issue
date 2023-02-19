@@ -1,6 +1,7 @@
 const Users = require('../Models/userModel');
 const Issues = require('../Models/issueModel');
 const Websites = require('../Models/websiteModel');
+const jwt = require('jsonwebtoken');
 
 module.exports.createIssue = async (req, res, next) => {
     try {
@@ -13,17 +14,31 @@ module.exports.createIssue = async (req, res, next) => {
             link,
             dateOfCreation: new Date().toDateString()
         });
-
+        
         const targetWebsite = await Websites.findOne({_id: website.id});
         targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
         
         const date = new Date().getDay();
         const weekday = new Date().toLocaleString('default', {weekday: 'short'}).toLowerCase();
-
-        if(targetWebsite.issuesOpenedOn[date]) {
-            targetWebsite.issuesOpenedOn[date].issues = targetWebsite.issuesOpenedOn[date].issues+1;
-        }else {
+        
+        if(weekday === 'sun') {   
+            if(targetWebsite.issuesOpenedOn.length !== 0 && targetWebsite.issuesOpenedOn[date].issues === 0) {
+                targetWebsite.issuesOpenedOn.forEach(day => {
+                    day.issues = 0;
+            })
             targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+            }else if(targetWebsite.issuesOpenedOn.length !== 0 && targetWebsite.issuesOpenedOn[date].issues > 0) {
+                let newIssues = targetWebsite.issuesOpenedOn[date].issues+1;
+                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: newIssues};
+            }else {
+                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+            }
+        }else {
+            if(targetWebsite.issuesOpenedOn[date]) {
+                targetWebsite.issuesOpenedOn[date].issues = targetWebsite.issuesOpenedOn[date].issues+1;
+            }else {
+                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+            }
         }
         await targetWebsite.save();
         return res.json({succeeded: true, id: issue._id});
@@ -41,7 +56,7 @@ module.exports.setIssueScreenshots = async (req, res, next) => {
         const issue = await Issues.findOne({_id: id});
         const user = await Users.findOne({email: decoded});
 
-        if(user && issue.openedBy.id === user._id) {
+        if(user && issue.openedBy.id == user._id) {
             if(data && Array.isArray(data)) {
                 let counter = 0;
                 for(screenshot of data) {

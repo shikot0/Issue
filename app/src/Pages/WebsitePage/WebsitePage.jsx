@@ -8,8 +8,11 @@ import { websiteImageRoute, websiteRoute } from '../../utils/APIRoutes';
 import { HeaderSkeleton, ImageSkeleton, WebsiteDescriptionSkeleton } from '../../Skeletons/Skeletons';
 import {toast, ToastContainer} from 'react-toastify';
 import UserItem from '../../Components/UserItem/UserItem';
-import './WebsitePage.css';
 import { useCookies } from 'react-cookie';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
+import {Line} from 'react-chartjs-2';
+import './WebsitePage.css';
+
 
 function WebsitePage() {
     const [query, setQuery] = useState('');
@@ -28,6 +31,8 @@ function WebsitePage() {
     const descriptionButton = useRef();
     const navigate = useNavigate();
     const formatter = Intl.NumberFormat('en', {notation: 'compact'});
+
+    ChartJS.register(ArcElement, Tooltip, Legend);
 
     useEffect(() => {    
         // if(!localStorage.getItem('token')) {
@@ -110,6 +115,7 @@ function WebsitePage() {
 
     }
 
+    console.log(website)
     return (
         <section id="website-page">
         {!noWebsites ? 
@@ -182,12 +188,15 @@ function WebsitePage() {
                             </div>
                         : null}
                         {website.description}
-                        <button ref={descriptionButton} type='button' className={`show-more-button ${description.current && description.current.scrollHeight < 216 ? 'hidden' : ''}`} onClick={handleShowDescription}>show more</button>
+                        <button ref={descriptionButton} type='button' className={`show-more-button ${description.current && description.current.scrollHeight > 216 ? 'visible' : ''}`} onClick={handleShowDescription}>show more</button>
                     </div>
             : <WebsiteDescriptionSkeleton/>}
             {/* <WebsiteDescriptionSkeleton/> */}
             <div className='website-issues-chart-wrapper'>
-                <canvas></canvas>
+                {/* <canvas></canvas> */}
+                {website && website.issuesOpenedOn ? 
+                    <Line/>
+                : null}
             </div>
         </div>
         {website && website.name && issues ? 

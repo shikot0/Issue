@@ -122,9 +122,8 @@ input button {
   font-weight: 700;
   cursor: pointer;
   position: relative;
-  background: transparent;
   transition: .2s;
-  background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+  /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
 }
 .cta:hover {
   transition-delay: .225s;
@@ -182,7 +181,7 @@ input button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(.7rem, 1.5vw, 1.4rem);
+  font-size: clamp(.7rem, 1vw, 1rem);
   background: radial-gradient(circle at 0 0, var(--primary-color), var(--secondary-color)) padding-box,
               linear-gradient(90deg, var(--primary-cta-color), var(--secondary-cta-color)) border-box;
   border: 2px solid transparent;
@@ -273,7 +272,7 @@ input button {
   fill: var(--secondary-cta-color)
 }
 .logout-button {
-  font-size: clamp(.7rem, 1.5vw, 1.4rem);
+  font-size: clamp(.7rem, 1vw, 1rem);
   font-weight: 700;
   background-color: var(--secondary-cta-color);
   border: none;

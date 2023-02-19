@@ -133,6 +133,7 @@ function NewIssuePage() {
         formData.append('fileupload', secondUploadedImage);
         formData.append('fileupload', thirdUploadedImage);
         formData.append('fileupload', fourthUploadedImage);
+        console.log(issue)
         
         if(!issue.name) {
             toast.error('Please name your issue', toastOptions);

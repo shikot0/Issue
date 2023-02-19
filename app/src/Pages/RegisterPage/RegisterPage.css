@@ -16,7 +16,8 @@
 	grid-auto-columns: 100%; 
     background-color: var(--secondary-color);
 	background-size: 200%;
-	box-shadow: 0 0 20rem rgba(33, 0, 180, 0.4), 0 20rem 20rem rgba(182, 0, 233, 0.4);
+	/* box-shadow: 0 0 20rem rgba(33, 0, 180, 0.4), 0 20rem 20rem rgba(182, 0, 233, 0.4); */
+	box-shadow: 0 0 20rem var(--primary-cta-color), 0 20rem 20rem var(--secondary-cta-color);
 	animation: fade-in 1s cubic-bezier(.68,-0.55,.27,1.55) 1 forwards;
 	scroll-snap-type: inline mandatory;
 	transition: .4s;

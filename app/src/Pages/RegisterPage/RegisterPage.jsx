@@ -130,7 +130,9 @@ function RegisterPage() {
                 if(response.succeeded) {
                     setCookie("token", response.token, {
                         path: '/',
-                        secure: true
+                        secure: true,
+                        sameSite: 'none',
+                        expires: new Date(new Date().setFullYear(new Date().getFullYear() + 10))
                     })
                     fetch(`${profilePictureRoute}/${response.id}`, {
                         headers: { "x-access-token": response.token },
@@ -179,7 +181,9 @@ function RegisterPage() {
                 if(response.succeeded) {
                     setCookie("token", response.token, {
                         path: '/',
-                        secure: true
+                        secure: true,
+                        sameSite: 'none',
+                        expires: new Date(new Date().setFullYear(new Date().getFullYear() + 10))
                     })
                     setIsLoading(false);
                     navigate('/home')
