@@ -11,9 +11,10 @@ function InfoPage() {
         // if(!localStorage.getItem('token')) {
         //     navigate('/register')
         // }
-        if(!cookies.token) {
-            navigate('/register');
-        }else if (cookies.token) {
+        // if(!cookies.token) {
+        //     navigate('/register');
+        // }else
+        if (cookies.token) {
             navigate('/home');
         }
     },[cookies.token, navigate]);
