@@ -47,9 +47,9 @@ function RegisterPage() {
     // }
     
     useEffect(() => {
-        // if(cookies.token) {
-        //     navigate('/home')
-        // } 
+        if(cookies.token) {
+            navigate('/home')
+        } 
     },[cookies.token, navigate])
 
     function handleShowUserImage(e) {
