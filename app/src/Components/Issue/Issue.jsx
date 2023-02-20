@@ -109,8 +109,8 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
     function handleEditIssue() {
         if(editedValues.id && editedValues.name && editedValues.link && editedValues.description) {
             fetch(issueRoute, {
-                headers: {"Content-Type": "application/json", 'x-access-token': cookies.token},
                 method: 'PATCH',
+                headers: {"Content-Type": "application/json", 'x-access-token': cookies.token},
                 body: JSON.stringify(editedValues)
             })
             .then(res => res.json())
@@ -128,8 +128,9 @@ function Issue ({issue, handleOpenLightbox, lastPostRef}) {
 
     function deleteIssue() {
         fetch(`${issueRoute}/${issue._id}`, {
-            method: 'DELETE'
-        })
+            method: 'DELETE',
+            headers: {'x-access-token': cookies.token}
+        }) 
         .then(res => res.json())
         .then(data => {
             if(data.succeeded) {

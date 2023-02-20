@@ -19,25 +19,33 @@ module.exports.createIssue = async (req, res, next) => {
         targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
         
         const date = new Date().getDay();
-        const weekday = new Date().toLocaleString('default', {weekday: 'short'}).toLowerCase();
+        const weekday = new Date().toLocaleString('default', {weekday: 'short'});
         
-        if(weekday === 'sun') {   
+        if(weekday === 'Sun') {   
             if(targetWebsite.issuesOpenedOn.length !== 0 && targetWebsite.issuesOpenedOn[date].issues === 0) {
                 targetWebsite.issuesOpenedOn.forEach(day => {
                     day.issues = 0;
             })
-            targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+            targetWebsite.issuesOpenedOn = [
+                {day: weekday, issues: 1},
+                {day: 'mon', issues: 0},
+                {day: 'tue', issues: 0},
+                {day: 'wed', issues: 0},
+                {day: 'thur', issues: 0},
+                {day: 'fri', issues: 0},
+                {day: 'sat', issues: 0}
+            ];
             }else if(targetWebsite.issuesOpenedOn.length !== 0 && targetWebsite.issuesOpenedOn[date].issues > 0) {
                 let newIssues = targetWebsite.issuesOpenedOn[date].issues+1;
-                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: newIssues};
+                targetWebsite.issuesOpenedOn[date] = {id: date, day: weekday, issues: newIssues};
             }else {
-                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+                targetWebsite.issuesOpenedOn[date] = {id: date, day: weekday, issues: 1};
             }
         }else {
             if(targetWebsite.issuesOpenedOn[date]) {
                 targetWebsite.issuesOpenedOn[date].issues = targetWebsite.issuesOpenedOn[date].issues+1;
             }else {
-                targetWebsite.issuesOpenedOn[date] = {day: weekday, issues: 1};
+                targetWebsite.issuesOpenedOn[date] = {id: date, day: weekday, issues: 1};
             }
         }
         await targetWebsite.save();
@@ -109,7 +117,7 @@ module.exports.deleteIssue = async (req, res, next) => {
         const issue = await Issues.findOne({_id:id});
         const user = await Users.findOne({email: decoded});
 
-        if(user && issue && issue.openedBy.id === user._id) {
+        if(user && issue && issue.openedBy.id == user._id) {
             const targetWebsite = await Websites.findOne({_id: issue.website.id});
             await Issues.deleteOne({_id:id});
             targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
@@ -157,7 +165,7 @@ module.exports.attestIssue = async (req, res, next) => {
         const id = req.params.id;
         const action = req.params.action;
         const accessToken = req.headers['x-access-token'];
-        const decoded = jwt.verify(accessToken, JWT_SECRET);
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const issue = await Issues.findOne({_id: id});
         const user = await Users.findOne({email: decoded});
 
@@ -184,7 +192,7 @@ module.exports.editIssue = async (req, res, next) => {
         const issue = await Issues.findOne({_id: id});
         const user = await Users.findOne({email: decoded});
 
-        if(user && issue.openedBy.id === user._id) {
+        if(user && issue.openedBy.id == user._id) {
             issue.name = name;
             issue.link = link;
             issue.description = description;

@@ -9,8 +9,8 @@ import { HeaderSkeleton, ImageSkeleton, WebsiteDescriptionSkeleton } from '../..
 import {toast, ToastContainer} from 'react-toastify';
 import UserItem from '../../Components/UserItem/UserItem';
 import { useCookies } from 'react-cookie';
-import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
-import {Line} from 'react-chartjs-2';
+// import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+import LineChart from '../../Components/LineChart/LineChart';
 import './WebsitePage.css';
 
 
@@ -22,6 +22,7 @@ function WebsitePage() {
     const {websites: returnedWebsite, noWebsites} = useWebsites(name);
     const [website, setWebsite] = useState({});
     const {issues, noIssues} = useIssues(null, name, null);
+    const [chartData, setChartData] = useState({});
     const {user: currentUser} = useUsers();
     const {user: users} = useUsers('all');
     const tooltip = useRef();
@@ -32,8 +33,14 @@ function WebsitePage() {
     const navigate = useNavigate();
     const formatter = Intl.NumberFormat('en', {notation: 'compact'});
 
-    ChartJS.register(ArcElement, Tooltip, Legend);
-
+    const toastOptions = {
+        position: "top-right",
+        autoClose: 2000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+    }
+    
     useEffect(() => {    
         // if(!localStorage.getItem('token')) {
         //     navigate('/register')
@@ -47,15 +54,83 @@ function WebsitePage() {
         if(returnedWebsite) {
             setWebsite(returnedWebsite);
         }
-    }, [returnedWebsite])
+    }, [returnedWebsite]);
 
-    const toastOptions = {
-        position: "top-right",
-        autoClose: 2000,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
+    const chartOptions = {
+            // responsive: true,
+            maintainAspectRatio: false,
+            animations: {
+                tension: {
+                    duration: 1000,
+                    easing: 'linear',
+                    from: .3,
+                    to: .5,
+                    // loop: true
+                }
+            },
+            scales: {
+                y: { 
+                    min: 0,
+                    ticks: {
+                        stepSize: 1,
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: '#8e94af',   
+                    } 
+                },
+            }, 
+            interaction: { 
+                mode: 'index',           
+                axis: 'y',     
+            },  
+            plugins: { 
+                legend: {
+                    display: false, 
+                },
+                tooltip: {   
+                    position: "nearest",  
+                    xAlign: 'center',         
+                }, 
+            },
     }
+
+    console.log(website)
+    useEffect(() => {
+        let labels = [];
+        let chartIssuesData = [];
+        const chartFeatures = {
+            // backgroundColor: '#0026ff',
+            // borderColor: '#ff00dd',
+            backgroundColor: '#ff00dd',
+            borderColor: '#0026ff',
+            pointBorderColor: 'transparent',
+            tension: .5,
+            borderRadius: '2'
+        }
+        if(website && website.issuesOpenedOn) {
+            website.issuesOpenedOn.forEach(weekday => {
+                if(weekday) {
+                    labels.push(weekday.day);
+                    chartIssuesData.push(weekday.issues);
+                }
+            })
+
+            setChartData({
+                labels,
+                datasets: [{
+                    label: 'Issues reported',
+                    data: chartIssuesData,
+                    ...chartFeatures
+                }]
+            })
+        }
+    }, [website])
+
 
     function formatNum(num) {
         let number = formatter.format(num);
@@ -115,7 +190,7 @@ function WebsitePage() {
 
     }
 
-    console.log(website)
+    console.log(chartData)
     return (
         <section id="website-page">
         {!noWebsites ? 
@@ -168,7 +243,7 @@ function WebsitePage() {
                         }).map((user, index) => {
                             return <UserItem key={index} user={user} handleClick={handleAddAdmin}/>
                         }) : null}
-                    </div>
+                    </div> 
                 </div>
             </div>
         </header>
@@ -192,12 +267,11 @@ function WebsitePage() {
                     </div>
             : <WebsiteDescriptionSkeleton/>}
             {/* <WebsiteDescriptionSkeleton/> */}
-            <div className='website-issues-chart-wrapper'>
-                {/* <canvas></canvas> */}
-                {website && website.issuesOpenedOn ? 
-                    <Line/>
-                : null}
-            </div>
+            {website && chartData && chartData.labels && chartData.labels.length !== 0 && chartData.datasets && chartData.datasets.length !== 0 ? 
+                <div className='website-issues-chart-wrapper'>
+                    <LineChart chartData={chartData} options={chartOptions}/>
+                </div>
+            : null}
         </div>
         {website && website.name && issues ? 
             <IssuesWrapper issues={issues} noIssues={noIssues} website={website}/>

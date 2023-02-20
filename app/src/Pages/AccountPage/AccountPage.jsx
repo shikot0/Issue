@@ -158,7 +158,7 @@ function AccountPage() {
                 {user ? 
                     <>
                         <div className="profile-picture-wrapper gradient-border" onDragOver={handleDragOver} onDrop={e => {handleDragImage(e)}} onDragLeave={handleDragLeave} onDragEnd={handleDragLeave}>
-                            <img src={updatedUserImage ? URL.createObjectURL(updatedUserImage) : `${profilePictureRoute}/${user._id}`} alt="profile" className="profile-picture" />
+                            <img src={updatedUserImage ? URL.createObjectURL(updatedUserImage) : `${profilePictureRoute}/${user._id}`} alt={user && user.username ? user.username : 'profile'} className="profile-picture" />
                             {user._id === currentUser._id ? 
                             <>
                                 <input ref={profilePictureInput} type="file" accept="image/*" onInput={handleShowUserImage} aria-label='profile-picture input' required className='hidden-input' />

@@ -161,7 +161,7 @@ function NewIssuePage() {
                     .then(response => {
                         if(response.succeeded) {
                             toast.success(response.msg,{...toastOptions, autoClose: 1000});
-                            // setTimeout(() => {navigate('/home')}, 2000)
+                            setTimeout(() => {navigate('/home')}, 2000)
                         }
                     }).catch(err => {
                         console.error(err.message)

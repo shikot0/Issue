@@ -123,6 +123,10 @@ input button {
   cursor: pointer;
   position: relative;
   transition: .2s;
+  background-image: url('../public/gradient-bg.webp');
+  background-size: 100%;
+  background-clip: text;
+  color: transparent;
   /* background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color)); */
 }
 .cta:hover {
