@@ -13,7 +13,9 @@ function InfoPage() {
         // }
         if(!cookies.token) {
             navigate('/register');
-        } 
+        }else if (cookies.token) {
+            navigate('/home');
+        }
     },[cookies.token, navigate]);
 
     function handleNavigate() {
