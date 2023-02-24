@@ -16,7 +16,7 @@ module.exports.createIssue = async (req, res, next) => {
         });
         
         const targetWebsite = await Websites.findOne({_id: website.id});
-        targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName})
+        targetWebsite.numberOfIssues = await Issues.count({"website.name": targetWebsite.queryName});
         
         const date = new Date().getDay();
         const weekday = new Date().toLocaleString('default', {weekday: 'short'});
