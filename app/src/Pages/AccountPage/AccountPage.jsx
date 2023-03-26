@@ -97,7 +97,7 @@ function AccountPage() {
             })
             .then(res => res.json())
             .then(response => {
-                if(response.succeded) {
+                if(response.succeeded) {
                     toast.success(response.msg, toastOptions);
                     setTimeout(() => {window.location.reload()}, 2000)
                 }
