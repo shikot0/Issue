@@ -140,16 +140,17 @@ function RegisterPage() {
                         body: formData
                     }).then(res => res.json())
                       .then(response => {
+                            setIsLoading(false);
                             if(response.succeeded) {
                                 navigate('/home');
                             }else {
                                 toast.error(response.msg, toastOptions)
                             }
-                            setIsLoading(false);
                     }).catch(err => {
                         console.error(err.message)
                     })
                 }else {
+                    setIsLoading(false);
                     toast.error(response.msg, toastOptions)
                 }
             }).catch(err => {

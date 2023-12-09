@@ -24,7 +24,7 @@ app.use('/api/website', websiteRoutes);
 mongoose.set('strictQuery', false);
 
 mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
+    useNewUrlParser: true,   
     useUnifiedTopology: true,
 }).then(() => {
     console.log(`Database is running at ${process.env.MONGO_URL}`)

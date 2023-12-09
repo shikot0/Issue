@@ -73,7 +73,7 @@ module.exports.setProfilePicture = async (req, res, next) => {
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const user = await Users.findOne({_id: id});
         const {data, mimetype} = req.files.fileupload;
-        
+
         if(decoded === user.email) {
             sharp(data).resize(200, 200).toBuffer().then(result => {
                 if(result && mimetype) {
