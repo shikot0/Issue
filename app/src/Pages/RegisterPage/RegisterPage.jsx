@@ -4,10 +4,12 @@ import { registerRoute, loginRoute, profilePictureRoute } from '../../utils/APIR
 import { ToastContainer, toast } from "react-toastify";
 import {useCookies} from 'react-cookie';
 import Loader from '../../Components/Loader/Loader';
+import useUsers from '../../utils/useUsers';
 import 'react-toastify/dist/ReactToastify.css';
 import './RegisterPage.css';
 
 function RegisterPage() {
+    const {user, noUsers} = useUsers();
     const [cookies, setCookie] = useCookies(["token"]);
     const [currentUserImage, setCurrentUserImage] = useState();
     const [signUpData, setSignUpData] = useState({
@@ -47,10 +49,10 @@ function RegisterPage() {
     // }
     
     useEffect(() => {
-        if(cookies.token) {
+        if(!noUsers) {
             navigate('/home')
         } 
-    },[cookies.token, navigate])
+    },[noUsers, navigate])
 
     function handleShowUserImage(e) {
         e.preventDefault();
