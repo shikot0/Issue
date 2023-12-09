@@ -49,10 +49,11 @@ function RegisterPage() {
     // }
     
     useEffect(() => {
-        if(user) {
+        console.log({user, noUsers})
+        if(!noUsers) {
             navigate('/home')
         } 
-    },[user, navigate])
+    },[noUsers, navigate])
 
     function handleShowUserImage(e) {
         e.preventDefault();
