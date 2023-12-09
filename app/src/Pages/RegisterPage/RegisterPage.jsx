@@ -55,6 +55,9 @@ function RegisterPage() {
     //     } 
     // },[noUsers, navigate])
 
+    useEffect(() => {
+        console.log({user, noUsers});
+    }, [user, noUsers]);
     function handleShowUserImage(e) {
         e.preventDefault();
         if(e.target.files[0].size < 400000) {
