@@ -20,19 +20,19 @@ function App() {
   const footer = useRef();
   const location = useLocation(); 
   
-  useEffect(() => {
-    if(location.pathname === '/' && header.current && footer.current) {
-      header.current.classList.add('hide-nav');
-      footer.current.classList.add('hide-nav');
-    }
-  },[location.pathname]);
+  // useEffect(() => {
+  //   if(location.pathname === '/' && header.current && footer.current) {
+  //     header.current.classList.add('hide-nav');
+  //     footer.current.classList.add('hide-nav');
+  //   }
+  // },[location.pathname]);
 
-  useEffect(() => {
-    if(location.pathname !== '/' && header.current && footer.current) {
-      header.current.classList.remove('hide-nav');
-      footer.current.classList.remove('hide-nav');
-    }
-  },[location.pathname]);      
+  // useEffect(() => {
+  //   if(location.pathname !== '/' && header.current && footer.current) {
+  //     header.current.classList.remove('hide-nav');
+  //     footer.current.classList.remove('hide-nav');
+  //   }
+  // },[location.pathname]);      
 
   return (
     <>
