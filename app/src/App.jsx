@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react';
-import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import Header from './Components/Header/Header.jsx';
 import InfoPage from './Pages/InfoPage/InfoPage.jsx';
 import HomePage from './Pages/HomePage/HomePage.jsx';
