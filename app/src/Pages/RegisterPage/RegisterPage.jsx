@@ -48,12 +48,12 @@ function RegisterPage() {
         //     imageInput.current.click();
     // }
     
-    useEffect(() => {
-        console.log({user, noUsers})
-        if(!noUsers) {
-            navigate('/home')
-        } 
-    },[noUsers, navigate])
+    // useEffect(() => {
+    //     console.log({user, noUsers})
+    //     if(!noUsers) {
+    //         navigate('/home')
+    //     } 
+    // },[noUsers, navigate])
 
     function handleShowUserImage(e) {
         e.preventDefault();
