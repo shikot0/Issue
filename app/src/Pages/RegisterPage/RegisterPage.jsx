@@ -55,12 +55,12 @@ function RegisterPage() {
     //     } 
     // },[noUsers, navigate])
 
-    useEffect(() => {
-        console.log({user, noUsers})
-        // if(user === "") {
-        //     navigate('/home')
-        // }
-    }, [user, noUsers, navigate]);
+    // useEffect(() => {
+    //     console.log({user, noUsers})
+    //     // if(user === "") {
+    //     //     navigate('/home')
+    //     // }
+    // }, [user, noUsers, navigate]);
 
     function handleShowUserImage(e) {
         e.preventDefault();
